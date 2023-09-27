@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_district,res.district,model_res_district,base.group_user,1,1,1,1
+access_res_regions,res.region,model_res_region,base.group_user,1,1,1,1
+access_res_tier,res.tier,model_res_tier,base.group_user,1,1,1,1
+access_res_station,res.station,model_res_station,base.group_user,1,1,1,1

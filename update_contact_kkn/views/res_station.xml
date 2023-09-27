@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+        <!-- Res station Form View -->
+
+        <record model="ir.ui.view" id="res_station_form_view">
+            <field name="name">res_station_form_view</field>
+            <field name="model">res.station</field>
+            <field name="arch" type="xml">
+                <form string="Station" name="Station" delete="false">
+                    <sheet>
+                        <div class="oe_title">
+                            <span class="o_form_label">Station</span>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="district_id" required="1"
+                                       options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                                <field name="region_id" required="0" attrs="{'invisible': [('district_id','=',False)]}"
+                                       options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                                <field name="state_id" required="0" attrs="{'invisible': [('district_id','=',False)]}"
+                                       options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                            </group>
+                            <group>
+                                <field name="tier_id" required="1"
+                                       options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                                <field name="zip" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Res Tiers Tree View -->
+
+        <record model="ir.ui.view" id="res_station_tree_view">
+            <field name="name">res_station_tree_view</field>
+            <field name="model">res.station</field>
+            <field name="arch" type="xml">
+                <tree string="Station" name="Station" export_xlsx="false" delete="false">
+                    <field name="name"/>
+                    <field name="district_id"/>
+                    <field name="tier_id"/>
+                    <field name="region_id"/>
+                    <field name="state_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on Res station -->
+
+        <record model="ir.actions.act_window" id="res_station_action_window">
+            <field name="name">Station</field>
+            <field name="res_model">res.station</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No Station found. Let's create one!</p>
+            </field>
+        </record>
+
+
+        <menuitem name="Stations" action="res_station_action_window" id="res_station_menu"
+                  parent="contacts.menu_localisation"
+                  sequence="5"/>
+    </data>
+</odoo>

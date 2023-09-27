@@ -1,0 +1,211 @@
+<odoo>
+    <data>
+        <record id="view_res_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//field[@name='lang']" position="after">
+                    <filed name="start_date" string="Start " />
+                </xpath> -->
+
+                <xpath expr="//h1//field[@name='name']" position="before">
+                    <field name="unique_id" placeholder='Unique id' />
+                </xpath>
+                <xpath expr="//h1//field[@id='company']" position='replace'>
+                    <field id="company" class="text-break" name="name" default_focus="1"
+                        placeholder="e.g. new company"
+                        attrs="{'required' : [('type', '=', 'contact')], 'invisible': [('is_company','=', False)]}" />
+                </xpath>
+
+                <!--                 attrs = "{'required': True}"-->
+                <xpath expr="//field[@name='company_type']" position="after">
+
+                    <group>
+                        <group>
+                            <field name="contact_type"
+                                attrs="{'invisible': [('company_type','==',False)], 'required' : True}" />
+
+                        </group>
+                        <group>
+                            <field name="contact_sub_type"
+                                attrs="{'invisible': [('contact_type','!=', 'customer')]}" />
+                        </group>
+                    </group>
+
+
+                    <group>
+                        <group>
+                            <field name="customer_subscription_model" widget="radio"
+                                options="{'horizontal': true}"
+                                attrs="{'invisible': [('contact_sub_type','==',False)], 'required' : False}" />
+                        </group>
+                    </group>
+
+                </xpath>
+
+
+                <xpath expr="//field[@name='category_id']" position="before">
+                    <field name="status" widget="boolean_toggle" />
+                </xpath>
+
+
+                <!--
+                   Following fields are invisible  as they are not required.
+                   Fields Include City, Street2
+                   -->
+
+
+                <xpath expr="//field[@name='city']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='street2']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+                <!--
+                   Following is to change the Placeholder for changing .
+                   state ->  Province
+                   -->
+
+                <xpath expr="//field[@name='state_id']" position="attributes">
+                    <attribute name="placeholder">Province</attribute>
+                </xpath>
+
+
+                <!--
+                   Following view belongs to  Address  of the contact it invloves
+                   district ->  model developed at kkn
+                   and stations
+
+
+                   -->
+
+                <xpath expr="//field[@name='city']" position="before">
+                    <field name="district_id" placeholder="District"
+                        options="{'no_create': True, 'no_edit': True, 'no_open': True}" />
+                </xpath>
+                <xpath expr="//field[@name='state_id']" position="before">
+                    <field name="station_id" domain="[('district_id', '=', district_id)]"
+                        class="o_address_city"
+                        placeholder="Station"
+                        attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                        options="{'no_open': True, 'no_create': True, 'no_edit': True}" />
+                </xpath>
+
+
+                <!--
+                   Following VAT was changed to NTN/PSTN with help of  Placeholder.
+                   VAT ->  NTN/PSTN
+                   -->
+
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="string">NTN/PSTN</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='vat']" position="before">
+                    <field name="cnic" placeholder="00000-0000000-0"
+                        attrs="{'invisible': [('contact_type', '!=', 'customer')] }" />
+                </xpath>
+
+
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="gstn" placeholder="00-0000-00000-0"
+                        attrs="{'readonly': [('parent_id','!=',False)]}"
+                        widget="field_partner_autocomplete" on_change="1"
+                        modifiers="{'readonly':[['parent_id','!=',false]]}" />
+
+                    <field name="tax_status" widget="radio" options="{'horizontal': True}" />
+
+                    <!-- <field name="reseller" widget="radio" options="{'horizontal':True}" /> -->
+
+                </xpath>
+                <xpath expr="//field[@name='tax_status']" position="after">
+                    <field name="pta_registered" widget="radio"
+                        attrs="{'invisible':[('tax_status','=','unregistered')]}"
+                        options="{'horizontal': True}" />
+                </xpath>
+
+                <!--                <xpath expr="//div[@name='button_box']" position="inside">-->
+                <!--                    <button class="oe_stat_button o_res_user_tip_opp" type="object"
+                name="create_master_dealer"-->
+                <!--                            icon="fa-star" string="Create Master Dealer">-->
+                <!--                    </button>-->
+                <!--                </xpath>-->
+
+                <!--                <xpath expr="//page[@name='contact_addresses']/field[@name='child_ids']"
+                position="attributes">-->
+                <!--                    <attribute name="context">{'default_parent_id': active_id, 'default_name':
+                name, 'default_phone':-->
+                <!--                        phone, 'default_mobile': mobile, 'default_email': email, 'default_street':
+                street,-->
+                <!--                        'default_street2': street2, 'default_city': city, 'default_district_id':
+                district_id,-->
+                <!--                        'default_station_id': station_id, 'default_state_id': state_id, 'default_zip':
+                zip,-->
+                <!--                        'default_country_id': country_id, 'default_lang': lang, 'default_user_id':
+                user_id,-->
+                <!--                        'default_type': 'other'}-->
+                <!--                    </attribute>-->
+                <!--                </xpath>-->
+
+
+                <xpath
+                    expr="//page[@name='contact_addresses']/field[@name='child_ids']/form/sheet/group/group[1]/div/div/field[@name='city']"
+                    position="replace">
+                    <field name="district_id" placeholder="District"
+                        options="{'no_create': True, 'no_edit': True, 'no_open': True}" />
+                </xpath>
+
+                <xpath
+                    expr="//page[@name='contact_addresses']/field[@name='child_ids']/form/sheet/group/group[1]/div/div/field[@name='district_id']"
+                    position="after">
+                    <field name="station_id" domain="[('district_id', '=', district_id)]"
+                        class="o_address_city"
+                        placeholder="Station"
+                        attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                        options="{'no_open': True, 'no_create': True, 'no_edit': True}" />
+                </xpath>
+                <xpath
+                    expr="//page[@name='contact_addresses']/field[@name='child_ids']/kanban/field[@name='city']"
+                    position="after">
+                    <field name="district_id" />
+                    <field name="station_id" />
+                </xpath>
+                <xpath
+                    expr="//page[@name='contact_addresses']/field[@name='child_ids']/kanban/templates/t/div/div[2]/div[3]/div/field[@name='zip']"
+                    position="before">
+                    <field name="district_id" />
+                    <field name="station_id" />
+                </xpath>
+
+                <xpath expr="//field[@name='mobile']" position="replace">
+                    <field name="mobile" placeholder="+92 304 5425910" />
+                </xpath>
+
+            </field>
+        </record>
+        <!-- <record id="view_res_partner_search_inherit" model="ir.ui.view">
+            <field name="name">res.partner.select.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter" />
+            <field name="arch" type="xml">
+                <xpath expr="//search/filter[@name='type_person']" position="after">
+                    <filter string="Master Dealers" name="master_dealer"
+                        domain="[('contact_sub_type','=','5')]" />
+                    <filter string="Dealers" name="dealer" domain="[('contact_sub_type','=','6')]" />
+                    <filter string="Sub Dealers" name="sub_dealer"
+                        domain="[('contact_sub_type','=','7')]" />
+                    <filter string="Panel Users" name="panel_users"
+                        domain="[('contact_sub_type','=','8')]" />
+                    <filter string="Residential" name="residential_users"
+                        domain="[('contact_sub_type','=','customer')]" />
+                </xpath>
+            </field>
+
+        </record> -->
+    </data>
+</odoo>

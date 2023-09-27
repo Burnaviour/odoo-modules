@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <!-- Res Tier Form View -->
+
+        <record model="ir.ui.view" id="res_tier_form_view">
+            <field name="name">res_tier_form_view</field>
+            <field name="model">res.tier</field>
+            <field name="arch" type="xml">
+                <form string="Tier" name="Tier" delete="false">
+                    <sheet>
+                        <div class="oe_title">
+                            <span class="o_form_label">Tier</span>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Res Tiers Tree View -->
+
+        <record model="ir.ui.view" id="res_tier_tree_view">
+            <field name="name">res_tier_tree_view</field>
+            <field name="model">res.tier</field>
+            <field name="arch" type="xml">
+                <tree string="Tier" name="Tier" export_xlsx="false" delete="false">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on Res Tier -->
+
+        <record model="ir.actions.act_window" id="res_tier_action_window">
+            <field name="name">Tier</field>
+            <field name="res_model">res.tier</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No Tier found. Let's create one!</p>
+            </field>
+        </record>
+
+
+        <menuitem name="Tiers" action="res_tier_action_window" id="res_tier_menu"
+                  parent="contacts.menu_localisation"
+                  sequence="7"/>
+    </data>
+</odoo>

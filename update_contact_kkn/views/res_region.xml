@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <!-- Res Region Form View -->
+
+        <record model="ir.ui.view" id="res_region_form_view">
+            <field name="name">res_region_form_view</field>
+            <field name="model">res.region</field>
+            <field name="arch" type="xml">
+                <form string="Pakistan Regions" name="Pakistan Regions" delete="false">
+                    <sheet>
+                        <div class="oe_title">
+                            <span class="o_form_label">Regions of Pakistan</span>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Res Regions Tree View -->
+
+        <record model="ir.ui.view" id="res_district_tree_view">
+            <field name="name">res_region_tree_view</field>
+            <field name="model">res.region</field>
+            <field name="arch" type="xml">
+                <tree string="Pakistan Regions" name="Pakistan Regions" export_xlsx="false" delete="false">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on Res Region -->
+
+        <record model="ir.actions.act_window" id="res_regions_action_window">
+            <field name="name">Pakistan Regions</field>
+            <field name="res_model">res.region</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No Regions found. Let's create one!</p>
+            </field>
+        </record>
+
+
+        <menuitem name="Regions" action="res_regions_action_window" id="res_region_menu"
+                  parent="contacts.menu_localisation"
+                  sequence="6"/>
+    </data>
+</odoo>

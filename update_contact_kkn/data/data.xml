@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="state_punjab" model="res.country.state">
+            <field name="name">PUNJAB</field>
+            <field name="code">PK-PJ</field>
+            <field name="country_id">177</field>
+        </record>
+        <record id="state_sindh" model="res.country.state">
+            <field name="name">SINDH</field>
+            <field name="code">PK-SN</field>
+            <field name="country_id">177</field>
+        </record>
+        <record id="state_kpk" model="res.country.state">
+            <field name="name">KHYBER PAKHTUNKHWA</field>
+            <field name="code">PK-KPK</field>
+            <field name="country_id">177</field>
+        </record>
+        <record id="state_bal" model="res.country.state">
+            <field name="name">BALOCHISTAN</field>
+            <field name="code">PK-BL</field>
+            <field name="country_id">177</field>
+        </record>
+        <record id="state_ict" model="res.country.state">
+            <field name="name">ISLAMABAD</field>
+            <field name="code">PK-ICT</field>
+            <field name="country_id">177</field>
+        </record>
+
+        <record id="city_fsd" model="res.city">
+            <field name="code">FSD</field>
+            <field name="name">FAISALABAD</field>
+        </record>
+        <record id="city_lhr" model="res.city">
+            <field name="code">LHR</field>
+            <field name="name">LAHORE</field>
+        </record>
+        <record id="city_khi" model="res.city">
+            <field name="code">KHI</field>
+            <field name="name">KARACHI</field>
+        </record>
+        <record id="city_mux" model="res.city">
+            <field name="code">MUX</field>
+            <field name="name">MULTAN</field>
+        </record>
+        <record id="city_grw" model="res.city">
+            <field name="code">GRW</field>
+            <field name="name">GUJRANWALA</field>
+        </record>
+        <record id="city_kas" model="res.city">
+            <field name="code">KSR</field>
+            <field name="name">KASUR</field>
+        </record>
+        <record id="city_isb" model="res.city">
+            <field name="code">ISB</field>
+            <field name="name">ISLAMABAD</field>
+        </record>
+        <record id="city_veh" model="res.city">
+            <field name="code">VEH</field>
+            <field name="name">VEHARI</field>
+        </record>
+        <record id="city_guj" model="res.city">
+            <field name="code">GUJ</field>
+            <field name="name">GUJRAT</field>
+        </record>
+
+        <!--<record id="hide_contacts" model="ir.model.access">
+            <field name="name">hide.contacts.module</field>
+            <field name="model_id">78</field>
+            <field name="group_id">74</field>
+            <field name="perm_read">0</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>-->
+
+        <!--<record model = "ir.ui.menu" id = "stock.menu_action_picking_tree">
+            <field name = "groups_id" eval = "[(4, ref ('group_stock_manager_moseltex'))]" />
+        </record>-->
+
+    </data>
+</odoo>
