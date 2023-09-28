@@ -48,7 +48,7 @@
 
 
                 <xpath expr="//field[@name='category_id']" position="before">
-                    <field name="status" widget="boolean_toggle" />
+                    <field name="active_status" widget="boolean_toggle" />
                 </xpath>
 
 

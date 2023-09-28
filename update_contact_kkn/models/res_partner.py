@@ -91,7 +91,7 @@ class ResPartner(models.Model):
     )
 
     start_date = fields.Date(string="Starting Date", default=fields.Date.context_today)
-    status = fields.Boolean(string="Status", default=True)
+    active_status = fields.Boolean(string="Active Status", default=True)
 
     @api.onchange("district_id")
     def _onchange_district(self):
