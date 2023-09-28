@@ -25,21 +25,22 @@
                     <group>
                         <group>
                             <field name="contact_type"
-                                attrs="{'invisible': [('company_type','==',False)], 'required' : True}" />
+                                attrs="{'invisible': [('company_type','==',False)], 'required' : [('contact_type', '=', 'customer')]}" />
 
                         </group>
                         <group>
                             <field name="contact_sub_type"
-                                attrs="{'invisible': [('contact_type','!=', 'customer')]}" />
+                                attrs="{'invisible': [('contact_type','!=', 'customer')],
+                                    'required' : [('contact_type', '=', 'customer')]
+                            }" />
                         </group>
                     </group>
-
 
                     <group>
                         <group>
                             <field name="customer_subscription_model" widget="radio"
                                 options="{'horizontal': true}"
-                                attrs="{'invisible': [('contact_sub_type','==',False)], 'required' : False}" />
+                                attrs="{'invisible': [('contact_sub_type','==',False)], 'required' : [('contact_type', '=', 'customer')]}" />
                         </group>
                     </group>
 

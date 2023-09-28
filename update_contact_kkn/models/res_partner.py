@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import re
-
+import logging
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-import logging
 
 _logger = logging.getLogger(__name__)
 
@@ -43,6 +41,7 @@ class ResPartner(models.Model):
     customer_subscription_model = fields.Selection(
         [("pre_paid", "Pre Paid"), ("post_paid", "Post Paid")],
         string="Subscription Model",
+        default="pre_paid",
     )
 
     # unique_id = fields.Char(string="Unique ID", tracking=True, store=True)
@@ -111,6 +110,12 @@ class ResPartner(models.Model):
     def onchange_tax_status(self):
         if self.tax_status:  # == 'unregistered':
             self.pta_registered = False
+
+    @api.onchange("contact_type")
+    def onchange_contact_type(self):
+        if self.contact_type and self.contact_type != "customer":
+            self.customer_subscription_model = False
+            self.contact_sub_type = False
 
     @api.model
     def create(self, vals_list):
