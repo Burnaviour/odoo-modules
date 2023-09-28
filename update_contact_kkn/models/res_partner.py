@@ -107,15 +107,6 @@ class ResPartner(models.Model):
             if len(search_cnic) > 0:
                 raise ValidationError("CNIC No Already Exist")
 
-    @api.onchange("mobile")
-    def _onchange_mobile(self):
-        if self.mobile:
-            search_mobile = self.env["res.partner"].search(
-                [("mobile", "=", self.mobile), ("id", "not in", self.ids)]
-            )
-            if len(search_mobile) > 0:
-                raise ValidationError("Mobile No Already Exist")
-
     @api.onchange("tax_status")
     def onchange_tax_status(self):
         if self.tax_status:  # == 'unregistered':
@@ -213,6 +204,7 @@ class ResPartner(models.Model):
         if sequence:
             self.unique_id = self.env["ir.sequence"].next_by_code(sequence)
 
+    @api.model
     def write(self, vals):
         """
         Overrides the write method of the base model class to update the unique ID when the company type is changed.
