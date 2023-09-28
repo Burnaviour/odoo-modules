@@ -5,9 +5,10 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="arch" type="xml">
-                <!-- <xpath expr="//field[@name='lang']" position="after">
-                    <filed name="start_date" string="Start " />
-                </xpath> -->
+
+                <xpath expr="//field[@name='lang']" position="after">
+                    <field name="start_date" />
+                </xpath>
 
                 <xpath expr="//h1//field[@name='name']" position="before">
                     <field name="unique_id" placeholder='Unique id' />

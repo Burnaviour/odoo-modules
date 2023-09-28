@@ -101,11 +101,11 @@ class ResPartner(models.Model):
     @api.onchange("cnic")
     def _onchange_cnic(self):
         if self.cnic:
-            search_cnic = self.env["res.partner"].search(
+            search_cnic = self.env["res.partner"].search_count(
                 [("cnic", "=", self.cnic), ("id", "not in", self.ids)]
             )
-            if len(search_cnic) > 0:
-                raise ValidationError("CNIC No Already Exist")
+            if search_cnic > 0:
+                raise ValidationError(_("CNIC No Already Exist"))
 
     @api.onchange("tax_status")
     def onchange_tax_status(self):
@@ -185,24 +185,7 @@ class ResPartner(models.Model):
             (id_type, contact_type, contact_sub_type)
         ):
             return self.env["ir.sequence"].next_by_code(sequence) or _("New")
-        else:
-            return "N/A"
-
-        # def generate_id(self, company):
-        """
-        Generates a unique ID based on the company type.
-
-        :param company: The company type.
-        """
-
-        if company == "person":
-            sequence = "res.partner.residential"
-        elif company == "company":
-            sequence = "res.partner.company"
-        else:
-            sequence = False
-        if sequence:
-            self.unique_id = self.env["ir.sequence"].next_by_code(sequence)
+        return "N/A"
 
     @api.model
     def write(self, vals):
@@ -221,12 +204,12 @@ class ResPartner(models.Model):
             contact_type = vals.get("contact_type", self.contact_type)
             contact_sub_type = vals.get("contact_sub_type", self.contact_sub_type)
 
-            _logger.error(
-                "%s      %s        %s  ", contact_type, contact_sub_type, id_type
-            )
-            # Set contact_sub_type to None if contact_type is not "customer"
-            # if "contact_sub_type" in vals and vals["contact_sub_type"]:
-            #     contact_sub_type = vals["contact_sub_type"]
+            # logger for debugging
+
+            # _logger.error(
+            #     "%s   %s     %s  ", contact_type, contact_sub_type, id_type
+            # )
+
             if contact_type != "customer":
                 vals["contact_sub_type"] = ""
                 contact_sub_type = False
