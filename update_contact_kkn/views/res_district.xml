@@ -63,7 +63,7 @@
 
         <menuitem name="Districts" action="res_district_action_window" id="res_district_menu"
                   parent="contacts.menu_localisation"
-                  sequence="4"/>
+                  sequence="5"/>
 
     </data>
 </odoo>

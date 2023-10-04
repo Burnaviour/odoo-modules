@@ -68,6 +68,6 @@
 
         <menuitem name="Stations" action="res_station_action_window" id="res_station_menu"
                   parent="contacts.menu_localisation"
-                  sequence="5"/>
+                  sequence="6"/>
     </data>
 </odoo>

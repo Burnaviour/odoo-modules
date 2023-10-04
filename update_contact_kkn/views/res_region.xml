@@ -54,6 +54,6 @@
 
         <menuitem name="Regions" action="res_regions_action_window" id="res_region_menu"
             parent="contacts.menu_localisation"
-            sequence="6" />
+            sequence="4" />
     </data>
 </odoo>
