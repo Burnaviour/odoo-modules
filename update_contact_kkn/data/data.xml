@@ -1,36 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data noupdate="1">
-        <!-- Define records for the res.country.state model -->
-        <record model="res.country.state" id="state1">
+    <data>
+        <record model="res.country.state" id="state_pk_bl">
             <field name="name">BALOCHISTAN</field>
             <field name="code">PK-BL</field>
-            <field name="country_id" ref="base.pk" /> <!-- Assuming 'base.pk' is the reference to
-            PAKISTAN -->
+            <field name="country_id" ref="base.pk" />
         </record>
-        <record model="res.country.state" id="state2">
+
+        <record model="res.country.state" id="state_pk_ict">
             <field name="name">ISLAMABAD</field>
             <field name="code">PK-ICT</field>
-            <field name="country_id" ref="base.pk" /> <!-- Assuming 'base.pk' is the reference to
-            PAKISTAN -->
+            <field name="country_id" ref="base.pk" />
         </record>
-        <record model="res.country.state" id="state3">
+
+        <record model="res.country.state" id="state_pk_kpk">
             <field name="name">KHYBER PAKHTUNKHWA</field>
             <field name="code">PK-KPK</field>
-            <field name="country_id" ref="base.pk" /> <!-- Assuming 'base.pk' is the reference to
-            PAKISTAN -->
+            <field name="country_id" ref="base.pk" />
         </record>
-        <record model="res.country.state" id="state4">
+
+        <record model="res.country.state" id="state_pk_pj">
             <field name="name">PUNJAB</field>
             <field name="code">PK-PJ</field>
-            <field name="country_id" ref="base.pk" /> <!-- Assuming 'base.pk' is the reference to
-            PAKISTAN -->
+            <field name="country_id" ref="base.pk" />
         </record>
-        <record model="res.country.state" id="state5">
+
+        <record model="res.country.state" id="state_pk_sn">
             <field name="name">SINDH</field>
             <field name="code">PK-SN</field>
-            <field name="country_id" ref="base.pk" /> <!-- Assuming 'base.pk' is the reference to
-            PAKISTAN -->
+            <field name="country_id" ref="base.pk" />
+        </record>
+        <!-- Define records for the res.region(refers to custom module) model -->
+        <record model="res.region" id="region_isb">
+            <field name="name">ISLAMABAD TELECOM REGION</field>
+        </record>
+        <record model="res.region" id="region_rwp">
+            <field name="name">RAWALPINDI TELECOM REGION</field>
+        </record>
+        <record model="res.region" id="region_gjr">
+            <field name="name">GUJRANWALA TELECOM REGION</field>
+        </record>
+        <record model="res.region" id="region_lhr">
+            <field name="name">LAHORE TELECOM REGION</field>
+        </record>
+        <record model="res.region" id="region_fsd">
+            <field name="name">FAISALABAD TELECOM REGION</field>
+        </record>
+        <record model="res.region" id="region_ctr">
+            <field name="name">CENTRAL TELECOM REGION</field>
+        </record>
+        <record model="res.region" id="region_mtn">
+            <field name="name">MULTAN TELECOM REGION</field>
+        </record>
+        <record model="res.region" id="region_str_5">
+            <field name="name">SOUTHERN TELECOM REGION-V</field>
+        </record>
+        <record model="res.region" id="region_khi">
+            <field name="name">KARACHI TELECOM REGION</field>
+        </record>
+        <record model="res.region" id="region_ntr_1">
+            <field name="name">NORTHERN TELECOM REGION-1</field>
+        </record>
+        <record model="res.region" id="region_str_1">
+            <field name="name">SOUTHERN TELECOM REGION-1</field>
+        </record>
+        <record model="res.region" id="region_hzr">
+            <field name="name">HAZARA TELECOM REGION</field>
+        </record>
+        <record model="res.region" id="region_ntr_2">
+            <field name="name">NORTHERN TELECOM REGION-2</field>
+        </record>
+        <record model="res.region" id="region_wst">
+            <field name="name">WESTERN TELECOM REGION</field>
         </record>
     </data>
 </odoo>

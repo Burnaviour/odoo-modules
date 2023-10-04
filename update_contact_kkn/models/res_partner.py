@@ -23,6 +23,7 @@ class ResPartner(models.Model):
             ("other", "OTHERS"),
         ],
         string="Contact Type",
+        default='customer',
         required=True,
         tracking=True,
     )

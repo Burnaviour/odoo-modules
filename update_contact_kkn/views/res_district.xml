@@ -6,7 +6,7 @@
             <field name="name">res_district_form_view</field>
             <field name="model">res.district</field>
             <field name="arch" type="xml">
-                <form string="Pakistan Districts" name="Pakistan Districts" delete="false">
+                <form string="Pakistan Districts" name="Pakistan Districts" >
                     <sheet>
                         <div class="oe_title">
                             <span class="o_form_label">Districts of Pakistan</span>

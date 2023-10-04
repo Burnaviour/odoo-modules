@@ -18,8 +18,6 @@
                         placeholder="e.g. new company"
                         attrs="{'required' : [('type', '=', 'contact')], 'invisible': [('is_company','=', False)]}" />
                 </xpath>
-
-                <!--                 attrs = "{'required': True}"-->
                 <xpath expr="//field[@name='company_type']" position="after">
 
                     <group>
@@ -185,11 +183,15 @@
                 </xpath>
 
                 <xpath expr="//field[@name='mobile']" position="replace">
-                    <field name="mobile" placeholder="+92 304 5425910" />
+                    <field name="mobile" placeholder="+92 304 5425910" required="1" />
+
                 </xpath>
 
             </field>
         </record>
+
+        <!-- filter in search views  -->
+
         <!-- <record id="view_res_partner_search_inherit" model="ir.ui.view">
             <field name="name">res.partner.select.inherit</field>
             <field name="model">res.partner</field>
