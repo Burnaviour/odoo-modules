@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- VIEWS: "Human readable name"
+
+    - Model·········: model
+    - _rec_name·····: name
+    - Domain········: []
+    - Context·······: \{}
+    - Parent menu ··: base.menu_custom
+    - View priority·: 16    
+    - Sequence····..: 10
+    - Action help···: Something about model
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- Tree view for "model" -->
+
+
+    <record id="view_switch_port_up_tree" model="ir.ui.view">
+        <field name="name">switch.port.up.tree</field>
+        <field name="model">switch.port.up</field>
+        <field name="type">tree</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <tree string="Switch Port up" create="true" delete="true" edit="true">
+                <field name="port" />
+                <field name="assigned_status" />
+                <field name="serial_no" />
+
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view for "model" -->
+    <record id="view_port_up_form" model="ir.ui.view">
+        <field name="name">view.port.up.form</field>
+        <field name="model">switch.port.up</field>
+        <field name="type">form</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <form string="Switch Port Up" create="true" delete="true" edit="true">
+                <!-- <header>
+                    <h1>
+                        <field name="port" class="oe_inline"  />
+                    </h1>
+                </header> -->
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="port" />
+                            <field name="assigned_status" />
+                            <field name="serial_no" />
+
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view for "switch.port.up" -->
+    <record id="view_switch_port_up_search" model="ir.ui.view">
+        <field name="name">view.switch.port.up.search</field>
+        <field name="model">switch.port.up</field>
+        <field name="type">search</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16" />
+        <field name="active" eval="True" />
+        <field name="arch" type="xml">
+            <search string="Switch Port Up Search">
+                <field name="port" />
+                <field name="assigned_status" />
+                <field name="serial_no" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Main window action for "model" -->
+    <record id="action_port_up_act_window" model="ir.actions.act_window">
+        <field name="name">Switch Port up</field>
+        <field name="res_model">switch.port.up</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your Switch Port UP Here!
+            </p>
+        </field>
+    </record>
+    <!-- Main menu for "model" -->
+    <menuitem id="menu_switch_port_up" name="Switch Port UP" parent="stock.menu_warehouse_config"
+        action="action_port_up_act_window" sequence="150"  />
+
+</odoo>
