@@ -1,0 +1,29 @@
+<odoo>
+
+    <data >
+
+        <!-- <record model="ir.module.category" id="category_hospital_module">
+                <field name="name">Hospital</field>
+                <field name="description">Helps you manage Hospital Module.</field>
+            </record>
+            <record id="menu_item_rights" model="res.groups">
+                <field name="name">Module Rights</field>
+                <field name="category_id" ref="category_hospital_module"/>
+            </record>     -->
+
+
+        <!-- access right example toc reate using xml file  -->
+        <record id="hospital_all_record_access_rights_" model="ir.model.access">
+            <field name="name">Hospital ALL Rights</field>
+            <field name="model_id"
+                ref="model_hospital_patients"
+            />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+    </data>
+
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hospital_operation_view_tree" model="ir.ui.view">
+		<field name="name">hospital.operations.view.tree</field>
+		<field name="model">hospital.operations</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle" />
+				<field name="op_name" />
+				<field name="doctor_id" />
+			</tree>
+		</field>
+	</record>
+	<record id="hospital_operation_view_form" model="ir.ui.view">
+		<field name="name">hospital.operations.view.form</field>
+		<field name="model">hospital.operations</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+
+						<field name="op_name" />
+						<field name="doctor_id" />
+					</group>
+
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="hospital_Operation_action" model="ir.actions.act_window">
+		<field name="name">Operation</field>
+		<field name="res_model">hospital.operations</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Create Operation Reacord
+			</p>
+		</field>
+
+	</record>
+
+	<menuitem
+		id="operation_menu"
+		name="Operations"
+		action="hospital_Operation_action"
+		parent="menu_configuration"
+		sequence="40" />
+
+</odoo>

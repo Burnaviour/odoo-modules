@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- groups="hospital.menu_item_rights" -->
+    <menuitem id="menu_hospital_root"
+              web_icon="hospital,static/description/icon.png"
+              name="Hospital" sequence="0" />
+    <menuitem id="menu_hospital_master"
+              name="Patient Details" sequence="0"
+              parent="menu_hospital_root"/>
+    <menuitem id="menu_configuration"
+              name="Configurations"
+              parent="menu_hospital_root"
+              sequence="30"/>
+     <menuitem id="menu_hospital_appointment" name="Appointment"  sequence="10"
+              parent="menu_hospital_root"/>
+    <menuitem id="menu_cancel_appointment" name="Cancellation"  sequence="20" action="action_cancel_appointment"
+              parent="menu_hospital_appointment"/>
+    <menuitem id="menu_technical" name="Technical"  sequence="100"
+              parent="menu_hospital_root"/>
+</odoo>

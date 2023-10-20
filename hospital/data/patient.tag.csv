@@ -1,0 +1,9 @@
+id,name,active
+patient_tag_vvip,Vvip,1
+patient_tag_adult,Adult,1
+patient_tag_child,Child,1
+patient_tag_senior,Senior,1
+patient_tag_newborn,Newborn,1
+patient_tag_adolescent,Adolescent,1
+patient_tag_teenager,Teenager,0
+

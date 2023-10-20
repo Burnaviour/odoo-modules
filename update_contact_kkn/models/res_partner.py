@@ -23,7 +23,7 @@ class ResPartner(models.Model):
             ("other", "OTHERS"),
         ],
         string="Contact Type",
-        default='customer',
+        default="vendor",
         required=True,
         tracking=True,
     )
@@ -118,25 +118,44 @@ class ResPartner(models.Model):
             self.customer_subscription_model = False
             self.contact_sub_type = False
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals_list):
         """
-        Overrides the create method of the base model class to generate a unique ID based on the company type when creating a new partner.
+        Overrides the create method of the base model class to generate a unique ID based on the company type when creating new partners.
 
-        :param values: Dictionary containing the data for the new partner record.
-        :return: The ID of the new partner record.
+        :param values: List of dictionaries containing the data for the new partner records.
+        :return: A recordset of the new partner records.
         """
-        if vals_list.get("unique_id", _("New")) == _("New"):
-            id_type = vals_list.get("company_type")
-            contact_type = vals_list.get("contact_type")
-            contact_sub_type = vals_list.get("contact_sub_type")
-            _logger.error(
-                "%s      %s        %s  ", id_type, contact_type, contact_sub_type
-            )
-            vals_list["unique_id"] = self._generate_unique_id(
-                id_type, contact_type, contact_sub_type
-            )
-        return super().create(vals_list)
+        for vals in vals_list:
+            if vals.get("unique_id", _("New")) == _("New"):
+                id_type = vals.get("company_type")
+                contact_type = vals.get("contact_type")
+                contact_sub_type = vals.get("contact_sub_type")
+                _logger.error(
+                    "%s      %s        %s  ", id_type, contact_type, contact_sub_type
+                )
+                vals["unique_id"] = self._generate_unique_id(
+                    id_type, contact_type, contact_sub_type
+                )
+        return super(ResPartner, self).create(vals_list)
+    # def create(self, vals_list):
+    #     """
+    #     Overrides the create method of the base model class to generate a unique ID based on the company type when creating a new partner.
+
+    #     :param values: Dictionary containing the data for the new partner record.
+    #     :return: The ID of the new partner record.
+    #     """
+    #     if vals_list.get("unique_id", _("New")) == _("New"):
+    #         id_type = vals_list.get("company_type")
+    #         contact_type = vals_list.get("contact_type")
+    #         contact_sub_type = vals_list.get("contact_sub_type")
+    #         _logger.error(
+    #             "%s      %s        %s  ", id_type, contact_type, contact_sub_type
+    #         )
+    #         vals_list["unique_id"] = self._generate_unique_id(
+    #             id_type, contact_type, contact_sub_type
+    #         )
+    #     return super().create(vals_list)
 
     def _generate_unique_id(self, id_type, contact_type, contact_sub_type):
         """
@@ -201,7 +220,6 @@ class ResPartner(models.Model):
         :param vals: Dictionary containing the values to be updated.
         :return: The result of the write operation.
         """
-
         if any(
             field in vals
             for field in ["company_type", "contact_type", "contact_sub_type"]

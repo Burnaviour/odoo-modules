@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!--form view-->
+    <record id="cancel_appointment_form_view" model="ir.ui.view">
+        <field name="name">cancel.appointment.wizard.form</field>
+        <field name="model">cancel.appointment.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+<!--                Hide appointment if it's in the form view of active id appointment-->
+                        <field name="appointment_id" invisible="context.get('hide_appointment')" domain="['|',('state','=','draft'),('priority','in',(0,1,False))]" />
+                        <field name="reason" />
+
+                    </group>
+                    <group>
+                    <field name="cancel_date" />
+                    </group>
+                </group>
+                                <footer>
+                                    <button string="Cancel Appointment" name="action_cancel" type="object" class="oe_highlight"/>
+                                    <button string="Discard"  special="cancel"  />
+                                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--action window for appointment screen -->
+
+    <record id="action_cancel_appointment" model="ir.actions.act_window">
+
+
+        <field name="name">Cancel Appointment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cancel.appointment.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+
+
+    </record>
+
+</odoo>
+

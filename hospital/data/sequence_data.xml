@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="sq_hospital_patient" model="ir.sequence">
+            <field name="name">Hospital Patient</field>
+            <field name="code">hospital.patients</field>
+            <field name="prefix">HP</field>
+            <field name="padding">4</field>
+        </record>
+
+    <record id="sq_hospital_appointment" model="ir.sequence">
+            <field name="name">Hospital Appointment</field>
+            <field name="code">hospital.appointment</field>
+            <field name="prefix">OP</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

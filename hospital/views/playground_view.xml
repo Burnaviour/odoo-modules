@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="playground_form_view" model="ir.ui.view">
+        <field name="name">playground.form</field>
+        <field name="model">hospital.playground</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code" widget="ace" options="{'mode':'python'}"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field name="result"/>
+                        </group>
+                    </group>
+
+                    <button string="Execute Code" type="object" name="execute_code" class="oe_highlight"/>
+
+                </sheet>
+
+
+
+            </form>
+        </field>
+    </record>
+    <record id="action_playground" model="ir.actions.act_window">
+
+
+        <field name="name">Playground</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.playground</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+
+    </record>
+    <menuitem id="menu_playground" name="Playground" action="action_playground" sequence="100"
+              parent="menu_technical"/>
+</odoo>
+

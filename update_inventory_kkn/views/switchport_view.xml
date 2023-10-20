@@ -93,6 +93,6 @@
     </record>
     <!-- Main menu for "model" -->
     <menuitem id="menu_switch_port_up" name="Switch Port UP" parent="stock.menu_warehouse_config"
-        action="action_port_up_act_window" sequence="150"  />
+        action="action_port_up_act_window" sequence="9"  />
 
 </odoo>
