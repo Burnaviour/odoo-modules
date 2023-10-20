@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="menu_kkn_pop_root"
+              name="POP"
+              web_icon="kkn_pop_module,static/description/icon.png"
+              sequence="1"/>
+</odoo>

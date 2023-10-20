@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="menu_kkn_electricity_root"
+              name="Electricity"
+              web_icon="kkn_electricity_module,static/description/icon.png"
+              sequence="-1"/>
+</odoo>
