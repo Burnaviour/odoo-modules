@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# from odoo import models, fields, api
+from odoo import models, fields, api
 
 
-# class kkn_pop_module(models.Model):
-#     _name = 'kkn_pop_module.kkn_pop_module'
-#     _description = 'kkn_pop_module.kkn_pop_module'
+class kkn_pop_module(models.Model):
+    _name = 'kkn_pop_module.kkn_pop_module'
+    _description = 'kkn_pop_module.kkn_pop_module'
 
 #     name = fields.Char()
 #     value = fields.Integer()

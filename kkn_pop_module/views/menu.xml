@@ -5,4 +5,22 @@
               name="POP"
               web_icon="kkn_pop_module,static/description/icon.png"
               sequence="1"/>
+
+    <menuitem id="menu_kkn_add_pop"
+              name="ADD POP"
+              action="action_kkn_add_pop"
+              parent="menu_kkn_pop_root"
+              sequence="0"/>
+
+    <menuitem id="menu_kkn_edit_pop"
+              name="EDIT POP"
+              action="action_kkn_add_pop"
+              parent="menu_kkn_pop_root"
+              sequence="1"/>
+
+    <menuitem id="menu_kkn_close_pop"
+              name="CLOSE POP"
+              action="action_kkn_add_pop"
+              parent="menu_kkn_pop_root"
+              sequence="2"/>
 </odoo>
