@@ -47,5 +47,5 @@ package.json
 /lib/
 /man/
 /share/
-./hospital
+/hospital
 /src/
