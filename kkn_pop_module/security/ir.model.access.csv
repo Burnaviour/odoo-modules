@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_kkn_pop_module_kkn_pop_module,access.kkn_pop_module.kkn_pop_module,model_kkn_pop_module_kkn_pop_module,base.group_user,1,1,1,1
 access_kkn_pop_module_kkn_edit_pop_module,access.kkn_pop_module.kkn_edit_pop_module,model_kkn_pop_module_kkn_edit_pop_module,base.group_user,1,1,1,1
+access_kkn_pop_module_kkn_close_pop_module,access.kkn_pop_module.kkn_close_pop_module,model_kkn_pop_module_kkn_close_pop_module,base.group_user,1,1,1,1
