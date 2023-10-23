@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': "kkn_pop_module",
 
@@ -29,12 +28,13 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/add_pop.xml',
-        'views/menus.xml',
         'views/edit_pop.xml',
         'views/close_pop.xml',
+        'views/menus.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
 }
+# -*- coding: utf-8 -*-
