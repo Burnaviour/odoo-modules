@@ -24,7 +24,7 @@
     </record>
 
     <record id="action_close_kkn_pop" model="ir.actions.act_window">
-        <field name="name">CLOSE POP</field>
+        <field name="name">Close Pop</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">kkn_pop_module.kkn_close_pop_module</field>
         <field name="view_mode">tree,form</field>

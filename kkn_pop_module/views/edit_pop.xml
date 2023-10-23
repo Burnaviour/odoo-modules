@@ -26,7 +26,7 @@
     </record>
 
     <record id="action_edit_pop" model="ir.actions.act_window">
-        <field name="name">EDIT POP</field>
+        <field name="name">Edit Pop</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">kkn_pop_module.kkn_edit_pop_module</field>
         <field name="view_mode">tree,form</field>

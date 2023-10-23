@@ -25,7 +25,7 @@
     </record>
 
     <record id="action_kkn_pop" model="ir.actions.act_window">
-        <field name="name">ADD POP</field>
+        <field name="name">Add Pop</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">kkn_pop_module.kkn_pop_module</field>
         <field name="view_mode">tree,form</field>
