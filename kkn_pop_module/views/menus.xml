@@ -3,7 +3,7 @@
 
     <menuitem id="menu_kkn_pop_root"
               name="POP"
-              web_icon=""
+              web_icon="kkn_pop_module,static/description/icon.png"
               sequence="1"/>
 
     <menuitem id="menu_kkn_add_pop_root"
@@ -14,14 +14,14 @@
 
     <menuitem id="menu_kkn_edit_pop_root"
               name="EDIT POP"
-              action="action_kkn_pop"
+              action="action_edit_pop"
               parent="menu_kkn_pop_root"
-              sequence="0"/>
+              sequence="1"/>
 
     <menuitem id="menu_kkn_close_pop_root"
               name="CLOSE POP"
-              action="action_kkn_pop"
+              action="action_close_kkn_pop"
               parent="menu_kkn_pop_root"
-              sequence="0"/>
+              sequence="2"/>
 
 </odoo>

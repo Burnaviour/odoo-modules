@@ -28,8 +28,10 @@
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
-        'views/templates.xml',
+        'views/add_pop.xml',
         'views/menus.xml',
+        'views/edit_pop.xml',
+        'views/close_pop.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
