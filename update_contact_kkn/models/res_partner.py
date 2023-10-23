@@ -126,6 +126,7 @@ class ResPartner(models.Model):
         :param values: List of dictionaries containing the data for the new partner records.
         :return: A recordset of the new partner records.
         """
+        _logger.error("%s", self.env.context)
         for vals in vals_list:
             if vals.get("unique_id", _("New")) == _("New"):
                 id_type = vals.get("company_type")
@@ -138,6 +139,7 @@ class ResPartner(models.Model):
                     id_type, contact_type, contact_sub_type
                 )
         return super(ResPartner, self).create(vals_list)
+
     # def create(self, vals_list):
     #     """
     #     Overrides the create method of the base model class to generate a unique ID based on the company type when creating a new partner.

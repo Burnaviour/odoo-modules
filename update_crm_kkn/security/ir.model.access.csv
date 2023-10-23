@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_update_crm_kkn_update_crm_kkn,update_crm_kkn.update_crm_kkn,model_update_crm_kkn_update_crm_kkn,base.group_user,1,1,1,1
