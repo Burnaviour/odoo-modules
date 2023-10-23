@@ -17,6 +17,8 @@
     # Check https://github.com/odoo/odoo/blob/16.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Uncategorized',
+    'application': True,
+    'sequence': -500,
     'version': '0.1',
 
     # any module necessary for this one to work correctly
@@ -24,9 +26,14 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
+        'views/menu.xml',
         'views/views.xml',
-        'views/templates.xml',
+        'views/assign_electricity_meters.xml',
+        'views/bill_electricity_meters.xml',
+        'views/electricity_meters.xml',
+        'wizards/monthly_electricity_bills_report_wiz.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
