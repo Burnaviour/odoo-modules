@@ -16,7 +16,7 @@
               name="EDIT POP"
               action="action_edit_pop"
               parent="menu_kkn_pop_root"
-              sequence="1"/>
+              sequence="3"/>
 
     <menuitem id="menu_kkn_close_pop_root"
               name="CLOSE POP"
