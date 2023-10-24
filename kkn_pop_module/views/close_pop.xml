@@ -3,7 +3,7 @@
 
     <record id="view_kk_close_pop_tree" model="ir.ui.view">
         <field name="name">Kkn.close.pop.tree</field>
-        <field name="model">kkn_pop_module.kkn_close_pop_module</field>
+        <field name="model">close_pop_module</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
@@ -13,7 +13,7 @@
 
     <record id="view_kkn_close_pop_form" model="ir.ui.view">
         <field name="name">Kkn.close.pop.form</field>
-        <field name="model">kkn_pop_module.kkn_close_pop_module</field>
+        <field name="model">close_pop_module</field>
         <field name="arch" type="xml">
             <form>
                 <group>
@@ -26,7 +26,7 @@
     <record id="action_close_kkn_pop" model="ir.actions.act_window">
         <field name="name">Close Pop</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">kkn_pop_module.kkn_close_pop_module</field>
+        <field name="res_model">close_pop_module</field>
         <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">

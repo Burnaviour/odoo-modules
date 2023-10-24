@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="menu_kkn_assign_mobile_number_root"
+              name="Mobile"
+              web_icon="kkn_mobile_module,static/description/icon.png"
+              sequence="1"/>
+
+    <menuitem id="menu_kkn_operations_root"
+              name="Operations"
+              parent="menu_kkn_assign_mobile_number_root"
+              sequence="0"/>
+
+    <menuitem id="menu_kkn_configuration_root"
+              name="Configuration"
+              parent="menu_kkn_assign_mobile_number_root"
+              sequence="1"/>
+
+    <menuitem id="menu_kkn_reports_root"
+              name="Reporting"
+              parent="menu_kkn_assign_mobile_number_root"
+              sequence="2"/>
+
+</odoo>
