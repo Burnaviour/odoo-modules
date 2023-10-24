@@ -3,7 +3,7 @@
 
     <record id="view_kkn_edit_pop_tree" model="ir.ui.view">
         <field name="name">Kkn.edit.pop.tree</field>
-        <field name="model">kkn_pop_module.kkn_edit_pop_module</field>
+        <field name="model">edit_pop_module</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
@@ -14,7 +14,7 @@
 
     <record id="view_kkn_edit_pop_form" model="ir.ui.view">
         <field name="name">kkn.edit.pop.form</field>
-        <field name="model">kkn_pop_module.kkn_edit_pop_module</field>
+        <field name="model">edit_pop_module</field>
         <field name="arch" type="xml">
             <form>
                 <group>
@@ -28,7 +28,7 @@
     <record id="action_edit_pop" model="ir.actions.act_window">
         <field name="name">Edit Pop</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">kkn_pop_module.kkn_edit_pop_module</field>
+        <field name="res_model">edit_pop_module</field>
         <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">

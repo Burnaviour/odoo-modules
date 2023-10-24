@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_unassign_mobile_numbers_tree" model="ir.ui.view">
+        <field name="name">Unassign.mobile.numbers.tree</field>
+        <field name="model">unassign_mobile_module</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_unassign_mobile_numbers_form" model="ir.ui.view">
+        <field name="name">Unassign.mobile.numbers.form</field>
+        <field name="model">unassign_mobile_module</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" placeholder="Add new mobile number"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_unassign_mobile_number" model="ir.actions.act_window">
+        <field name="name">Unassign Mobile Numbers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">unassign_mobile_module</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add new Mobile Number!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="unassign_mobile_number"
+              name="Unassign Mobile Number"
+              action="action_unassign_mobile_number"
+              parent="menu_kkn_operations_root"
+              sequence="2"/>
+
+</odoo>

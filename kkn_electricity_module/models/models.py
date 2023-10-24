@@ -4,8 +4,8 @@ from odoo import models, fields, api
 
 
 class kkn_electricity_module(models.Model):
-    _name = 'kkn_electricity_module.kkn_electricity_module'
-    _description = 'kkn_electricity_module.kkn_electricity_module'
+    _name = 'assign_electricity_module'
+    _description = 'assign_electricity_module'
 
     name = fields.Char()
 
@@ -21,14 +21,14 @@ class kkn_electricity_module(models.Model):
 
 
 class kkn_bills_electricity_module(models.Model):
-    _name = 'kkn_electricity_module.kkn_bills_electricity_module'
-    _description = 'kkn_electricity_module.kkn_bills_electricity_module'
+    _name = 'bills_electricity_module'
+    _description = 'bills_electricity_module'
 
     name = fields.Char()
 
 
 class kkn_electricity_meters_module(models.Model):
-    _name = 'kkn_electricity_module.kkn_electricity_meters_module'
-    _description = 'kkn_electricity_module.kkn_electricity_meters_module'
+    _name = 'electricity_meters_module'
+    _description = 'electricity_meters_module'
 
     name = fields.Char()

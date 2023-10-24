@@ -4,8 +4,8 @@ from odoo import models, fields, api
 
 
 class kkn_pop_module(models.Model):
-    _name = 'kkn_pop_module.kkn_pop_module'
-    _description = 'kkn_pop_module.kkn_pop_module'
+    _name = 'add_pop_module'
+    _description = 'add_pop_module'
 
     name = fields.Char()
 
@@ -21,14 +21,14 @@ class kkn_pop_module(models.Model):
 
 
 class kkn_edit_pop_module(models.Model):
-    _name = 'kkn_pop_module.kkn_edit_pop_module'
-    _description = 'kkn_pop_module.kkn_edit_pop_module'
+    _name = 'edit_pop_module'
+    _description = 'edit_pop_module'
 
     name = fields.Char()
 
 
 class kkn_close_pop_module(models.Model):
-    _name = 'kkn_pop_module.kkn_close_pop_module'
-    _description = 'kkn_pop_module.kkn_close_pop_module'
+    _name = 'close_pop_module'
+    _description = 'close_pop_module'
 
     name = fields.Char()
