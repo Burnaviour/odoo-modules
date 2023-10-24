@@ -27,6 +27,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/menu.xml',
         'views/views.xml',
         'views/assign_mobile_numbers.xml',
         'views/unassign_mobile_numbers.xml',
@@ -34,7 +35,6 @@
         'views/mobile_packages.xml',
         'views/mobile_numbers.xml',
         'wizards/monthly_mobile_bill_report.xml',
-        'views/menu.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
