@@ -36,4 +36,6 @@
         "views/res_partner.xml",
         "data/data.xml",
     ],
+    'license': 'LGPL-3',
+
 }
