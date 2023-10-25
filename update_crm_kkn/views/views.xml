@@ -1,0 +1,100 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="update_crm_kkn.list">
+      <field name="name">update_crm_kkn list</field>
+      <field name="model">update_crm_kkn.update_crm_kkn</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+    <record id="crm_lead_view_form_inherit" model="ir.ui.view">
+      <field name="name">crm.lead.view.form.inherit</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_lead_view_form" />
+      <field name="arch" type="xml">
+        <!-- <xpath expr="//form/sheet[1]/group[1]/group[1]/field[@name='partner_id']"
+          position="attributes">
+          <attribute name="options">
+            {'no_quick_create': True,}</attribute>
+        </xpath> -->
+        <xpath expr="//form/sheet[1]/group[1]/group[2]/field[@name='partner_id']"
+        position='attributes'>
+          <attribute name="options">
+            {'no_quick_create': True,}</attribute>
+        </xpath>
+     
+
+      </field>
+    </record>
+
+
+    <record id="quick_create_opportunity_form_inherit" model="ir.ui.view">
+      <field name="name">crm.lead.form.quick.create.inherit</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.quick_create_opportunity_form" />
+      <field name="arch" type="xml">
+        <!-- <xpath expr="//form/sheet[1]/group[1]/group[1]/field[@name='partner_id']"
+          position="attributes">
+          <attribute name="options">
+            {'no_quick_create': True,}</attribute>
+        </xpath> -->
+        <xpath expr="//form/group[1]/field[@name='partner_id']"
+        position='attributes'>
+          <attribute name="options">
+            {'no_quick_create': True,}</attribute>
+        </xpath>
+     
+
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="update_crm_kkn.action_window">
+      <field name="name">update_crm_kkn window</field>
+      <field name="res_model">update_crm_kkn.update_crm_kkn</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="update_crm_kkn.action_server">
+      <field name="name">update_crm_kkn server</field>
+      <field name="model_id" ref="model_update_crm_kkn_update_crm_kkn"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="update_crm_kkn" id="update_crm_kkn.menu_root"/>
+-->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="update_crm_kkn.menu_1" parent="update_crm_kkn.menu_root"/>
+    <menuitem name="Menu 2" id="update_crm_kkn.menu_2" parent="update_crm_kkn.menu_root"/>
+-->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="update_crm_kkn.menu_1_list" parent="update_crm_kkn.menu_1"
+              action="update_crm_kkn.action_window"/>
+    <menuitem name="Server to list" id="update_crm_kkn" parent="update_crm_kkn.menu_2"
+              action="update_crm_kkn.action_server"/>
+-->
+  </data>
+</odoo>

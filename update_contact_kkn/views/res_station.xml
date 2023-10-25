@@ -6,7 +6,7 @@
             <field name="name">res_station_form_view</field>
             <field name="model">res.station</field>
             <field name="arch" type="xml">
-                <form string="Station" name="Station" >
+                <form string="Station" name="Station" delete="false">
                     <sheet>
                         <div class="oe_title">
                             <span class="o_form_label">Station</span>

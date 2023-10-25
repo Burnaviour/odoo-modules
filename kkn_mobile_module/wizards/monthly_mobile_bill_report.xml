@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="monthly_mobile_bill_report_wizard">
+            <field name="name">monthly_mobile_bill_report_wizard</field>
+            <field name="model">mobile.bill.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="month" required="1"/>
+                            <field name="year" required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="" string="Print"
+                                class="oe_highlight"/>
+                        <button string="Close" class="btn btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="monthly_mobile_bill_report_wizard_action_window">
+            <field name="name">Monthly Mobile Bill Report</field>
+            <field name="res_model">mobile.bill.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_monthly_mobile_bill_report_wizard"
+                  name="Monthly mobile Bill Report"
+                  action="monthly_mobile_bill_report_wizard_action_window"
+                  parent="menu_kkn_reports_root"
+                  sequence="5"/>
+
+    </data>
+</odoo>

@@ -14,6 +14,7 @@ __pycache__/
 # emacs backup files
 *~
 # hg stuff
+
 *.orig
 status
 # odoo filestore
@@ -46,4 +47,5 @@ package.json
 /lib/
 /man/
 /share/
+/hospital
 /src/

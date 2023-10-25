@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="menu_kkn_pop_root"
+              name="Pop"
+              web_icon="kkn_pop_module,static/description/icon.png"
+              sequence="1"/>
+
+    <menuitem id="menu_kkn_add_pop_root"
+              name="Add Pop"
+              action="action_kkn_pop"
+              parent="menu_kkn_pop_root"
+              sequence="0"/>
+
+    <menuitem id="menu_kkn_edit_pop_root"
+              name="Edit Pop"
+              action="action_edit_pop"
+              parent="menu_kkn_pop_root"
+              sequence="3"/>
+
+    <menuitem id="menu_kkn_close_pop_root"
+              name="Close Pop"
+              action="action_close_kkn_pop"
+              parent="menu_kkn_pop_root"
+              sequence="2"/>
+
+</odoo>

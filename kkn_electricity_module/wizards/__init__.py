@@ -1,0 +1,1 @@
+from . import monthly_electricity_bills_report_wiz
