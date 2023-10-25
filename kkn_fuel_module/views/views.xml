@@ -55,5 +55,27 @@
         }
       </field>
     </record> -->
+
+
+    <!-- Top menu item -->
+
+
+    <menuitem name="Fuel" id="kkn_fuel_module.menu_root"
+      web_icon="kkn_fuel_module,static/description/fuel.png"
+      sequence="1"
+    />
+
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="kkn_fuel_module.menu_1" parent="kkn_fuel_module.menu_root"/>
+    <menuitem name="Menu 2" id="kkn_fuel_module.menu_2" parent="kkn_fuel_module.menu_root"/>
+-->
+    <!-- actions -->
+
+    <menuitem name="List" id="kkn_fuel_module_menu_list" parent="kkn_fuel_module.menu_root"
+      action="kkn_fuel_module.action_window" />
+    <!-- <menuitem name="Server to list" id="kkn_fuel_module" parent="kkn_fuel_module.menu_2"
+              action="kkn_fuel_module.action_server"/> -->
+
   </data>
 </odoo>
