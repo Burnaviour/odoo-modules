@@ -5,8 +5,17 @@
         <field name="name">Kkn.edit.pop.tree</field>
         <field name="model">edit_pop_module</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree string="POP's" name="POP" export_xlsx="false" delete="false">
+                <field name="unique_id"/>
+                <field name="complete_name" string="Location"/>
+                <field name="usage"/>
                 <field name="name"/>
+                <field name="street"/>
+                <field name="street2"/>
+                <field name="city_id"/>
+                <field name="state_id"/>
+                <field name="zip_id" optional="hide"/>
+                <field name="country_id"/>
             </tree>
 
         </field>
@@ -16,12 +25,192 @@
         <field name="name">kkn.edit.pop.form</field>
         <field name="model">edit_pop_module</field>
         <field name="arch" type="xml">
-            <form>
-                <group>
+            <form string="Edit POP" name="POP" delete="false">
+                <header>
+                    <button name="" string="Approved" class="oe_highlight" states="New"/>
+                    <button name="" string="Rejected" class="oe_highlight" states="New"/>
+                    <field name="state" widget="statusbar" statusbar_visible="New,Updated" readonly="1"/>
+                </header>
+                <sheet>
+                    <label for="existing_location_id" class="oe_edit_only"
+                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                    <h1>
+                        <field name="existing_location_id" style="width:100%;"
+                               options="{'no_open': True, 'no_edit': True, 'no_create': True}" force_save="1"
+                               attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                    </h1>
+                    <label for="unique_id" class="oe_edit_only" modifiers="{}"/>
+                    <h3 modifiers="{}">
+                        <div>
+                            <field name="city_code" invisible="1" style="width:5%; margin-right:2%;" force_save="1"
+                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                            <field name="unique_id" readonly="1" modifiers="{'required':true}" style="width:10%"
+                                   force_save="1"/>
+                        </div>
+                    </h3>
+                    <label for="name" class="oe_edit_only"
+                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                    <h1>
+                        <field name="name" force_save="1"
+                               attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                    </h1>
+                    <!--                    <label for="location_id" class="oe_edit_only"-->
+                    <!--                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>-->
+                    <!--                    <h2>-->
+                    <!--                        <field name="location_id" readonly="1"-->
+                    <!--                               options="{'no_open': True, 'no_edit': True, 'no_create': True}"-->
+                    <!--                               attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}" force_save="1"/>-->
+                    <!--                    </h2>-->
+                    <group>
+                        <group string="Additional Information" name="additional_info">
+                            <field name="usage" readonly="1" force_save="1"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"
+                                   force_save="1"
+                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                        </group>
+                        <group string="Address" name="address">
+                            <b>Address</b>
 
-                    <field name="name" placeholder="Enter edit pop name"/>
-                </group>
+                            <div class="o_address_format" modifiers="{}">
+                                <field name="street" placeholder="Street..." class="o_address_street" force_save="1"
+                                       attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street" force_save="1"
+                                       attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                <field name="city_id" placeholder="City" class="o_address_city"
+                                       options="{'no_open': True, 'no_create': True}" can_create="true" can_write="true"
+                                       force_save="1"
+                                       attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                <field name="state_id" class="o_address_state" placeholder="Province"
+                                       options="{'no_open': True, 'no_create': True}"
+                                       context="{'country_id': country_id, 'zip_id': zip_id}"
+                                       domain="['|', '|', '|', '|', ('code', '=', 'PK-BL'), ('code', '=', 'PK-ICT'),                             ('code', '=', 'PK-KPK'), ('code', '=', 'PK-PJ'), ('code', '=', 'PK-SN')]"
+                                       on_change="1" can_create="true" can_write="true" force_save="1"
+                                       attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                <field name="zip_id" placeholder="ZIP" class="o_address_zip" on_change="1"
+                                       force_save="1"
+                                       attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country"
+                                       domain="[('code', '=', 'PK')]" options="{'no_open': True, 'no_create': True}"
+                                       on_change="1" can_create="true" can_write="true" force_save="1"
+                                       attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                            </div>
+                        </group>
+                    </group>
+                    <field name="comment" placeholder="External note..." force_save="1"
+                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                    <notebook>
+                        <page string="Location Coordinates" id="partner_assignation">
+                            <group colspan="2" col="2">
+                                <separator string="Geolocation" colspan="2"/>
+                                <button string="Geolocate" name="geo_localize_location" colspan="2" icon="fa-check"
+                                        type="object"/>
+                                <div>
+                                    <span class="oe_inline">( On</span>
+                                    <field name="date_localization" nolabel="1" class="oe_inline" force_save="1"
+                                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                    <span>: Lat :</span>
+                                    <field name="partner_latitude" nolabel="1" class="oe_inline" force_save="1"
+                                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                    <span>; Long:</span>
+                                    <field name="partner_longitude" nolabel="1" class="oe_inline" force_save="1"
+                                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                    <span>)</span>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
+        </field>
+    </record>
+
+    <record id="edit_view_pop_search" model="ir.ui.view">
+        <field name="name">edit.pop.search</field>
+        <field name="model">edit_pop_module</field>
+        <field name="arch" type="xml">
+            <search string="Location Name">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="edit_pops_kanban" model="ir.ui.view">
+        <field name="name">edit.pops.kanban</field>
+        <field name="model">edit_pop_module</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" default_order="state" class="o_kanban_small_column o_kanban_project_tasks"
+                    quick_create="false" records_draggable="false" on_create="quick_create"
+                    quick_create_view="close_view_pop_form">
+
+                <field name="state"/>
+                <field name="name"/>
+                <field name="color"/>
+                <field name="priority"/>
+
+                <progressbar field="kanban_state"
+                             colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;, &quot;normal&quot;: &quot;muted&quot;}"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                        <br/>
+                                        Note:
+                                        <field name="comment"/>
+                                        <br/>
+                                    </div>
+                                    <div class="o_dropdown_kanban dropdown" t-if="!selection_mode"
+                                         groups="base.group_user">
+                                        <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
+                                           data-display="static" href="#" aria-label="Dropdown menu"
+                                           title="Dropdown menu">
+                                            <span class="fa fa-ellipsis-v"/>
+                                        </a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a t-if="widget.editable" role="menuitem" type="set_cover"
+                                               class="dropdown-item" data-field="displayed_image_id">Set Cover Image
+                                            </a>
+                                            <a name="144" role="menuitem" type="action" class="dropdown-item">Share</a>
+                                            <a t-if="widget.editable" role="menuitem" type="edit" class="dropdown-item">
+                                                Edit Task
+                                            </a>
+                                            <a t-if="widget.deletable" role="menuitem" type="delete"
+                                               class="dropdown-item">Delete
+                                            </a>
+                                            <div role="separator" class="dropdown-divider"/>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom" t-if="!selection_mode">
+                                    <div class="oe_kanban_bottom_left">
+                                        <t t-set="date_format" t-value="'MM/DD/YY'"/>
+                                        <t t-set="date" t-value=""/>
+                                        <span name="date" t-attf-class="#{deadline_class || ''}">
+                                            <t t-esc="date"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right" t-if="!selection_mode">
+                                        <field name="kanban_state" widget="state_selection" groups="base.group_user"
+                                               invisible="context.get('fsm_mode', False)"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
@@ -29,7 +218,7 @@
         <field name="name">Edit Pop</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">edit_pop_module</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

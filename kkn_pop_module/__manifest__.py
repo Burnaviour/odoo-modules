@@ -21,11 +21,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'stock', 'update_contact_kkn'],
+    'depends': ['base', 'mail', 'stock', 'update_contact_kkn', 'account', 'uom', 'update_location_form', 'base_geolocalize'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         'views/menus.xml',
         'views/views.xml',
         'views/add_pop.xml',
