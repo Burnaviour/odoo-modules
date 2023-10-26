@@ -1,35 +1,40 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="update_crm_kkn.list">
-      <field name="name">update_crm_kkn list</field>
-      <field name="model">update_crm_kkn.update_crm_kkn</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
-    </record>
--->
+
     <record id="crm_lead_view_form_inherit" model="ir.ui.view">
       <field name="name">crm.lead.view.form.inherit</field>
       <field name="model">crm.lead</field>
       <field name="inherit_id" ref="crm.crm_lead_view_form" />
       <field name="arch" type="xml">
+
         <!-- <xpath expr="//form/sheet[1]/group[1]/group[1]/field[@name='partner_id']"
           position="attributes">
           <attribute name="options">
             {'no_quick_create': True,}</attribute>
         </xpath> -->
+
         <xpath expr="//form/sheet[1]/group[1]/group[2]/field[@name='partner_id']"
-        position='attributes'>
+          position='attributes'>
           <attribute name="options">
             {'no_quick_create': True,}</attribute>
         </xpath>
-     
+
+        <xpath expr="//form[1]/header[1]/field[@name='stage_id']" position="replace">
+          <field name="stage_id" widget="statusbar" class="o_field_statusbar"
+            options="{'fold_field': 'fold'}"
+            domain="['|', ('team_id', '=', team_id), ('team_id', '=', False)]"
+            attrs="{'invisible': ['|' , ('active', '=', False), ('type', '=', 'lead')]}" />
+        </xpath>
+
+        <xpath expr="//form[1]/sheet[1]/group[1]/group[4]/field[@name='user_id']"
+          position="replace">
+          <field name="user_id"
+            context="{'default_sales_team_id': team_id}"
+            attrs="{'readonly':True}"
+            widget="many2one_avatar_user" />
+
+        </xpath>
+
 
       </field>
     </record>
@@ -46,11 +51,11 @@
             {'no_quick_create': True,}</attribute>
         </xpath> -->
         <xpath expr="//form/group[1]/field[@name='partner_id']"
-        position='attributes'>
+          position='attributes'>
           <attribute name="options">
             {'no_quick_create': True,}</attribute>
         </xpath>
-     
+
 
       </field>
     </record>
