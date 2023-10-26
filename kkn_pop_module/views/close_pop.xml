@@ -35,4 +35,11 @@
             </p>
         </field>
     </record>
+
+    <menuitem id="menu_kkn_close_pop_root"
+              name="Close Pop"
+              action="action_close_kkn_pop"
+              parent="menu_kkn_pop_operation_root"
+              sequence="2"/>
+
 </odoo>

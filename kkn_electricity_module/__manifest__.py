@@ -22,11 +22,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'mail', 'product','update_contact_kkn', 'kkn_pop_module', 'account'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         'views/menu.xml',
         'views/views.xml',
         'views/assign_electricity_meters.xml',

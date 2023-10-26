@@ -21,16 +21,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'mail', 'stock', 'update_contact_kkn'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/menus.xml',
         'views/views.xml',
         'views/add_pop.xml',
         'views/edit_pop.xml',
         'views/close_pop.xml',
-        'views/menus.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

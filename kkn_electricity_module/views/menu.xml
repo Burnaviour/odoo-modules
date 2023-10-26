@@ -10,13 +10,13 @@
               parent="menu_kkn_electricity_root"
               sequence="0"/>
 
-    <menuitem id="menu_kkn_electricity_configuration_root"
-              name="Configuration"
+    <menuitem id="menu_kkn_electricity_reporting_root"
+              name="Reporting"
               parent="menu_kkn_electricity_root"
               sequence="1"/>
 
-    <menuitem id="menu_kkn_electricity_reporting_root"
-              name="Reporting"
+    <menuitem id="menu_kkn_electricity_configuration_root"
+              name="Configuration"
               parent="menu_kkn_electricity_root"
               sequence="2"/>
 </odoo>
