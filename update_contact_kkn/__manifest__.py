@@ -35,6 +35,7 @@
         "views/res_station.xml",
         "views/res_partner.xml",
         "data/data.xml",
+        "data/res.station.csv",
     ],
     'license': 'LGPL-3',
 

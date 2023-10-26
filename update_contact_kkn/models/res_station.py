@@ -12,4 +12,4 @@ class ResStation(models.Model):
     tier_id = fields.Many2one('res.tier', string='Tier', tracking=True)
     region_id = fields.Many2one(related='district_id.region_id', store=True, tracking=True)
     state_id = fields.Many2one(related='district_id.state_id', store=True, tracking=True)
-    zip = fields.Char('Zip Code', required=True, tracking=True)
+    zip = fields.Char('Zip Code', tracking=True)
