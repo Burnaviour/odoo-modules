@@ -37,4 +37,11 @@
             </p>
         </field>
     </record>
+
+    <menuitem id="menu_kkn_edit_pop_root"
+              name="Edit Pop"
+              action="action_edit_pop"
+              parent="menu_kkn_pop_operation_root"
+              sequence="1"/>
+
 </odoo>

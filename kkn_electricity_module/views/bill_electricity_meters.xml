@@ -4,8 +4,19 @@
         <field name="name">Electricity.bills.meters.tree</field>
         <field name="model">bills_electricity_module</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree string="Electricity Bills" name="Electricity Bills" create="false" delete="false">
                 <field name="name"/>
+                <field name="pop_id"/>
+                <field name="meter_number"/>
+                <field name="vendor"/>
+                <field name="billing_date"/>
+                <field name="due_date"/>
+                <field name="amount_total"/>
+                <field name="state"/>
+                <field name="bill_state"/>
+                <field name="bill_payment_state"/>
+                <field name="draft_admin_time" optional="show"/>
+                <field name="admin_to_approve_time" optional="show"/>
             </tree>
         </field>
     </record>
@@ -14,11 +25,212 @@
         <field name="name">Electricity.bills.meters.from</field>
         <field name="model">bills_electricity_module</field>
         <field name="arch" type="xml">
-            <form>
-                <group>
-                    <field name="name" placeholder="Add Bills Meters"/>
-                </group>
+            <form string="Electricity Bills" create="false" delete="false">
+                <header>
+                    <button name="" string="Admin Approval" class="oe_highlight"
+                            attrs="{'invisible':[('state','!=','draft')]}"/>
+                    <button name="" string="Reset to Draft" class="oe_highlight"
+                            states="cancel,admin_approval,approved,rejected,cancel"
+                            groups="kkn_electricity_module.group_electricity_admin_rights"/>
+                    <button name="" string="IA Approval" class="oe_highlight"
+                            attrs="{'invisible':[('state','!=','admin')]}"
+                            groups="kkn_electricity_module.group_electricity_admin_rights"/>
+                    <button name="" string="Approve" class="oe_highlight"
+                            attrs="{'invisible':[('state','!=','iaapproval')]}"
+                            groups="kkn_electricity_module.group_electricity_ia_rights"/>
+                    <button name="" string="Cancel" class="oe_highlight"
+                            attrs="{'invisible':[('state','=','cancel')]}"
+                            groups="kkn_electricity_module.group_electricity_cancel_rights"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,admin,iaapproval,approved,cancel"
+                           readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h3>
+                            <field name="name" force_save="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </h3>
+                        <label for="pop_id"/>
+                        <h4>
+                            <field name="pop_id" readonly="1"
+                                   options="{'no_create': True, 'no_edit': True, 'no_open': True}" force_save="1"
+                                   attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </h4>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_start" readonly="1" force_save="1"/>
+                            <field name="bills_id" string="Electricity Bill ID"
+                                   attrs="{'invisible':[('bills_id','=', False)]}" readonly="1" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="date_end" readonly="1" force_save="1"/>
+                            <field name="pricelist_id" invisible="1" options="{'no_open':True,'no_create': True}"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="meter_number" readonly="1" force_save="1"
+                                   options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                            <field name="billing_date" readonly="1" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="vendor" readonly="1" force_save="1"
+                                   options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                            <field name="due_date" readonly="1" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="draft_date" invisible="1"/>
+                            <field name="admin_approval_date" invisible="1"/>
+                            <field name="approval_date" invisible="1"/>
+                            <field name="cancel_date" invisible="1"/>
+                            <label for="draft_admin_time" invisible="1"/>
+                            <div invisible="1">
+                                <field name="draft_admin_time" class="oe_inline" force_save="True" readonly="1"/>
+                                <span>
+                                    <b style="margin-left: 10px">Hrs</b>
+                                </span>
+                            </div>
+                            <label for="admin_to_approve_time" invisible="1"/>
+                            <div invisible="1">
+                                <field name="admin_to_approve_time" class="oe_inline" force_save="True"
+                                       readonly="1"/>
+                                <span>
+                                    <b style="margin-left: 10px">Hrs</b>
+                                </span>
+                            </div>
+                        </group>
+                    </group>
+                    <group name="note_group" col="6">
+                        <group colspan="4">
+                        </group>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <field name="bill_amount" readonly="0" force_save="1"/>
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="amount_total"/>
+                            </div>
+                            <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator"
+                                   widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        <div class="oe_clear"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
+        </field>
+    </record>
+
+    <record id="electricity_bills_search" model="ir.ui.view">
+        <field name="name">electricity_bills_search.search</field>
+        <field name="model">bills_electricity_module</field>
+        <field name="arch" type="xml">
+            <search string="Electricity Bills">
+                <field name="name"/>
+                <field name="pop_id"/>
+                <field name="meter_number"/>
+                <field name="vendor"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="bills_electricity_kanban_view_leads" model="ir.ui.view">
+        <field name="name">electricity.bills.kanban</field>
+        <field name="model">bills_electricity_module</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" create="false" default_order="state"
+                    class="o_kanban_small_column o_kanban_project_tasks" quick_create="false"
+                    records_draggable="false" on_create="quick_create" quick_create_view="bills_electricity_form">
+
+                <field name="state"/>
+                <field name="name"/>
+                <field name="color"/>
+                <field name="priority"/>
+
+                <progressbar field="kanban_state"
+                             colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;, &quot;normal&quot;: &quot;muted&quot;}"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                        <br/>
+                                        <br/>
+                                        Pop Name:
+                                        <field name="pop_id"/>
+                                        <br/>
+                                        Meter Number:
+                                        <field name="meter_number"/>
+                                        <br/>
+                                        Vendor:
+                                        <field name="vendor"/>
+                                        <br/>
+                                        Billing Date:
+                                        <field name="billing_date"/>
+                                        <br/>
+                                        Due Date:
+                                        <field name="due_date"/>
+                                        <br/>
+                                        Bill Amount:
+                                        <field name="amount_total"/>
+                                        <br/>
+                                        <span attrs="{'invisible':[('bills_id','=', False)]}">Electricity Bill ID:
+                                            <field name="bills_id"/>
+                                        </span>
+                                    </div>
+                                    <div class="o_dropdown_kanban dropdown" t-if="!selection_mode"
+                                         groups="base.group_user">
+                                        <a role="button" class="dropdown-toggle o-no-caret btn"
+                                           data-toggle="dropdown" data-display="static" href="#"
+                                           aria-label="Dropdown menu" title="Dropdown menu">
+                                            <span class="fa fa-ellipsis-v"/>
+                                        </a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a t-if="widget.editable" role="menuitem" type="set_cover"
+                                               class="dropdown-item" data-field="displayed_image_id">Set Cover Image
+                                            </a>
+                                            <a name="144" role="menuitem" type="action" class="dropdown-item">
+                                                Share
+                                            </a>
+                                            <a t-if="widget.editable" role="menuitem" type="edit"
+                                               class="dropdown-item">Edit Task
+                                            </a>
+                                            <a t-if="widget.deletable" role="menuitem" type="delete"
+                                               class="dropdown-item">Delete
+                                            </a>
+                                            <div role="separator" class="dropdown-divider"/>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom" t-if="!selection_mode">
+                                    <div class="oe_kanban_bottom_left">
+                                        <t t-set="date_format" t-value="'MM/DD/YY'"/>
+                                        <t t-set="date" t-value=""/>
+                                        <span name="date" t-attf-class="#{deadline_class || ''}">
+                                            <t t-esc="date"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right" t-if="!selection_mode">
+                                        <field name="kanban_state" widget="state_selection" groups="base.group_user"
+                                               invisible="context.get('fsm_mode', False)"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 

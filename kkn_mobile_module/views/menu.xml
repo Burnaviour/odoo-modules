@@ -20,6 +20,4 @@
         name="Configuration"
         parent="menu_kkn_assign_mobile_number_root"
         sequence="3" />
-
-
 </odoo>

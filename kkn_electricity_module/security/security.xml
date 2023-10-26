@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.module.category" id="group_electricity_rights">
+        <field name="name">Electricity Module Rights</field>
+        <field name="description">Electricity Module Rights</field>
+    </record>
+    <record id="group_electricity_admin_rights" model="res.groups">
+        <field name="name">Admin Rights</field>
+        <field name="category_id" ref="group_electricity_rights"/>
+    </record>
+    <record id="group_electricity_ia_rights" model="res.groups">
+        <field name="name">IA Rights</field>
+        <field name="category_id" ref="group_electricity_rights"/>
+    </record>
+    <record id="group_electricity_cancel_rights" model="res.groups">
+        <field name="name">Cancel Rights</field>
+        <field name="category_id" ref="group_electricity_rights"/>
+    </record>
+    <record id="group_electricity_reject_rights" model="res.groups">
+        <field name="name">Reject Rights</field>
+        <field name="category_id" ref="group_electricity_rights"/>
+    </record>
+    <record id="group_icon_electricity_module_rights" model="res.groups">
+        <field name="name">Electricity Module</field>
+        <field name="category_id" ref="group_electricity_rights"/>
+    </record>
+</odoo>
