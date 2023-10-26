@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.module.category" id="group_show_pop">
+        <field name="name">POP</field>
+        <field name="description">Show POP Module</field>
+    </record>
+
+    <record id="module_pop_show" model="res.groups">
+        <field name="name">Show POP Module</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="add_module_pop_show" model="res.groups">
+        <field name="name">Show ADD POP Module</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="add_module_pop_report" model="res.groups">
+        <field name="name">Show Report POP Module</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="edit_module_pop_show" model="res.groups">
+        <field name="name">Show Edit POP Module</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="close_module_pop_show" model="res.groups">
+        <field name="name">Show Close POP Module</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="pop_approved_rejected" model="res.groups">
+        <field name="name">Approved/Rejected Right</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="pop_coo_approved_rejected" model="res.groups">
+        <field name="name">COO Approved/Rejected Right</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="pop_ceo_approved_rejected" model="res.groups">
+        <field name="name">CEO Approved/Rejected Right</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="pop_store_approved_rejected" model="res.groups">
+        <field name="name">Store Approved/Rejected Right</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="pop_approved_create_edit_delete" model="res.groups">
+        <field name="name">Create Edit Delete Right</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+    <record id="pop_developer_right" model="res.groups">
+        <field name="name">POP Developer Rights</field>
+        <field name="category_id" ref="group_show_pop"/>
+    </record>
+</odoo>
