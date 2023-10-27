@@ -2,7 +2,7 @@
 <odoo>
     <record id="view_electricity_bills_meters_tree" model="ir.ui.view">
         <field name="name">Electricity.bills.meters.tree</field>
-        <field name="model">bills_electricity_module</field>
+        <field name="model">bills.electricity.module</field>
         <field name="arch" type="xml">
             <tree string="Electricity Bills" name="Electricity Bills" create="false" delete="false">
                 <field name="name"/>
@@ -23,7 +23,7 @@
 
     <record id="view_electricity_bills_meters_from" model="ir.ui.view">
         <field name="name">Electricity.bills.meters.from</field>
-        <field name="model">bills_electricity_module</field>
+        <field name="model">bills.electricity.module</field>
         <field name="arch" type="xml">
             <form string="Electricity Bills" create="false" delete="false">
                 <header>
@@ -127,7 +127,7 @@
 
     <record id="electricity_bills_search" model="ir.ui.view">
         <field name="name">electricity_bills_search.search</field>
-        <field name="model">bills_electricity_module</field>
+        <field name="model">bills.electricity.module</field>
         <field name="arch" type="xml">
             <search string="Electricity Bills">
                 <field name="name"/>
@@ -140,7 +140,7 @@
 
     <record id="bills_electricity_kanban_view_leads" model="ir.ui.view">
         <field name="name">electricity.bills.kanban</field>
-        <field name="model">bills_electricity_module</field>
+        <field name="model">bills.electricity.module</field>
         <field name="priority" eval="1"/>
         <field name="arch" type="xml">
             <kanban default_group_by="state" create="false" default_order="state"
@@ -237,7 +237,7 @@
     <record id="action_bills_electricity_meters" model="ir.actions.act_window">
         <field name="name">Electricity Bills</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">bills_electricity_module</field>
+        <field name="res_model">bills.electricity.module</field>
         <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">

@@ -12,7 +12,7 @@ AVAILABLE_PRIORITIES = [
 
 
 class kkn_close_pop_module(models.Model):
-    _name = 'close_pop_module'
+    _name = 'close.pop.module'
     _description = 'Close POP'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 

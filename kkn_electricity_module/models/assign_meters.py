@@ -14,8 +14,8 @@ AVAILABLE_PRIORITIES = [
 
 
 class kkn_electricity_module(models.Model):
-    _name = 'assign_electricity_module'
-    _description = 'assign_electricity_module'
+    _name = 'assign.electricity.module'
+    _description = 'assign.electricity.module'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'pop_id'
 
@@ -39,8 +39,8 @@ class kkn_electricity_module(models.Model):
         ('cancel', 'Cancel'),
     ], string='State', required=1, group_expand='_expand_states', default='draft', tracking=True)
 
-    pop_id = fields.Many2one('add_pop_module', store=True, required=True, tracking=True)
-    meter_number = fields.Many2one('electricity_meters_module', string='Meter Number', required=True, tracking=True)
+    pop_id = fields.Many2one('add.pop.module', store=True, required=True, tracking=True)
+    meter_number = fields.Many2one('electricity.meters.module', string='Meter Number', required=True, tracking=True)
     vendor = fields.Many2one(related='meter_number.vendor', readonly=1, store=True, string='Vendor', tracking=True)
     billing_date = fields.Integer(related='meter_number.billing_date', readonly=1, store=True, string='Billing Date',
                                   tracking=True)

@@ -14,7 +14,7 @@ AVAILABLE_PRIORITIES = [
 
 
 class kkn_pop_module(models.Model):
-    _name = 'add_pop_module'
+    _name = 'add.pop.module'
     _description = 'Add POP'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
@@ -357,15 +357,15 @@ class noc_wireless_report(models.Model):
             domains.append(('customer_is_pop', '=', True))
 
         data = {'domains': domains}
-        return self.env.ref('add_pop_module.stock_location_pop_report_id').report_action(self, data=data)
+        return self.env.ref('add.pop.module.stock_location_pop_report_id').report_action(self, data=data)
 
 
 class RentBillsHistory(models.Model):
     _name = "add.pop.rent.bill"
     _description = "POP RENT BILL HISTORY"
 
-    name = fields.Many2one('add_pop_module')
-    name1 = fields.Many2one('add_pop_module')
+    name = fields.Many2one('add.pop.module')
+    name1 = fields.Many2one('add.pop.module')
     move_id = fields.Many2one('account.move')
     billing_date = fields.Date('Billing Date')
 
@@ -374,7 +374,7 @@ class ServiceBillsHistory(models.Model):
     _name = "add.pop.service.bill"
     _description = "POP SERVICE BILL HISTORY"
 
-    name = fields.Many2one('add_pop_module')
+    name = fields.Many2one('add.pop.module')
     move_id = fields.Many2one('account.move')
     billing_date = fields.Date('Billing Date')
 
@@ -383,6 +383,6 @@ class GeneratorBillsHistory(models.Model):
     _name = "add.pop.generator.bill"
     _description = "POP GENERATOR BILL HISTORY"
 
-    name = fields.Many2one('add_pop_module')
+    name = fields.Many2one('add.pop.module')
     move_id = fields.Many2one('account.move')
     billing_date = fields.Date('Billing Date')

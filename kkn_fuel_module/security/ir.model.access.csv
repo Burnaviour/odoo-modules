@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_kkn_fuel_module_kkn_fuel_module,kkn_fuel_module.kkn_fuel_module,model_kkn_fuel_module_kkn_fuel_module,base.group_user,1,1,1,1
+access_kkn_fuel_module,access.kkn.fuel.module,model_kkn_fuel_module,base.group_user,1,1,1,1

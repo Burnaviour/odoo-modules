@@ -12,7 +12,7 @@ AVAILABLE_PRIORITIES = [
 
 
 class kkn_edit_pop_module(models.Model):
-    _name = 'edit_pop_module'
+    _name = 'edit.pop.module'
     _description = 'Edit POP'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
