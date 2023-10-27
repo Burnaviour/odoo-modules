@@ -1,7 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_assign_mobile_module,access.assign_mobile_module,model_assign_mobile_module,base.group_user,1,1,1,1
-access_unassign_mobile_module,access.unassign_mobile_module,model_unassign_mobile_module,base.group_user,1,1,1,1
-access_mobile_bills_module,access.mobile_bills_module,model_mobile_bills_module,base.group_user,1,1,1,1
-access_mobile_packages_module,access.mobile_packages_module,model_mobile_packages_module,base.group_user,1,1,1,1
-access_mobile_numbers_module,access.mobile_numbers_module,model_mobile_numbers_module,base.group_user,1,1,1,1
+access_assign_mobile_module,access.assign.mobile.module,model_assign_mobile_module,base.group_user,1,1,1,1
+access_unassign_mobile_module,access.unassign.mobile.module,model_unassign_mobile_module,base.group_user,1,1,1,1
+access_mobile_bills_module,access.mobile.bills.module,model_mobile_bills_module,base.group_user,1,1,1,1
+access_mobile_packages_module,access.mobile.packages.module,model_mobile_packages_module,base.group_user,1,1,1,1
+access_mobile_numbers_module,access.mobile.numbers.module,model_mobile_numbers_module,base.group_user,1,1,1,1
 access_mobile_bill_report,access.mobile.bill.report,model_mobile_bill_report,base.group_user,1,1,1,1

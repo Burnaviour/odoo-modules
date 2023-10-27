@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_assign_electricity_module,access.assign_electricity_module,model_assign_electricity_module,base.group_user,1,1,1,1
-access_bills_electricity_module,access.bills_electricity_module,model_bills_electricity_module,base.group_user,1,1,1,1
-access_electricity_meters_module,access.electricity_meters_module,model_electricity_meters_module,base.group_user,1,1,1,1
+access_bills_electricity_module,access.bills.electricity.module,model_bills_electricity_module,base.group_user,1,1,1,1
+access_electricity_meters_module,access.electricity.meters.module,model_electricity_meters_module,base.group_user,1,1,1,1
 access_electricity.bill.report,access.electricity.bill.report,model_electricity_bill_report,base.group_user,1,1,1,1

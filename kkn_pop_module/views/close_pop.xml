@@ -3,7 +3,7 @@
 
     <record id="view_kk_close_pop_tree" model="ir.ui.view">
         <field name="name">Kkn.close.pop.tree</field>
-        <field name="model">close_pop_module</field>
+        <field name="model">close.pop.module</field>
         <field name="arch" type="xml">
             <tree string="POP's" name="POP" export_xlsx="false" delete="false">
                 <field name="unique_id"/>
@@ -21,7 +21,7 @@
 
     <record id="view_kkn_close_pop_form" model="ir.ui.view">
         <field name="name">Kkn.close.pop.form</field>
-        <field name="model">close_pop_module</field>
+        <field name="model">close.pop.module</field>
         <field name="arch" type="xml">
             <form string="Close POP" name="POP" delete="false">
                 <header>
@@ -146,7 +146,7 @@
 
     <record id="close_view_pop_search" model="ir.ui.view">
         <field name="name">close.pop.search</field>
-        <field name="model">close_pop_module</field>
+        <field name="model">close.pop.module</field>
         <field name="arch" type="xml">
             <search string="Location Name">
                 <field name="name"/>
@@ -155,38 +155,53 @@
     </record>
 
     <record id="close_pops_kanban" model="ir.ui.view">
-            <field name="name">close.pops.kanban</field>
-            <field name="model">close_pop_module</field>
-            <field name="priority" eval="1"/>
-            <field name="arch" type="xml">
-                <kanban default_group_by="state" default_order="state" class="o_kanban_small_column o_kanban_project_tasks" quick_create="false" records_draggable="false"  on_create="quick_create" quick_create_view="close_view_pop_form">
+        <field name="name">close.pops.kanban</field>
+        <field name="model">close.pop.module</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" default_order="state" class="o_kanban_small_column o_kanban_project_tasks"
+                    quick_create="false" records_draggable="false" on_create="quick_create"
+                    quick_create_view="close_view_pop_form">
 
-                    <field name="state"/>
-                    <field name="name"/>
-                    <field name="color"/>
-                    <field name="priority"/>
+                <field name="state"/>
+                <field name="name"/>
+                <field name="color"/>
+                <field name="priority"/>
 
-                    <progressbar field="kanban_state" colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;, &quot;normal&quot;: &quot;muted&quot;}"/>
-                    <templates>
+                <progressbar field="kanban_state"
+                             colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;, &quot;normal&quot;: &quot;muted&quot;}"/>
+                <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
                             <div class="oe_kanban_content">
                                 <div class="o_kanban_record_top">
                                     <div class="o_kanban_record_headings">
-                                        <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
                                         <br/>
-                                        Note: <field name="comment"/>
+                                        Note:
+                                        <field name="comment"/>
                                         <br/>
                                     </div>
-                                    <div class="o_dropdown_kanban dropdown" t-if="!selection_mode" groups="base.group_user">
-                                        <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <div class="o_dropdown_kanban dropdown" t-if="!selection_mode"
+                                         groups="base.group_user">
+                                        <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
+                                           data-display="static" href="#" aria-label="Dropdown menu"
+                                           title="Dropdown menu">
                                             <span class="fa fa-ellipsis-v"/>
                                         </a>
                                         <div class="dropdown-menu" role="menu">
-                                            <a t-if="widget.editable" role="menuitem" type="set_cover" class="dropdown-item" data-field="displayed_image_id">Set Cover Image</a>
+                                            <a t-if="widget.editable" role="menuitem" type="set_cover"
+                                               class="dropdown-item" data-field="displayed_image_id">Set Cover Image
+                                            </a>
                                             <a name="144" role="menuitem" type="action" class="dropdown-item">Share</a>
-                                            <a t-if="widget.editable" role="menuitem" type="edit" class="dropdown-item">Edit Task</a>
-                                            <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                            <a t-if="widget.editable" role="menuitem" type="edit" class="dropdown-item">
+                                                Edit Task
+                                            </a>
+                                            <a t-if="widget.deletable" role="menuitem" type="delete"
+                                               class="dropdown-item">Delete
+                                            </a>
                                             <div role="separator" class="dropdown-divider"/>
                                             <ul class="oe_kanban_colorpicker" data-field="color"/>
                                         </div>
@@ -196,25 +211,28 @@
                                     <div class="oe_kanban_bottom_left">
                                         <t t-set="date_format" t-value="'MM/DD/YY'"/>
                                         <t t-set="date" t-value=""/>
-                                        <span name="date" t-attf-class="#{deadline_class || ''}"><t t-esc="date"/></span>
+                                        <span name="date" t-attf-class="#{deadline_class || ''}">
+                                            <t t-esc="date"/>
+                                        </span>
                                     </div>
                                     <div class="oe_kanban_bottom_right" t-if="!selection_mode">
-                                        <field name="kanban_state" widget="state_selection" groups="base.group_user" invisible="context.get('fsm_mode', False)"/>
-                                   </div>
+                                        <field name="kanban_state" widget="state_selection" groups="base.group_user"
+                                               invisible="context.get('fsm_mode', False)"/>
+                                    </div>
                                 </div>
                             </div>
                             <div class="oe_clear"/>
                         </div>
                     </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
     <record id="action_close_kkn_pop" model="ir.actions.act_window">
         <field name="name">Close Pop</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">close_pop_module</field>
+        <field name="res_model">close.pop.module</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">

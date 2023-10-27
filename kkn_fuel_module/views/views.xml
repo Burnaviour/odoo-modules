@@ -4,7 +4,7 @@
 
     <record model="ir.ui.view" id="view_kkn_fuel_list">
       <field name="name">kkn_fuel_module list</field>
-      <field name="model">kkn_fuel_module.kkn_fuel_module</field>
+      <field name="model">kkn.fuel.module</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name" />
@@ -16,7 +16,7 @@
 
     <record id="view_kkn_fuel_form" model="ir.ui.view">
       <field name="name">Kkn.close.pop.form</field>
-      <field name="model">kkn_fuel_module.kkn_fuel_module</field>
+      <field name="model">kkn.fuel.module</field>
       <field name="arch" type="xml">
         <form>
           <group>
@@ -31,7 +31,7 @@
 
     <record model="ir.actions.act_window" id="kkn_fuel_module.action_window">
       <field name="name">Fuel</field>
-      <field name="res_model">kkn_fuel_module.kkn_fuel_module</field>
+      <field name="res_model">kkn.fuel.module</field>
       <field name="view_mode">tree,form</field>
       <field name="help" type="html">
         <p class="o_view_nocontent_smiling_face">
