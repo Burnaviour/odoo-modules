@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="stock_location_form_inherit">
+            <field name="name">stock_location.stock_location.form_inherit</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet[1]/label[1]" position="before">
+                    <label for="unique_id" class="oe_edit_only"/>
+                    <h3>
+                        <div>
+                            <field name="city_code" style="width:5%; margin-right:2%;"/>
+                            <field name="unique_id" style="width:10%"/>
+                        </div>
+                    </h3>
+                </xpath>
+                <field name="usage" position="after">
+                    <field name="customer_is_pop"
+                           attrs="{'invisible':[('usage','not in',('customer','costcenter','exchange'))]}"/>
+                </field>
+                <xpath expr="//form[1]/sheet[1]" position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/field[@name='comment']" position="after">
+                    <notebook>
+                        <page string="Location Coordinates" id="partner_assignation">
+                            <group colspan="2" col="2">
+                                <separator string="Geolocation" colspan="2"/>
+                                <button
+                                        string="Geolocate"
+                                        name="geo_localize_location"
+                                        colspan="2"
+                                        icon="fa-check"
+                                        type="object"/>
+                                <div>
+                                    <span class="oe_inline">( On</span>
+                                    <field name="date_localization" nolabel="1" class="oe_inline"/>
+                                    <span>: Lat :</span>
+                                    <field name="partner_latitude" nolabel="1" class="oe_inline"/>
+                                    <span>; Long:</span>
+                                    <field name="partner_longitude" nolabel="1" class="oe_inline"/>
+                                    <span>)</span>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_location_tree">
+            <field name="name">stock_location.stock_location.tree</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[1]/field[@name='complete_name']" position="after">
+                    <field name="unique_id"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock_location_search_new" model="ir.ui.view">
+            <field name="name">stock.location.search.new</field>
+            <field name="model">stock.location</field>
+            <field name="arch" type="xml">
+                <search string="Location">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>
