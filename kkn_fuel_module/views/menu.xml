@@ -7,9 +7,12 @@
             sequence="1"
         />
         <!-- menu categories -->
-        <menuitem name="Operations" id="kkn_fuel_module.menu_1" sequence="0" parent="kkn_fuel_module.menu_root"
+        <menuitem name="Operations" id="kkn_fuel_module.menu_1" sequence="0"
+            parent="kkn_fuel_module.menu_root"
             action="kkn_fuel_module.action_window" />
-        <menuitem name="Reporting" id="kkn_fuel_module.menu_2" parent="kkn_fuel_module.menu_root" sequence="1" action="kkn_fuel_module.action_window" />
+
+        <menuitem name="Reporting" id="kkn_fuel_module.menu_2" parent="kkn_fuel_module.menu_root"
+            sequence="1" action="kkn_fuel_module.action_window" />
 
         <menuitem name="Configuration" id="kkn_fuel_module.menu_3"
             parent="kkn_fuel_module.menu_root" sequence="2" action="kkn_fuel_module.action_window"
