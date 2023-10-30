@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import logging
 from odoo import models, fields, api, _
 
+_logger = logging.getLogger(__name__)
 
-class updateLocationForm(models.Model):
+
+class UpdateLocationForm(models.Model):
     _name = "stock.location"
     _inherit = ["stock.location", "mail.thread", "mail.activity.mixin"]
 
@@ -25,16 +28,20 @@ class updateLocationForm(models.Model):
         tracking=True,
     )
 
-    city_code = fields.Char(related="city_id.code", tracking=True, readonly=True)
-
-    city_id = fields.Many2one("res.district")
+    city_id = fields.Many2one(
+        "res.district",
+        default=lambda self: self.env["res.district"].search([("code", "=", "LHR")])
+    )
+    city_code = fields.Char(
+        related="city_id.code", tracking=True, readonly=True, store=True
+    )
     # Unique ID for location form
     unique_id = fields.Char(
         string="Unique ID",
         tracking=True,
         required=True,
         readonly=True,
-        default="New",
+        default=lambda self: _("New"),
     )
     customer_is_pop = fields.Boolean("Is POP?")
 
@@ -70,26 +77,30 @@ class updateLocationForm(models.Model):
     partner_longitude = fields.Float("Geo Longitude", digits=(16, 6), tracking=True)
     date_localization = fields.Date(string="Geolocation Date", tracking=True)
 
-    @api.onchange("city_code")
-    def _onchange_city_code(self):
-        if self.city_code:
-            sql = (
-                "select Max(unique_id) maxcode from stock_location WHERE unique_id LIKE '%"
-                + self.city_code
-                + "%'"
-            )
-            self.env.cr.execute(sql)
-            max_code = self.env.cr.fetchone()
-            temp = max_code[0]
-            if temp == None:
-                self.unique_id = self.city_code + "-1501"
-            else:
-                if max_code[0] is not None:
-                    levelstr5 = str(int(temp[-4:]) + 1)
-                    result = self.city_code + "-" + levelstr5
-                    self.unique_id = result
-        else:
-            self.unique_id = False
+    def generat_id(self, city_id):
+        unique_code = self.env["ir.sequence"].next_by_code(
+            "stock.location.sequenece"
+        ) or _("New")
+        city = self.env["res.district"].browse(city_id)
+        if unique_code == _("New") or not city:
+            return unique_code
+        code = f"{city.code}-{unique_code}"
+        return code
+
+    @api.model
+    def create(self, vals_list):
+        if vals_list.get("unique_id", _("New")) == _("New"):
+            vals_list["unique_id"] = self.generat_id(vals_list["city_id"])
+            # _logger.error("%s      %s   ", vals_list["unique_id"], self)
+
+        return super().create(vals_list)
+
+    # def write(self, vals):
+    #     if "city_id" in vals:
+    #         vals["unique_id"] = self.generat_id(vals["city_id"])
+    #         _logger.error("%s ", vals["city_id"])
+
+    #     return super().write(vals)
 
     # Find Location of given Data
     @api.model

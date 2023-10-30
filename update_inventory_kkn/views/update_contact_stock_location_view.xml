@@ -1,47 +1,64 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-        <!--Adding Address form fields in Location form-->
-        <record model="ir.ui.view" id="address_form_view">
-            <field name="name">update_inventory_kkn.location.address_form_view</field>
-            <field name="model">stock.location</field>
-            <field name="inherit_id" ref="stock.view_location_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//form/sheet/group/group[1]" position="after">
-                    <group>
-                        <field name="cnic" invisible="1" string="CNIC"/>
+    <!--Adding Address form fields in
+    Location form-->
 
-                        <b id="address">Address</b>
-                        <div class="o_address_format" modifiers="{}">
-                            <field name="street" placeholder="Street..." class="o_address_street"/>
-                            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
-                            <field name="city_id" placeholder="City" class="o_address_city" options="{'no_open': True, 'no_create': True}" can_create="true" can_write="true"/>
-                            <field name="state_id" class="o_address_state" placeholder="Province" options="{'no_open': True, 'no_create': True}" context="{'country_id': country_id, 'zip_id': zip_id}" domain="['|', '|', '|', '|', ('code', '=', 'PK-BL'), ('code', '=', 'PK-ICT'),
-                            ('code', '=', 'PK-KPK'), ('code', '=', 'PK-PJ'), ('code', '=', 'PK-SN')]" on_change="1" can_create="true" can_write="true"/>
-                            <field name="zip_id" placeholder="ZIP" class="o_address_zip" on_change="1"/>
-                            <field name="country_id" placeholder="Country" class="o_address_country" domain="[('code', '=', 'PK')]" options="{'no_open': True, 'no_create': True}" on_change="1" can_create="true" can_write="true"/>
-                        </div>
-                    </group>
-                </xpath>
-            </field>
-        </record>
+    <record model="ir.ui.view" id="address_form_view">
+        <field name="name">update_inventory_kkn.location.address_form_view</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group/group[1]" position="after">
+                <group>
+                    <field name="cnic" invisible="1" string="CNIC" />
 
-        <!--Adding/Showing Address form fields in Location tree view-->
-        <record model="ir.ui.view" id="locations_form_view">
-            <field name="name">update_inventory_kkn.stock.locations_form_view</field>
-            <field name="model">stock.location</field>
-            <field name="inherit_id" ref="stock.view_location_tree2"/>
-            <field name="arch" type="xml">
-                <xpath expr="//tree[1]/field[@groups='base.group_multi_company']" position="after">
-                    <field name="name"/>
-                    <field name="street"/>
-                    <field name="street2"/>
-                    <field name="city_id"/>
-                    <field name="state_id"/>
-                    <field name="zip_id"/>
-                    <field name="country_id"/>
-                </xpath>
-            </field>
-        </record>
+                    <b id="address">Address</b>
+                    <div class="o_address_format" modifiers="{}">
+                        <field name="street" placeholder="Street..." class="o_address_street" />
+                        <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                        <field name="city_id" placeholder="City" class="o_address_city"
+                            options="{'no_open': True, 'no_create': True}"
+                            attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                        <field name="state_id" class="o_address_state" placeholder="Province"
+                            options="{'no_open': True, 'no_create': True}"
+                            context="{'country_id': country_id, 'zip_id': zip_id}"
+                            on_change="1" can_create="true" can_write="true" />
+                        <field name="zip_id" placeholder="ZIP" class="o_address_zip" on_change="1" />
+                        <field name="country_id" placeholder="Country" class="o_address_country"
+                            domain="[('code', '=', 'PK')]"
+                            options="{'no_open': True, 'no_create': True}" on_change="1"
+                            can_create="true" can_write="true" />
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Adding/Showing
+   Location  Address  tree view-->
+    <record model="ir.ui.view" id="locations_form_view">
+        <field name="name">update_inventory_kkn.stock.locations_tree_view</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_tree2" />
+        <field name="arch" type="xml">
+            <xpath expr="//tree[1]/field[@groups='base.group_multi_company']" position="after">
+                <field name="name" options="{'no_open': True, 'no_create': True}"
+                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                <field name="street" options="{'no_open': True, 'no_create': True}"
+                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                <field name="street2" options="{'no_open': True, 'no_create': True}"
+                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                <field name="city_id" options="{'no_open': True, 'no_create': True}"
+                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                <field name="state_id" options="{'no_open': True, 'no_create': True}"
+                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                <field name="zip_id" options="{'no_open': True, 'no_create': True}"
+                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                <field name="country_id" options="{'no_open': True, 'no_create': True}"
+                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+            </xpath>
+        </field>
+    </record>
 
 </odoo>
