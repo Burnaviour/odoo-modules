@@ -3,7 +3,7 @@
 
         <!--Adding Address form fields in Location form-->
         <record model="ir.ui.view" id="address_form_view">
-            <field name="name">update_location_form.address_form_view</field>
+            <field name="name">update_inventory_kkn.location.address_form_view</field>
             <field name="model">stock.location</field>
             <field name="inherit_id" ref="stock.view_location_form"/>
             <field name="arch" type="xml">
@@ -28,7 +28,7 @@
 
         <!--Adding/Showing Address form fields in Location tree view-->
         <record model="ir.ui.view" id="locations_form_view">
-            <field name="name">update_location_form.locations_form_view</field>
+            <field name="name">update_inventory_kkn.stock.locations_form_view</field>
             <field name="model">stock.location</field>
             <field name="inherit_id" ref="stock.view_location_tree2"/>
             <field name="arch" type="xml">

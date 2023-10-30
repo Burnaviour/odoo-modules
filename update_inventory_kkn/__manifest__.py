@@ -15,8 +15,10 @@
     "category": "Customizations",
     "version": "16.0.1",
     # any module necessary for this one to work correctly
-    "depends": ["base", "stock"],
+    "depends": ["base", "stock", "update_contact_kkn", "base_geolocalize"],
+    
     # always loaded
+    
     "data": [
         "security/ir.model.access.csv",
         "views/views.xml",
@@ -30,6 +32,5 @@
     "demo": [
         "demo/demo.xml",
     ],
-    'license': 'LGPL-3',
-
+    "license": "LGPL-3",
 }
