@@ -87,11 +87,12 @@ class UpdateLocationForm(models.Model):
         code = f"{city.code}-{unique_code}"
         return code
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals_list):
-        if vals_list.get("unique_id", _("New")) == _("New"):
-            vals_list["unique_id"] = self.generat_id(vals_list["city_id"])
-            # _logger.error("%s      %s   ", vals_list["unique_id"], self)
+        for vals in vals_list:
+            if vals.get("unique_id", _("New")) == _("New"):
+                vals["unique_id"] = self.generat_id(vals["city_id"])
+                # _logger.error("%s      %s   ", vals["unique_id"], self)
 
         return super().create(vals_list)
 
