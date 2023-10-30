@@ -24,8 +24,8 @@
         "views/templates.xml",
         "views/product_template_view.xml",
         "views/switchport_view.xml",
-        "views/update_contact_stock_location_view.xml",
         "views/update_location.xml",
+        "views/update_contact_stock_location_view.xml",
     ],
     # only loaded in demonstration mode
     "demo": [
