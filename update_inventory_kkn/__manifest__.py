@@ -15,21 +15,21 @@
     "category": "Customizations",
     "version": "16.0.1",
     # any module necessary for this one to work correctly
-    "depends": ["base", "stock"],
+    "depends": ["base", "stock", "update_contact_kkn", "base_geolocalize"],
     # always loaded
     "data": [
         "security/ir.model.access.csv",
+        "data/sequence.xml",
         "views/views.xml",
         "views/templates.xml",
         "views/product_template_view.xml",
         "views/switchport_view.xml",
-        "views/update_contact_stock_location_view.xml",
         "views/update_location.xml",
+        "views/update_contact_stock_location_view.xml",
     ],
     # only loaded in demonstration mode
     "demo": [
         "demo/demo.xml",
     ],
-    'license': 'LGPL-3',
-
+    "license": "LGPL-3",
 }
