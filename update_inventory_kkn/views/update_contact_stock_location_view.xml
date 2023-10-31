@@ -44,19 +44,19 @@
         <field name="arch" type="xml">
             <xpath expr="//tree[1]/field[@groups='base.group_multi_company']" position="after">
                 <field name="name" options="{'no_open': True, 'no_create': True}"
-                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                attrs="{ 'readonly': True}" />
                 <field name="street" options="{'no_open': True, 'no_create': True}"
-                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                    attrs="{ 'readonly': True}" />
                 <field name="street2" options="{'no_open': True, 'no_create': True}"
-                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                    attrs="{ 'readonly': True}" />
                 <field name="city_id" options="{'no_open': True, 'no_create': True}"
-                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                    attrs="{ 'readonly': True}" />
                 <field name="state_id" options="{'no_open': True, 'no_create': True}"
-                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                    attrs="{ 'readonly': True}" />
                 <field name="zip_id" options="{'no_open': True, 'no_create': True}"
-                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                    attrs="{ 'readonly': True}" />
                 <field name="country_id" options="{'no_open': True, 'no_create': True}"
-                    attrs="{ 'readonly': [('unique_id','!=','New')]}" />
+                    attrs="{ 'readonly': True}" />
             </xpath>
         </field>
     </record>
