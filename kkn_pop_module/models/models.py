@@ -14,10 +14,9 @@ AVAILABLE_PRIORITIES = [
 
 
 class kkn_pop_module(models.Model):
-    _name = "add.pop.module"
-    _description = "Add POP"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
-
+    _name = 'add.pop.model'
+    _description = 'Add POP'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     def _expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
 
@@ -127,123 +126,11 @@ class kkn_pop_module(models.Model):
     )
     cost_center_id = fields.Many2one("account.analytic.account", "Cost Center")
     company_id = fields.Many2one(
-        "res.company",
-        "Company",
-        default=lambda self: self.env.company,
-        index=True,
-        help="Let this field empty if this location is shared between companies",
-    )
-    city_code = fields.Selection(
-        [
-            ("FSD", "FSD"),
-            ("LHR", "LHR"),
-            ("KHI", "KHI"),
-            ("MUX", "MUX"),
-            ("GRW", "GRW"),
-            ("KSR", "KSR"),
-            ("ISB", "ISB"),
-            ("VEH", "VEH"),
-            ("GUJ", "GUJ"),
-            ("RWP", "RWP"),
-            ("JHL", "JHL"),
-            ("SHK", "SHK"),
-            ("SAH", "SAH"),
-            ("WAZ", "WAZ"),
-            ("MDI", "MDI"),
-            ("BWP", "BWP"),
-            ("PAT", "PAT"),
-            ("SRQ", "SRQ"),
-            ("KAM", "KAM"),
-            ("TTS", "TTS"),
-            ("DEP", "DEP"),
-            ("CHO", "CHO"),
-            ("BHA", "BHA"),
-            ("MNG", "MNG"),
-            ("GOJ", "GOJ"),
-            ("JHG", "JHG"),
-            ("BHN", "BHN"),
-            ("RYK", "RYK"),
-            ("HZD", "HZD"),
-            ("NRW", "NRW"),
-            ("SKT", "SKT"),
-            ("CHK", "CHK"),
-            ("ATK", "ATK"),
-            ("DGK", "DGK"),
-            ("LYH", "LYH"),
-            ("MZG", "MZG"),
-            ("RJP", "RJP"),
-            ("NKS", "NKS"),
-            ("PKP", "PKP"),
-            ("OKR", "OKR"),
-            ("CHT", "CHT"),
-            ("LDR", "LDR"),
-            ("KHN", "KHN"),
-            ("SGD", "SGD"),
-            ("KHB", "KHB"),
-            ("MNW", "MNW"),
-            ("BHK", "BHK"),
-            ("CHW", "CHW"),
-            ("KRK", "KRK"),
-            ("ALBD", "ALBD"),
-            ("PNG", "PNG"),
-            ("GJKH", "GJKH"),
-            ("DSK", "DSK"),
-            ("JPT", "JPT"),
-            ("JRN", "JRN"),
-            ("ARF", "ARF"),
-            ("PM", "PM"),
-            ("RAJ", "RAJ"),
-            ("SUM", "SUM"),
-            ("MSJ", "MSJ"),
-            ("BUR", "BUR"),
-            ("MUR", "MUR"),
-            ("RWD", "RWD"),
-            ("ZAF", "ZAF"),
-            ("PAS", "PAS"),
-            ("KAP", "KAP"),
-            ("HAR", "HAR"),
-            ("CHN", "CHN"),
-            ("MLS", "MLS"),
-            ("CHA", "CHA"),
-            ("SHG", "SHG"),
-            ("SGH", "SGH"),
-            ("SHO", "SHO"),
-            ("KSW", "KSW"),
-            ("KMK", "KMK"),
-            ("LAL", "LAL"),
-            ("SAD", "SAD"),
-            ("SAM", "SAM"),
-            ("SAR", "SAR"),
-            ("MRE", "MRE"),
-            ("MUW", "MUW"),
-            ("QAD", "QAD"),
-            ("JAM", "JAM"),
-            ("KSD", "KSD"),
-            ("PHA", "PHA"),
-            ("KDK", "KDK"),
-            ("HUJ", "HUJ"),
-            ("KTM", "KTM"),
-            ("MIC", "MIC"),
-            ("CHU", "CHU"),
-            ("HAV", "HAV"),
-            ("MDX", "MDX"),
-            ("NSR", "NSR"),
-            ("BNP", "BNP"),
-            ("HDD", "HDD"),
-            ("SKZ", "SKZ"),
-            ("QET", "QET"),
-            ("PEW", "PEW"),
-            ("SWT", "SWT"),
-            ("BDN", "BDN"),
-            ("GHT", "GHT"),
-            ("MKD", "MKD"),
-            ("AAW", "AAW"),
-            ("MZJ", "MZJ"),
-            ("KUA", "KUA"),
-            ("HAN", "HAN"),
-        ],
-        tracking=True,
-    )
+        'res.company', 'Company',
+        default=lambda self: self.env.company, index=True,
+        help='Let this field empty if this location is shared between companies')
+    city_code = fields.Char(related='city_id.code', tracking=True)
+
     # Unique ID for location form
     unique_id = fields.Char(string="Unique ID", tracking=True)
 
@@ -483,36 +370,35 @@ class noc_wireless_report(models.Model):
     #         domains.append("|")
     #         domains.append(("usage", "=", "pop"))
     #         domains.append(("customer_is_pop", "=", True))
-
     #     data = {"domains": domains}
     #     return self.env.ref(
     #         "add.pop.module.stock_location_pop_report_id"
     #     ).report_action(self, data=data)
 
 
+
 class RentBillsHistory(models.Model):
     _name = "add.pop.rent.bill"
     _description = "POP RENT BILL HISTORY"
-
     name = fields.Many2one("add.pop.module")
     name1 = fields.Many2one("add.pop.module")
     move_id = fields.Many2one("account.move")
     billing_date = fields.Date("Billing Date")
 
 
+
 class ServiceBillsHistory(models.Model):
     _name = "add.pop.service.bill"
     _description = "POP SERVICE BILL HISTORY"
-
     name = fields.Many2one("add.pop.module")
     move_id = fields.Many2one("account.move")
     billing_date = fields.Date("Billing Date")
 
 
+
 class GeneratorBillsHistory(models.Model):
     _name = "add.pop.generator.bill"
     _description = "POP GENERATOR BILL HISTORY"
-
     name = fields.Many2one("add.pop.module")
     move_id = fields.Many2one("account.move")
     billing_date = fields.Date("Billing Date")

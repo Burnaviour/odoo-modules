@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "kkn_electricity_module",
+    'name': "Electricity",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as

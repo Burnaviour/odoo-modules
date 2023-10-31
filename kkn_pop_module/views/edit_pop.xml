@@ -3,7 +3,7 @@
 
     <record id="view_kkn_edit_pop_tree" model="ir.ui.view">
         <field name="name">Kkn.edit.pop.tree</field>
-        <field name="model">edit.pop.module</field>
+        <field name="model">edit.pop.model</field>
         <field name="arch" type="xml">
             <tree string="POP's" name="POP" export_xlsx="false" delete="false">
                 <field name="unique_id"/>
@@ -23,7 +23,7 @@
 
     <record id="view_kkn_edit_pop_form" model="ir.ui.view">
         <field name="name">kkn.edit.pop.form</field>
-        <field name="model">edit.pop.module</field>
+        <field name="model">edit.pop.model</field>
         <field name="arch" type="xml">
             <form string="Edit POP" name="POP" delete="false">
                 <header>
@@ -131,7 +131,7 @@
 
     <record id="edit_view_pop_search" model="ir.ui.view">
         <field name="name">edit.pop.search</field>
-        <field name="model">edit.pop.module</field>
+        <field name="model">edit.pop.model</field>
         <field name="arch" type="xml">
             <search string="Location Name">
                 <field name="name"/>
@@ -141,7 +141,7 @@
 
     <record id="edit_pops_kanban" model="ir.ui.view">
         <field name="name">edit.pops.kanban</field>
-        <field name="model">edit.pop.module</field>
+        <field name="model">edit.pop.model</field>
         <field name="priority" eval="1"/>
         <field name="arch" type="xml">
             <kanban default_group_by="state" default_order="state" class="o_kanban_small_column o_kanban_project_tasks"
@@ -217,7 +217,7 @@
     <record id="action_edit_pop" model="ir.actions.act_window">
         <field name="name">Edit Pop</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">edit.pop.module</field>
+        <field name="res_model">edit.pop.model</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">

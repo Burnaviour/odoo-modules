@@ -1,6 +1,8 @@
 {
-    "name": "kkn_pop_module",
-    "summary": """
+    'name': "POP",
+
+    'summary': """
+
         Short (1 phrase/line) summary of the module's purpose, used as
         subtitle on modules listing or apps.openerp.com""",
     "description": """
@@ -16,6 +18,7 @@
     "sequence": -400,
     "version": "0.1",
     # any module necessary for this one to work correctly
+
     "depends": [
         "base",
         "mail",
@@ -26,6 +29,7 @@
         "update_inventory_kkn",
         "base_geolocalize",
     ],
+
     # always loaded
     "data": [
         "security/ir.model.access.csv",

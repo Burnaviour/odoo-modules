@@ -15,8 +15,8 @@ AVAILABLE_PRIORITIES = [
 
 
 class kkn_bills_electricity_module(models.Model):
-    _name = 'bills.electricity.module'
-    _description = 'bills_electricity_module'
+    _name = 'bills.electricity.model'
+    _description = 'bills_electricity_model'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'name'
 
@@ -63,8 +63,8 @@ class kkn_bills_electricity_module(models.Model):
     product_template_id = fields.Many2one(related='electricity_card_number.product_template_id', tracking=True)
     amount_total = fields.Monetary(string='Total Bill', store=True, readonly=True, tracking=4)
 
-    pop_id = fields.Many2one('add.pop.module', store=True, required=True, tracking=True)
-    meter_number = fields.Many2one('electricity.meters.module', string='Meter Number', required=True, tracking=True)
+    pop_id = fields.Many2one('add.pop.model', store=True, required=True, tracking=True)
+    meter_number = fields.Many2one('electricity.meters.model', string='Meter Number', required=True, tracking=True)
     vendor = fields.Many2one(related='meter_number.vendor', readonly=1, store=True, string='Vendor', tracking=True)
     billing_date = fields.Integer(related='meter_number.billing_date', readonly=1, store=True, string='Billing Date',
                                   tracking=True)

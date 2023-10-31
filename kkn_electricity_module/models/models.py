@@ -14,8 +14,8 @@ AVAILABLE_PRIORITIES = [
 
 
 class kkn_electricity_meters_module(models.Model):
-    _name = 'electricity.meters.module'
-    _description = 'electricity_meters_module'
+    _name = 'electricity.meters.model'
+    _description = 'electricity_meters_model'
     _inherit = 'mail.thread', 'mail.activity.mixin'
     _rec_name = 'meter_number'
 
