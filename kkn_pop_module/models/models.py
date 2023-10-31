@@ -380,8 +380,8 @@ class noc_wireless_report(models.Model):
 class RentBillsHistory(models.Model):
     _name = "add.pop.rent.bill"
     _description = "POP RENT BILL HISTORY"
-    name = fields.Many2one("add.pop.module")
-    name1 = fields.Many2one("add.pop.module")
+    name = fields.Many2one("add.pop.model")
+    name1 = fields.Many2one("add.pop.model")
     move_id = fields.Many2one("account.move")
     billing_date = fields.Date("Billing Date")
 
@@ -390,7 +390,7 @@ class RentBillsHistory(models.Model):
 class ServiceBillsHistory(models.Model):
     _name = "add.pop.service.bill"
     _description = "POP SERVICE BILL HISTORY"
-    name = fields.Many2one("add.pop.module")
+    name = fields.Many2one("add.pop.model")
     move_id = fields.Many2one("account.move")
     billing_date = fields.Date("Billing Date")
 
@@ -399,6 +399,6 @@ class ServiceBillsHistory(models.Model):
 class GeneratorBillsHistory(models.Model):
     _name = "add.pop.generator.bill"
     _description = "POP GENERATOR BILL HISTORY"
-    name = fields.Many2one("add.pop.module")
+    name = fields.Many2one("add.pop.model")
     move_id = fields.Many2one("account.move")
     billing_date = fields.Date("Billing Date")

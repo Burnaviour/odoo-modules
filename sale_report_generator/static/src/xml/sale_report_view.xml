@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <t t-name="SaleReport">
+        <div class="">
+            <div>
+                <center>
+                    <h1 style="margin: 20px;">Sales Dynamic Report</h1>
+                </center>
+            </div>
+            <div>
+                <div class="filter_view_sr"/>
+            </div>
+            <div>
+                <div class="table_view_sr" style="width: 95%; margin: auto;"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="saleFilterView">
+        <div class="container-fluid">
+            <div class="row" style="margin-right: 10px; margin-left: 10px;">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-danger" id="pdf"
+                                    style="width: 100%; height: 50px; border-radius: 10px; background-color: #d31111; color: white">
+                                Print (PDF)
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-danger" id="xlsx"
+                                    style="width: 100%; height: 50px; border-radius: 10px; background-color: #d31111; color: white">
+                                Export (XLSX)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="time_range_sale">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+                                            <span class="fa fa-calendar"
+                                                  style="background-color: #d31111; color: white;"
+                                                  title="Dates" role="img" aria-label="Dates"></span>
+                                            Date Range
+                                        </a>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date" id="date_from"
+                                                         data-target-input="nearest">
+                                                        <input type="text" name="date_from" placeholder="Start Date"
+                                                               class="form-control datetimepicker-input"
+                                                               data-target="#date_from"/>
+                                                        <div class="input-group-append" data-target="#date_from"
+                                                             data-toggle="datetimepicker">
+                                                            <span class="input-group-text">
+                                                                <span class="fa fa-calendar"
+                                                                      style="background-color: #d31111; color: white; font-size: 1.6rem;"
+                                                                      role="img" aria-label="Calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="input-group date" id="date_to"
+                                                         data-target-input="nearest">
+                                                        <input type="text" name="date_to" placeholder="End Date"
+                                                               class="form-control datetimepicker-input"
+                                                               data-target="#date_to"/>
+                                                        <div class="input-group-append" data-target="#date_to"
+                                                             data-toggle="datetimepicker">
+                                                            <span class="input-group-text">
+                                                                <span class="fa fa-calendar"
+                                                                      style="background-color: #d31111; color: white; font-size: 1.6rem;"
+                                                                      role="img" aria-label="Calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-0 m-0">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="search-Result-Selection"
+                                         style="display: flex; justify-content: center; width: 75%;">
+                                        <a type="button" class="report-type">
+                                            <span class="fa fa-book"
+                                                  style="background-color: #d31111; color: white;"></span>
+                                            Report Type:
+                                        </a>
+                                        <select id="selection" class="report_type ml-5" name="states[]">
+                                            <option value="report_by_order" selected="">Report By Order</option>
+                                            <option value="report_by_order_detail">Report By Order Detail</option>
+                                            <option value="report_by_product">Report By Product</option>
+                                            <option value="report_by_categories">Report By Categories</option>
+                                            <option value="report_by_salesperson">Report By Sales Person</option>
+                                            <option value="report_by_state">Report By State</option>
+                                            <option value="own_salesperson_report">Own Sales Person Report</option>
+                                        </select>
+                                        <span id="report_res" style="display: none;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="margin-left: -20px;">
+                                    <div class="apply_sale" style="margin-top: 0px;">
+                                        <button type="button" id="apply_filter" class="btn btn-danger"
+                                                style="width: 100%; height: 50px; border-radius: 10px; background-color: #d31111; color: white">
+                                            Apply
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="SaleOrderTable">
+        <!--Report for order-->
+        <div t-if="order.report_type == 'report_by_order'">
+            <div class="table_main_view mt-3">
+                <table cellspacing="0" width="100%">
+
+                    <thead>
+                        <tr class="table_sale_head" style="background-color: #d31111;">
+                            <th>Sale</th>
+                            <th class="mon_fld">Date Order</th>
+                            <th class="mon_fld">Customer</th>
+                            <th class="mon_fld">Sales Person</th>
+                            <th class="mon_fld">Total Qty</th>
+                            <th class="mon_fld">Amount Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <t t-foreach="report_lines" t-as="sale_report">
+                            <tr style="border: 1.5px solid black;"
+                                class="so-line"
+
+                                t-att-data-account-id="sale_report['id']"
+                                t-attf-data-target=".a{{sale_report['id']}}">
+                                <td>
+                                    <t t-if="sale_report['id']">
+                                        <div class="dropdown dropdown-toggle">
+                                            <a data-toggle="dropdown" href="#">
+                                                <span class="caret"/>
+                                                <span>
+                                                    <t t-esc="sale_report['number']"/>
+                                                </span>
+                                            </a>
+                                            <ul class="dropdown-menu"
+                                                role="menu"
+                                                aria-labelledby="dropdownMenu">
+                                                <li>
+                                                    <a class="view_sale_order"
+                                                       tabindex="-1" href="#"
+                                                       t-att-id="sale_report['id']">
+                                                        View Sale Order
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </t>
+                                </td>
+
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['date_order']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['customer']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['sales_man']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['sum']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['amount_total']"/>
+                                    </span>
+                                </td>
+
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--Report for order detail-->
+        <div t-if="order.report_type == 'report_by_order_detail'">
+            <div class="table_main_view mt-3">
+                <table cellspacing="0" width="100%">
+
+                    <thead>
+                        <tr class="table_sale_head" style="background-color: #d31111;">
+                            <th>Sale</th>
+                            <th class="mon_fld">Date Order</th>
+                            <th class="mon_fld">Customer</th>
+                            <th class="mon_fld">Company</th>
+                            <th class="mon_fld">Sales Person</th>
+                            <th class="mon_fld">Product Name</th>
+                            <th class="mon_fld">Product Code</th>
+                            <th class="mon_fld">Quantity</th>
+                            <th class="mon_fld">Price Subtotal</th>
+                            <th class="mon_fld">Amount Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <t t-foreach="report_lines" t-as="sale_report">
+                            <tr style="border: 1.5px solid black;"
+                                class="so-line"
+                                data-toggle="collapse"
+                                t-att-data-account-id="sale_report['id']"
+                                t-attf-data-target=".a{{sale_report['id']}}">
+                                <td style="border: 0px solid black;">
+                                    <i class="fa fa-caret-down" role="img"
+                                       aria-label="Unfolded" title="Unfolded"/>
+
+                                    <span>
+                                        <t t-esc="sale_report['number']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['date_order']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['customer']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['company']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['salesman']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['product']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['default_code']"/>
+                                    </span>
+                                </td>
+
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['product_uom_qty']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['price_subtotal']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['amount_total']"/>
+                                    </span>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--Report for product-->
+        <div t-if="order.report_type == 'report_by_product'">
+            <div class="table_main_view mt-3">
+                <table cellspacing="0" width="100%">
+
+                    <thead>
+                        <tr class="table_sale_head" style="background-color: #d31111;">
+
+                            <th>Product</th>
+                            <th class="mon_fld">Category</th>
+                            <th class="mon_fld">Product Code</th>
+                            <th class="mon_fld">Quantity</th>
+                            <th class="mon_fld">Amount Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <t t-foreach="report_lines" t-as="sale_report">
+                            <tr style="border: 1.5px solid black;"
+                                class="so-line"
+                                data-toggle="collapse"
+                                t-att-data-account-id="sale_report['id']"
+                                t-attf-data-target=".a{{sale_report['id']}}">
+                                <td style="border: 0px solid black;">
+                                    <i class="fa fa-caret-down" role="img"
+                                       aria-label="Unfolded" title="Unfolded"/>
+                                    <span>
+                                        <t t-esc="sale_report['product']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['category']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['default_code']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['product_uom_qty']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['amount_total']"/>
+                                    </span>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--Report for Categories-->
+        <div t-if="order.report_type == 'report_by_categories'">
+            <div class="table_main_view mt-3">
+                <table cellspacing="0" width="100%">
+
+                    <thead>
+                        <tr class="table_sale_head" style="background-color: #d31111;">
+                            <th>Category</th>
+                            <th class="mon_fld">Qty</th>
+                            <th class="mon_fld">Amount Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="report_lines" t-as="sale_report">
+                            <tr style="border: 1.5px solid black;"
+                                class="so-line"
+                                data-toggle="collapse"
+                                t-att-data-account-id="sale_report['id']"
+                                t-attf-data-target=".a{{sale_report['id']}}">
+                                <td style="border: 0px solid black;">
+                                    <i class="fa fa-caret-down" role="img"
+                                       aria-label="Unfolded" title="Unfolded"/>
+                                    <span>
+                                        <t t-esc="sale_report['name']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['qty']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['amount_total']"/>
+                                    </span>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--Report for Sales Person-->
+        <div t-if="order.report_type == 'report_by_salesperson'">
+            <div class="table_main_view mt-3">
+                <table cellspacing="0" width="100%">
+
+                    <thead>
+                        <tr class="table_sale_head" style="background-color: #d31111;">
+                            <th>Sales Person</th>
+                            <th class="mon_fld">Total Order</th>
+                            <th class="mon_fld">Total Qty</th>
+                            <th class="mon_fld">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="report_lines" t-as="sale_report">
+                            <tr style="border: 1.5px solid black;"
+                                class="so-line"
+                                data-toggle="collapse"
+                                t-att-data-account-id="sale_report['id']"
+                                t-attf-data-target=".a{{sale_report['id']}}">
+                                <td style="border: 0px solid black;">
+                                    <i class="fa fa-caret-down" role="img"
+                                       aria-label="Unfolded" title="Unfolded"/>
+                                    <span>
+                                        <t t-esc="sale_report['name']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['order']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['qty']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['amount']"/>
+                                    </span>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--Report for State-->
+        <div t-if="order.report_type == 'report_by_state'">
+            <div class="table_main_view mt-3">
+                <table cellspacing="0" width="100%">
+                    <thead>
+                        <tr class="table_sale_head" style="background-color: #d31111;">
+                            <th>State</th>
+                            <th class="mon_fld">Total Count</th>
+                            <th class="mon_fld">Quantity</th>
+                            <th class="mon_fld">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="report_lines" t-as="sale_report">
+                            <tr style="border: 1.5px solid black;" class="so-line"
+                                data-toggle="collapse"
+                                t-att-data-account-id="sale_report['id']"
+                                t-attf-data-target=".a{{sale_report['id']}}">
+                                <td style="border: 0px solid black;">
+                                    <i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"/>
+                                    <span>
+                                        <t t-esc="sale_report['state']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['count']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['qty']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['amount']"/>
+                                    </span>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div t-if="order.report_type == 'own_salesperson_report'">
+            <div class="table_main_view mt-3">
+                <table cellspacing="0" width="100%">
+
+                    <thead>
+                        <tr class="table_sale_head" style="background-color: #d31111;">
+                            <th>Sales Person</th>
+                            <th class="mon_fld">Total Order</th>
+                            <th class="mon_fld">Total Qty</th>
+                            <th class="mon_fld">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="report_lines" t-as="sale_report">
+                            <tr style="border: 1.5px solid black;"
+                                class="so-line"
+                                data-toggle="collapse"
+                                t-att-data-account-id="sale_report['id']"
+                                t-attf-data-target=".a{{sale_report['id']}}">
+                                <td style="border: 0px solid black;">
+                                    <i class="fa fa-caret-down" role="img"
+                                       aria-label="Unfolded" title="Unfolded"/>
+                                    <t t-if="sale_report['salesperson']">
+                                        <span>
+                                            <t t-esc="sale_report['salesperson']"/>
+                                        </span>
+                                    </t>
+                                    <t t-else="">
+                                        All
+                                    </t>
+                                </td>
+                                <td style="text-align:center;">
+                                    <t t-if="sale_report['order']">
+                                        <span>
+                                            <t t-esc="sale_report['order']"/>
+                                        </span>
+                                    </t>
+                                    <t t-else="">
+                                        0
+                                    </t>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['qty']"/>
+                                    </span>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span>
+                                        <t t-esc="sale_report['amount']"/>
+                                    </span>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+</template>
