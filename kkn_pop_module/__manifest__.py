@@ -1,5 +1,5 @@
 {
-    'name': "kkn_pop_module",
+    'name': "POP",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -21,7 +21,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'stock', 'update_contact_kkn', 'account', 'uom', 'update_location_form', 'base_geolocalize'],
+    'depends': ['base', 'mail', 'stock', 'update_contact_kkn', 'account', 'uom', 'update_inventory_kkn', 'base_geolocalize'],
 
     # always loaded
     'data': [

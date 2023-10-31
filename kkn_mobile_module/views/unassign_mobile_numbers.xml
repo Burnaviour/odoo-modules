@@ -3,7 +3,7 @@
 
     <record id="view_unassign_mobile_numbers_tree" model="ir.ui.view">
         <field name="name">Unassign.mobile.numbers.tree</field>
-        <field name="model">unassign.mobile.module</field>
+        <field name="model">unassign.mobile.model</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
@@ -13,7 +13,7 @@
 
     <record id="view_unassign_mobile_numbers_form" model="ir.ui.view">
         <field name="name">Unassign.mobile.numbers.form</field>
-        <field name="model">unassign.mobile.module</field>
+        <field name="model">unassign.mobile.model</field>
         <field name="arch" type="xml">
             <form>
                 <group>
@@ -26,7 +26,7 @@
     <record id="action_unassign_mobile_number" model="ir.actions.act_window">
         <field name="name">Unassign Mobile Numbers</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">unassign.mobile.module</field>
+        <field name="res_model">unassign.mobile.model</field>
         <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">
