@@ -1,0 +1,95 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record id="view_kkn_fuel_form" model="ir.ui.view">
+      <field name="name">assign.fuel.card.form.view</field>
+      <field name="model">assign.fuel.card.model</field>
+      <field name="arch" type="xml">
+        <form string="Assign Fuel Card">
+          <sheet>
+            <group>
+              <group>
+                <field name="employee_id" />
+              </group>
+              <group>
+                <!-- <field name="fuel_card_id" /> -->
+              </group>
+            </group>
+            <group>
+              <!-- <field name="fuel_type" />
+              <field name="fuel_limit" /> -->
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- Kanban view -->
+    <record model="ir.ui.view" id="assign_fuel_card_kanban_view">
+      <field name="name">Assign Fuel Card Kanban</field>
+      <field name="model">assign.fuel.card.model</field>
+      <field name="arch" type="xml">
+        <kanban class="o_kanban_small_column o_kanban_project_tasks" default_group_by="state"
+          quick_create="false" records_draggable="false"
+          default_order="state">
+          <field name="state" />
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                <div class="o_kanban_record_top mb16">
+                  <field name="employee_id" />
+                </div>
+                <div class="o_kanban_record_bottom">
+                  <div class="oe_kanban_bottom_left">
+
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <!-- List view -->
+    <record model="ir.ui.view" id="assign_fuel_card_list_view">
+      <field name="name">Assign Fuel Card List</field>
+      <field name="model">assign.fuel.card.model</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="employee_id" />
+
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="assign_fuel_card_action_window">
+      <field name="name">Fuel</field>
+      <field name="res_model">assign.fuel.card.model</field>
+      <field name="view_mode">kanban,tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Assign fuel card!
+        </p>
+      </field>
+    </record>
+
+
+    <!-- server action to the one above -->
+    <!-- 
+    <record model="ir.actions.server" id="kkn_fuel_module.action_server">
+      <field name="name">kkn_fuel_module server</field>
+      <field name="model_id" ref="model_kkn_fuel_module_kkn_fuel_module"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record> -->
+  </data>
+</odoo>

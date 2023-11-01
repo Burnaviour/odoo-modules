@@ -2,8 +2,7 @@
 {
     "name": "Fuel",
     "summary": """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Fuel module used to assign fuel card to employee""",
     "description": """
         Long description of module's purpose
     """,
@@ -17,11 +16,11 @@
     "sequence": -400,
     "version": "0.1",
     # any module necessary for this one to work correctly
-    "depends": ["base"],
+    "depends": ["base", "hr", "mail"],
     # always loaded
     "data": [
         "security/ir.model.access.csv",
-        "views/views.xml",
+        "views/assign_fuel_card.xml",
         "views/menu.xml",
         "views/templates.xml",
     ],
