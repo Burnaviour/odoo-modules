@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_assign_fuel_card_model,access.assign.fuel.card.model,model_assign_fuel_card_model,base.group_user,1,1,1,1
+access_create_fuel_card_model,access.create.fuel.card.model,model_create_fuel_card_model,base.group_user,1,1,1,1
+access_fuel_monthly_report_wizard,access.fuel.monthly.report.wizard,model_fuel_monthly_report_wizard,base.group_user,1,1,1,1

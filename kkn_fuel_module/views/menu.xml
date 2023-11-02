@@ -6,21 +6,29 @@
             web_icon="kkn_fuel_module,static/description/fuel.png"
             sequence="1"
         />
-        <!-- menu categories -->
+        <!-- menu Operations -->
         <menuitem name="Operations" id="kkn_fuel_module.menu_1" sequence="0"
             parent="kkn_fuel_module.menu_root"
             action="kkn_fuel_module.assign_fuel_card_action_window" />
 
+
+        <!-- Reporting -->
         <menuitem name="Reporting" id="kkn_fuel_module.menu_2" parent="kkn_fuel_module.menu_root"
-            sequence="1" action="kkn_fuel_module.assign_fuel_card_action_window" />
+            sequence="1" />
 
+        <!-- submenu     -->
+        <menuitem
+            id="monthly_fuel_report_menu"
+            name="Monthly Fuel Report"
+            parent="kkn_fuel_module.menu_2"
+            action="kkn_fuel_module.monthly_fuel_report_wizard_action_window"
+            sequence="2" />
+
+        <!-- configuration -->
         <menuitem name="Configuration" id="kkn_fuel_module.menu_3"
-            parent="kkn_fuel_module.menu_root" sequence="2" action="kkn_fuel_module.assign_fuel_card_action_window"
+            parent="kkn_fuel_module.menu_root" sequence="2"
+            action="kkn_fuel_module.assign_fuel_card_action_window"
         />
-
-   
-
- 
 
 
         <!-- <menuitem name="Server to list" id="kkn_fuel_module" parent="kkn_fuel_module.menu_2"

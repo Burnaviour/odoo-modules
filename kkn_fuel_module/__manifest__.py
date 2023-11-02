@@ -21,6 +21,8 @@
     "data": [
         "security/ir.model.access.csv",
         "views/assign_fuel_card.xml",
+        "views/create_fuel_card.xml",
+        "wizard/fuel_monthly_report_wizard.xml",
         "views/menu.xml",
         "views/templates.xml",
     ],

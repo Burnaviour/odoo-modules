@@ -33,7 +33,7 @@
         'views/assign_electricity_meters.xml',
         'views/bill_electricity_meters.xml',
         'views/electricity_meters.xml',
-        'wizards/monthly_electricity_bills_report_wiz.xml',
+        'wizard/monthly_electricity_bills_report_wiz.xml',
 
     ],
     # only loaded in demonstration mode

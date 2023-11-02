@@ -30,20 +30,55 @@
       <field name="name">Assign Fuel Card Kanban</field>
       <field name="model">assign.fuel.card.model</field>
       <field name="arch" type="xml">
-        <kanban class="o_kanban_small_column o_kanban_project_tasks" default_group_by="state"
-          quick_create="false" records_draggable="false"
-          default_order="state">
+        <kanban class="o_kanban_small_column o_kanban_project_tasks"
+          default_group_by="state"
+          quick_create="false"
+        >
+          <!-- records_draggable="false"
+        default_order="state" -->
           <field name="state" />
+          <field name="employee_id" />
+          <!-- <progressbar field="kanban_state"
+            colors='{"draft": "info","admin_approval": "warning" ,"assigned": "success", "cancel": "danger"}'
+          /> -->
+          <progressbar field="kanban_state"
+            colors='{"draft": "secondary","admin_approval": "warning" ,"assigned": "success", "unassign_request": "primary", "rejected": "danger", "cancel": "danger"}' />
+
           <templates>
             <t t-name="kanban-box">
-              <div t-attf-class="oe_kanban_card oe_kanban_global_click">
-                <div class="o_kanban_record_top mb16">
-                  <field name="employee_id" />
-                </div>
-                <div class="o_kanban_record_bottom">
-                  <div class="oe_kanban_bottom_left">
+              <div class="oe_kanban_global_click"
+              >
+                <div class="oe_kanban_details d-flex flex-column">
+                  <strong>
+                    <field name="employee_id" />
+                  </strong>
+                  <!-- <ul>
+                    <li> Name: <field name="name_on_card" />
 
-                  </div>
+                    </li>
+                    <li> Valid From : <field name="valid_from_month" />/ <field
+                        name="valid_from_year" />
+
+                    </li>
+
+                    <li> Valid Till : <field name="valid_till_month" />/ <field
+                        name="valid_till_year" />
+                    </li>
+                    <li> Product : <field name="product_name" />
+
+
+                    </li>
+                    <li> Card Usage Limit : <field name="card_usage_limit" />
+                    </li>
+                  </ul> -->
+
+                </div>
+
+
+                <div class="o_kanban_record_bottom">
+                  <!-- <field name="kanban_state" widget="state_selection"
+                            groups="base.group_user"
+                            invisible="context.get('fsm_mode', False)" /> -->
                 </div>
               </div>
             </t>

@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="view_fuel_monthly_report_wizard_form" model="ir.ui.view">
+            <field name="name">fuel.monthly.report.wizard.form</field>
+            <field name="model">fuel.monthly.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Fuel Monthly Report">
+                    <header>
+                    </header>
+                    <group>
+                        <field name="year" />
+                        <field name="month" />
+                    </group>
+                    <footer>
+                        <button name="generate_report" string="Generate PDF" type="object"
+                            class="btn-primary oe_right" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window"
+            id="monthly_fuel_report_wizard_action_window">
+            <field name="name">Monthly Fuel Bill Report</field>
+            <field name="res_model">fuel.monthly.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+    </data>
+</odoo>
+                    

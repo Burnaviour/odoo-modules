@@ -1,0 +1,152 @@
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_create_fuel_card_tree" model="ir.ui.view">
+            <field name="name">create.fuel.card.tree</field>
+            <field name="model">create.fuel.card.model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="card_number" />
+                    <field name="name_on_card" />
+                    <field name="product_name" />
+                    <field name="card_usage_limit" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Kanban View -->
+        <record id="view_create_fuel_card_kanban" model="ir.ui.view">
+            <field name="name">create.fuel.card.kanban</field>
+            <field name="model">create.fuel.card.model</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_small_column o_kanban_project_tasks"
+                    default_group_by="state"
+                    quick_create="false"
+                >
+                    <!-- records_draggable="false"
+                    default_order="state" -->
+                    <field name="state" />
+                    <field name="card_number" />
+                    <progressbar field="kanban_state"
+                        colors='{"draft": "info","admin": "warning" ,"approved": "success", "cancel": "danger"}' />
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click"
+                            >
+                                <div class="oe_kanban_details d-flex flex-column">
+                                    <strong>
+                                        <field name="card_number" />
+
+                                    </strong>
+                                    <ul>
+                                        <li> Name: <field name="name_on_card" />
+
+                                        </li>
+                                        <li> Valid From : <field name="valid_from_month" />/ <field
+                                                name="valid_from_year" />
+
+                                        </li>
+
+                                        <li> Valid Till : <field name="valid_till_month" />/ <field
+                                                name="valid_till_year" />
+                                        </li>
+                                        <li> Product : <field name="product_name" />
+
+
+                                        </li>
+                                        <li> Card Usage Limit : <field name="card_usage_limit" />
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+
+                                <div class="o_kanban_record_bottom">
+                                    <!-- <field name="kanban_state" widget="state_selection"
+                                        groups="base.group_user"
+                                        invisible="context.get('fsm_mode', False)" /> -->
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_create_fuel_card_form" model="ir.ui.view">
+            <field name="name">create.fuel.card.form</field>
+            <field name="model">create.fuel.card.model</field>
+            <field name="arch" type="xml">
+                <form string="Fuel Cards">
+                    <header>
+                        <field name="state" widget="statusbar"
+                            statusbar_visible="draft,admin,approved,rejected,cancel"
+                            readonly="1" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="card_number" />
+                                <field name="name_on_card" />
+                                <label for='valid_from_month' />
+                                <div>
+                                    <field name="valid_from_month"
+                                        class="oe_inline"
+                                    />
+                                    <span>/</span>
+                                    <field name="valid_from_year" class="oe_inline" />
+                                </div>
+
+                                <label for='valid_till_month' />
+                                <div>
+                                    <field name="valid_till_month"
+                                        class="oe_inline"
+                                    />
+                                    <span>/</span>
+
+                                    <field name="valid_till_year" class="oe_inline" />
+                                </div>
+
+                            </group>
+
+                            <group>
+                                <field name="product_name" />
+                                <field name="card_usage_limit" />
+                            </group>
+
+                        </group>
+
+
+                    </sheet>
+
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="activity_ids" widget="mail_activity" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+
+                </form>
+            </field>
+        </record>
+
+        <!-- Actions opening views on models -->
+        <record model="ir.actions.act_window" id="create_fuel_card_action_window">
+            <field name="name">Fuel Card</field>
+            <field name="res_model">create.fuel.card.model</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create fuel card!
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_create_fuel_card" name="Fuel Cards" parent="kkn_fuel_module.menu_3"
+            action="create_fuel_card_action_window" />
+
+    </data>
+</odoo>
