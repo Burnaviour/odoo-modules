@@ -193,7 +193,7 @@
 
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="assign_fuel_card_action_window">
-      <field name="name">Fuel</field>
+      <field name="name">Assign Fuel Card </field>
       <field name="res_model">assign.fuel.card.model</field>
       <field name="view_mode">kanban,tree,form</field>
       <field name="help" type="html">

@@ -111,7 +111,7 @@
                 <form string="Fuel Cards">
                     <header>
                         <field name="state" widget="statusbar"
-                            statusbar_visible="draft,admin,approved,rejected,cancel"
+                            statusbar_visible="draft,admin_approval,approved,rejected,cancel"
                             readonly="1" />
                     </header>
                     <sheet>
