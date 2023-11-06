@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from datetime import datetime
 from odoo import models, fields, api
 
 
@@ -12,16 +10,6 @@ STATES = [
     ("unassigned", "Unassigned"),
     ("rejected", "Rejected"),
     ("cancel", "Cancel"),
-]
-
-KANBAN_STATES = [
-    ("draft", "Grey"),
-    ("admin_approval", "Yellow"),
-    ("assigned", "Green"),
-    ("unassigned", "Red"),
-    ("unassign_request", "Blue"),
-    ("rejected", "Red"),
-    ("cancel", "Red"),
 ]
 
 
@@ -81,23 +69,29 @@ class AssignFuelCard(models.Model):
     state = fields.Selection(
         STATES,
         string="State",
-        required=1,
+        required=True,
         default="draft",
         tracking=True,
         group_expand="_expand_states",
     )
 
     kanban_state = fields.Selection(
-        KANBAN_STATES,
+        [
+            ("draft", "Grey"),
+            ("admin_approval", "Yellow"),
+            ("assigned", "Green"),
+            ("unassigned", "Red"),
+            ("unassign_request", "Blue"),
+            ("rejected", "Red"),
+            ("cancel", "Red"),
+        ],
         string="Kanban State",
         copy=False,
         default="draft",
         required=True,
     )
     kanban_state_label = fields.Char(
-        compute="_compute_kanban_state_label",
-        string="Kanban State Label",
-        tracking=True,
+        compute="_compute_kanban_state_label", string="Kanban State Label", store=True
     )
 
     @api.depends("state", "kanban_state")

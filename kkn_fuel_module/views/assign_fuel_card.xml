@@ -7,42 +7,51 @@
       <field name="arch" type="xml">
         <form string="Assign Fuel Card">
           <header>
-            <button string="Reset to Draft" name="draft_state_method" type="object"
-              class="oe_highlight" />
-            <button string="Admin Approval" name="admin_approval_state_method" type="object"
-              class="oe_highlight" />
-            <button string="Assigned" name="assigned_state_method" type="object"
-              class="oe_highlight" />
-            <button string="Unassign Request" name="unassign_request_state_method" type="object"
-              class="oe_highlight" />
-            <button string="Unassign" name="unassigned_state_method" type="object"
-              class="oe_highlight" />
-            <button string="Reject" name="rejected_state_method" type="object" class="oe_highlight" />
-            <button string="Cancel" name="cancel_state_method" type="object" class="oe_highlight" />
+            <!-- states -->
             <field name="state" widget="statusbar"
               statusbar_visible="draft,admin_approval,assigned,unassign_request,unassigned,rejected,cancel" />
+
+            <button string="Reset to Draft" name="draft_state_method" type="object"
+              states="rejected,cancel"
+              class="oe_highlight" />
+            <button string="Admin Approval" name="admin_approval_state_method" type="object"
+              class="oe_highlight" states="draft" />
+            <button string="Assigned" name="assigned_state_method" type="object"
+              class="oe_highlight" states="admin_approval" />
+            <button string="Unassign Request" name="unassign_request_state_method" type="object"
+              class="oe_highlight" states="assigned" />
+            <button string="Unassign" name="unassigned_state_method" type="object"
+              class="oe_highlight" states="unassign_request" />
+            <button string="Reject" name="rejected_state_method" type="object"
+              states="admin_approval" class="oe_highlight" />
+            <button string="Cancel" name="cancel_state_method" type="object" class="oe_highlight"
+              attrs="{'invisible':[('state','in',('assigned','unassigned','cancel'))]}" />
+
           </header>
-
           <sheet>
-
             <!-- employee -->
             <div class="oe_title">
+
               <label for="employee_id" />
               <h3>
                 <field name="employee_id"
                   options="{'no_open': True, 'no_create': True, 'no_edit': True}"
                 />
               </h3>
+
             </div>
             <!-- card number  -->
-            <group>
-              <group>
+            <div class="oe_title">
 
-                <field name="fuel_card_id" />
+              <label for="fuel_card_id" />
+              <h3>
+                <field name="fuel_card_id"
+                  options="{'no_open': True, 'no_create': True, 'no_edit': True}"
+                />
+              </h3>
+            </div>
 
 
-              </group>
-            </group>
             <!-- fuel card group  -->
             <group name="fuel_card" string="Fuel Card Details"
               attrs="{'invisible': [('fuel_card_id', '=', False)]}">
@@ -82,7 +91,7 @@
       <field name="name">Assign Fuel Card Kanban</field>
       <field name="model">assign.fuel.card.model</field>
       <field name="arch" type="xml">
-        <kanban class="o_kanban_small_column o_kanban_project_tasks"
+        <kanban class="o_kanban_project_tasks o_kanban_small_column o_opportunity_kanban"
           default_group_by="state"
           quick_create="false"
         >
@@ -90,49 +99,77 @@
         default_order="state" -->
           <field name="state" />
           <field name="employee_id" />
-          <!-- <progressbar field="kanban_state"
-            colors='{"draft": "info","admin_approval": "warning" ,"assigned": "success", "cancel": "danger"}'
-          /> -->
+          <field name="kanban_state" />
+
           <progressbar field="kanban_state"
             colors='{"draft": "secondary","admin_approval": "warning" ,"assigned": "success", "unassign_request": "primary","unassigned": "danger", "rejected": "danger", "cancel": "danger"}' />
 
           <templates>
             <t t-name="kanban-box">
-              <div class="oe_kanban_global_click"
+              <div class="oe_kanban_global_click o_has_icon oe_kanban_content oe_kanban_card"
               >
-                <div class="oe_kanban_details d-flex flex-column">
-                  <strong>
-                    <field name="employee_id" />
-                  </strong>
-                  <!-- <ul>
-                    <li> Name: <field name="name_on_card" />
+                <div class="oe_kanban_details d-flex flex-column"> Employee: <strong>
+                    <field name="employee_id"
+                    />
+                  </strong> 
+                  <hr />
+                  <ul>
+
+                    <li>
+                      <strong>Card Number: </strong>
+                      <field
+                        name="fuel_card_id" />
 
                     </li>
-                    <li> Valid From : <field name="valid_from_month" />/ <field
+                    <li>
+                      <strong>
+                        Name on Card:
+                      </strong>
+                      <field name="name_on_card" />
+
+                    </li>
+                    <hr />
+                    <li>
+                      <strong>Product :</strong>
+                      <field name="product_name" />
+
+
+                    </li>
+                    <li>
+                      <strong>Card Usage Limit :</strong>
+                      <field name="card_usage_limit" />
+                    </li>
+                    <li>
+                      <strong>Valid From :</strong> <field name="valid_from_month" />/ <field
                         name="valid_from_year" />
 
                     </li>
 
-                    <li> Valid Till : <field name="valid_till_month" />/ <field
+                    <li>
+                      <strong>Valid Till :</strong> <field name="valid_till_month" />/ <field
                         name="valid_till_year" />
                     </li>
-                    <li> Product : <field name="product_name" />
 
-
-                    </li>
-                    <li> Card Usage Limit : <field name="card_usage_limit" />
-                    </li>
-                  </ul> -->
+                  </ul>
 
                 </div>
 
+                <div class="oe_kanban_footer">
+                  <div class="o_kanban_record_bottom">
+                    <div class="oe_kanban_bottom_left">
 
-                <div class="o_kanban_record_bottom">
-                  <!-- <field name="kanban_state" widget="state_selection"
-                            groups="base.group_user"
-                            invisible="context.get('fsm_mode', False)" /> -->
+                    </div>
+
+                    <div class="oe_kanban_bottom_right">
+                      <i title="fuel card icon"
+                        t-attf-class="fa fa-credit-card #{record.kanban_state.raw_value == 'draft' ? 'text-secondary' : record.kanban_state.raw_value == 'admin_approval' ? 'text-warning' : record.kanban_state.raw_value == 'assigned' ? 'text-success' : record.kanban_state.raw_value == 'unassign_request' ? 'text-primary' : record.kanban_state.raw_value == 'unassigned' || record.kanban_state.raw_value == 'rejected' || record.kanban_state.raw_value == 'cancel' ? 'text-danger' : 'default_color'}"></i>
+                    </div>
+                  </div>
                 </div>
+
               </div>
+
+
             </t>
           </templates>
         </kanban>

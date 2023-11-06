@@ -4,7 +4,7 @@ from odoo import _, api, fields, models
 
 STATES = [
     ("draft", "Draft"),
-    ("admin", "Admin Approval"),
+    ("admin_approval", "Admin Approval"),
     ("approved", "Approved"),
     ("rejected", "Rejected"),
     ("cancel", "Cancel"),
@@ -13,7 +13,7 @@ STATES = [
 
 class CreateFuelCard(models.Model):
     _name = "create.fuel.card.model"
-    _description = "Create Fuel Card "
+    _description = "Create Fuel Cards"
     _rec_name = "card_number"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
@@ -105,8 +105,9 @@ class CreateFuelCard(models.Model):
     kanban_state = fields.Selection(
         [
             ("draft", "Grey"),
-            ("admin", "Yellow"),
+            ("admin_approval", "Yellow"),
             ("approved", "Green"),
+            ("rejected", "Red"),
             ("cancel", "Red"),
         ],
         string="Kanban State",
@@ -117,6 +118,7 @@ class CreateFuelCard(models.Model):
     kanban_state_label = fields.Char(
         compute="_compute_kanban_state_label",
         string="Kanban State Label",
+        store=True,
         tracking=True,
     )
 
@@ -127,11 +129,5 @@ class CreateFuelCard(models.Model):
     @api.depends("state", "kanban_state")
     def _compute_kanban_state_label(self):
         for task in self:
-            if task.state == "draft":
-                task.kanban_state = "draft"
-            elif task.state == "approved":
-                task.kanban_state = "approved"
-            elif task.state == "admin":
-                task.kanban_state = "admin"
-            else:
-                task.kanban_state = "cancel"
+            task.kanban_state = task.state
+            task.kanban_state_label = task.state
