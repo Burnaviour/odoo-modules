@@ -49,6 +49,7 @@ class kkn_edit_pop_module(models.Model):
         self.city_id = False
         self.state_id = False
         self.country_id = False
+        self.company_id = False
         self.zip_id = 54000
         self.partner_latitude = 0.000
         self.partner_longitude = 0.000
@@ -64,6 +65,7 @@ class kkn_edit_pop_module(models.Model):
             self.location_id = self.existing_location_id.location_id
             self.state_id = self.existing_location_id.state_id
             self.country_id = self.existing_location_id.country_id
+            self.company_id = self.existing_location_id.company_id
             self.zip_id = self.existing_location_id.zip_id
             self.partner_latitude = self.existing_location_id.partner_latitude
             self.partner_longitude = self.existing_location_id.partner_longitude
@@ -106,6 +108,18 @@ class kkn_edit_pop_module(models.Model):
     country_id = fields.Many2one('res.country', domain="[('name','=','PAKISTAN')]", tracking=True,
                                  default=lambda self: self.env['res.country'].search(
                                      [('name', '=', 'PAKISTAN')]).id, required=True)
+
+    def action_in_updated(self):
+        for rec in self:
+            rec.state = 'Updated'
+
+    def action_in_rejected(self):
+        for rec in self:
+            rec.state = 'Rejected'
+
+    def action_in_new(self):
+        for rec in self:
+            rec.state = 'New'
 
     @api.model
     def _geo_localize(self, street='', zip='', city='', state='', country=''):

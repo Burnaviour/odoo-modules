@@ -3,7 +3,7 @@
     <data>
         <!-- Top menu item -->
         <menuitem name="Fuel" id="kkn_fuel_module.menu_root"
-            web_icon="kkn_fuel_module,static/description/fuel.png"
+            web_icon="kkn_fuel_module,static/description/icon.png"
             sequence="1"
         />
         <!-- menu categories -->
