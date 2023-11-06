@@ -28,7 +28,7 @@
                     <field name="state" />
                     <field name="card_number" />
                     <progressbar field="kanban_state"
-                        colors='{"draft": "info","admin": "warning" ,"approved": "success", "cancel": "danger"}' />
+                        colors='{"draft": "secondary","admin": "warning" ,"approved": "success", "cancel": "danger"}' />
 
                     <templates>
                         <t t-name="kanban-box">

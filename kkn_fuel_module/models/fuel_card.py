@@ -103,7 +103,12 @@ class CreateFuelCard(models.Model):
         group_expand="_expand_states",
     )
     kanban_state = fields.Selection(
-        [("draft", "Grey"),("admin", "Yellow"), ("approved", "Green"), ("cancel", "Red")],
+        [
+            ("draft", "Grey"),
+            ("admin", "Yellow"),
+            ("approved", "Green"),
+            ("cancel", "Red"),
+        ],
         string="Kanban State",
         copy=False,
         default="draft",

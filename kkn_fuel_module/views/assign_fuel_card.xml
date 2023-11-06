@@ -6,20 +6,72 @@
       <field name="model">assign.fuel.card.model</field>
       <field name="arch" type="xml">
         <form string="Assign Fuel Card">
+          <header>
+            <button string="Reset to Draft" name="draft_state_method" type="object"
+              class="oe_highlight" />
+            <button string="Admin Approval" name="admin_approval_state_method" type="object"
+              class="oe_highlight" />
+            <button string="Assigned" name="assigned_state_method" type="object"
+              class="oe_highlight" />
+            <button string="Unassign Request" name="unassign_request_state_method" type="object"
+              class="oe_highlight" />
+            <button string="Unassign" name="unassigned_state_method" type="object"
+              class="oe_highlight" />
+            <button string="Reject" name="rejected_state_method" type="object" class="oe_highlight" />
+            <button string="Cancel" name="cancel_state_method" type="object" class="oe_highlight" />
+            <field name="state" widget="statusbar"
+              statusbar_visible="draft,admin_approval,assigned,unassign_request,unassigned,rejected,cancel" />
+          </header>
+
           <sheet>
+
+            <!-- employee -->
+            <div class="oe_title">
+              <label for="employee_id" />
+              <h3>
+                <field name="employee_id"
+                  options="{'no_open': True, 'no_create': True, 'no_edit': True}"
+                />
+              </h3>
+            </div>
+            <!-- card number  -->
             <group>
               <group>
-                <field name="employee_id" />
-              </group>
-              <group>
-                <!-- <field name="fuel_card_id" /> -->
+
+                <field name="fuel_card_id" />
+
+
               </group>
             </group>
-            <group>
-              <!-- <field name="fuel_type" />
-              <field name="fuel_limit" /> -->
+            <!-- fuel card group  -->
+            <group name="fuel_card" string="Fuel Card Details"
+              attrs="{'invisible': [('fuel_card_id', '=', False)]}">
+              <group>
+                <field name="name_on_card" />
+                <label for='valid_from_month' />
+                <div>
+                  <field name="valid_from_month" class="oe_inline" />
+                  <span>/</span>
+                  <field name="valid_from_year" class="oe_inline" />
+                </div>
+                <label for='valid_till_month' />
+                <div>
+                  <field name="valid_till_month" class="oe_inline" />
+                  <span>/</span>
+                  <field name="valid_till_year" class="oe_inline" />
+                </div>
+              </group>
+              <group>
+                <field name="card_usage_limit" />
+                <field name="product_name" />
+              </group>
             </group>
           </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" />
+            <field name="activity_ids" widget="mail_activity" />
+            <field name="message_ids" widget="mail_thread" />
+          </div>
         </form>
       </field>
     </record>
@@ -42,7 +94,7 @@
             colors='{"draft": "info","admin_approval": "warning" ,"assigned": "success", "cancel": "danger"}'
           /> -->
           <progressbar field="kanban_state"
-            colors='{"draft": "secondary","admin_approval": "warning" ,"assigned": "success", "unassign_request": "primary", "rejected": "danger", "cancel": "danger"}' />
+            colors='{"draft": "secondary","admin_approval": "warning" ,"assigned": "success", "unassign_request": "primary","unassigned": "danger", "rejected": "danger", "cancel": "danger"}' />
 
           <templates>
             <t t-name="kanban-box">
@@ -87,14 +139,17 @@
       </field>
     </record>
 
-    <!-- List view -->
+    <!-- Tree view -->
     <record model="ir.ui.view" id="assign_fuel_card_list_view">
       <field name="name">Assign Fuel Card List</field>
       <field name="model">assign.fuel.card.model</field>
       <field name="arch" type="xml">
         <tree>
           <field name="employee_id" />
-
+          <field name="fuel_card_id" />
+          <field name="name_on_card" />
+          <field name="product_name" />
+          <field name="card_usage_limit" />
         </tree>
       </field>
     </record>

@@ -388,22 +388,22 @@
     <record id="add_pops_kanban" model="ir.ui.view">
         <field name="name">add.pops.kanban</field>
         <field name="model">add.pop.model</field>
-        <field name="priority" eval="1"/>
+        <field name="priority" eval="1" />
         <field name="arch" type="xml">
             <kanban default_group_by="state" default_order="state"
                 class="o_kanban_small_column o_kanban_project_tasks" quick_create="false"
-                records_draggable="false" on_create="quick_create" quick_create_view="view_pop_form">
-                <field name="state" />
-                <field name="name" />
-                <field name="pop_new_type" />
-                <field name="color" />
-                <field name="priority" />
-                <progressbar field="kanban_state"
-                    colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;, &quot;normal&quot;: &quot;muted&quot;}" />
+                records_draggable="false">
+                <field name=" state" />
+                <field name=" name" />
+                <field name=" pop_new_type" />
+                <field name=" color" />
+                <field name=" priority" />
+                <progressbar field=" kanban_state"
+                    colors=" {&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;, &quot;normal&quot;: &quot;muted&quot;}" />
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name=" kanban-box">
                         <div
-                            t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
+                            t-attf-class=" {{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
                             <div class="oe_kanban_content">
                                 <div class="o_kanban_record_top">
                                     <div class="o_kanban_record_headings">

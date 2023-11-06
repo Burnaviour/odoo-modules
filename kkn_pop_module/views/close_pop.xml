@@ -161,7 +161,7 @@
         <field name="arch" type="xml">
             <kanban default_group_by="state" default_order="state" class="o_kanban_small_column o_kanban_project_tasks"
                     quick_create="false" records_draggable="false" on_create="quick_create"
-                    quick_create_view="close_view_pop_form">
+                    >
 
                 <field name="state"/>
                 <field name="name"/>
