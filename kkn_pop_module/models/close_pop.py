@@ -53,6 +53,7 @@ class kkn_close_pop_module(models.Model):
         self.city_id = False
         self.state_id = False
         self.country_id = False
+        self.company_id = False
         self.zip_id = False
         self.partner_latitude = 0.000
         self.partner_longitude = 0.000
@@ -68,6 +69,7 @@ class kkn_close_pop_module(models.Model):
             self.location_id = self.existing_location_id.location_id
             self.state_id = self.existing_location_id.state_id
             self.country_id = self.existing_location_id.country_id
+            self.company_id = self.existing_location_id.company_id
             self.zip_id = self.existing_location_id.zip_id
             self.partner_latitude = self.existing_location_id.partner_latitude
             self.partner_longitude = self.existing_location_id.partner_longitude
@@ -111,6 +113,45 @@ class kkn_close_pop_module(models.Model):
                                  default=lambda self: self.env['res.country'].search(
                                      [('name', '=', 'PAKISTAN')]).id, required=True)
     picking_id = fields.Many2one('stock.picking', 'Return Transfer')
+
+    def action_in_new(self):
+        for rec in self:
+            rec.state = 'New'
+
+    def action_in_approval_required(self):
+        for rec in self:
+            rec.state = 'Approval Required'
+
+    def action_in_coo_approval(self):
+        for rec in self:
+            rec.state = 'COO Approval'
+
+    def action_in_ceo_approval(self):
+        for rec in self:
+            rec.state = 'CEO Approval'
+
+    def action_in_store_return(self):
+        for rec in self:
+            rec.state = 'Store Return'
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'Click Successfully',
+                'type': 'rainbow_man',
+            }
+        }
+
+    def action_in_rejected(self):
+        for rec in self:
+            rec.state = 'Rejected'
+
+    def action_in_closed(self):
+        for rec in self:
+            rec.state = 'Closed'
+
+    def action_reset_to_admin(self):
+        for rec in self:
+            rec.state = 'Approval Required'
 
     @api.model
     def _geo_localize(self, street='', zip='', city='', state='', country=''):
