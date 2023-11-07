@@ -17,7 +17,6 @@ class kkn_pop_module(models.Model):
     _name = 'add.pop.model'
     _description = 'Add POP'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-
     def _expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
 
@@ -111,7 +110,7 @@ class kkn_pop_module(models.Model):
         else:
             self.existing_location_id = False
 
-    name = fields.Many2one('stock.location', "Location Name", tracking=True)
+    name = fields.Char("Location Name", tracking=True)
     complete_name = fields.Char("Full Location Name", store=True, tracking=True)
     location_id = fields.Many2one(
         "stock.location",
@@ -127,8 +126,8 @@ class kkn_pop_module(models.Model):
     )
     cost_center_id = fields.Many2one("account.analytic.account", "Cost Center")
     company_id = fields.Many2one(
-        related='name.company_id', string='Company',
-        index=True,
+        'res.company', 'Company',
+        default=lambda self: self.env.company, index=True,
         help='Let this field empty if this location is shared between companies')
     city_code = fields.Char(related='city_id.code', tracking=True)
 
@@ -147,22 +146,30 @@ class kkn_pop_module(models.Model):
     date_localization = fields.Date(string="Geolocation Date", tracking=True)
     comment = fields.Text("Additional Information")
 
-    street = fields.Char(related='name.street', tracking=True, required=True)
-    street2 = fields.Char(related='name.street2', tracking=True)
+    street = fields.Char(tracking=True, required=True)
+    street2 = fields.Char(tracking=True)
     city_id = fields.Many2one(
-        related="name.city_id",
+        "res.district",
         tracking=True,
+        default=lambda self: self.env["res.district"].search([("code", "=", "LHR")]).id,
         required=True,
     )
     state_id = fields.Many2one(
-        related="name.state_id",
+        "res.country.state",
         tracking=True,
+        default=lambda self: self.env["res.country.state"]
+        .search([("code", "=", "PK-PJ")])
+        .id,
         required=True,
     )
     zip_id = fields.Char(tracking=True, default="54000")
     country_id = fields.Many2one(
-        related="name.country_id",
+        "res.country",
+        domain="[('name','=','PAKISTAN')]",
         tracking=True,
+        default=lambda self: self.env["res.country"]
+        .search([("name", "=", "PAKISTAN")])
+        .id,
         required=True,
     )
 
@@ -180,12 +187,6 @@ class kkn_pop_module(models.Model):
         string="Landlord Email",
         tracking=True,
         required=False,
-    )
-    bank_id = fields.Many2one(
-        related="landlord_name.bank_ids.bank_id", string='Bank', tracking=True
-    )
-    acc_number = fields.Char(
-        related="landlord_name.bank_ids.acc_number", string="Account Number", tracking=True
     )
     rent = fields.Monetary(
         string="Agreement Rent", currency_field="company_currency", tracking=True
@@ -243,8 +244,8 @@ class kkn_pop_module(models.Model):
         string="NTN",
         index=True,
         help="The Tax Identification Number. "
-             "Complete it if the contact is subjected to government taxes. "
-             "Used in some legal statements.",
+        "Complete it if the contact is subjected to government taxes. "
+        "Used in some legal statements.",
     )
     partner_id = fields.Many2one("res.partner", "Vendor", tracking=True)
     next_billing_date = fields.Date("Next Billing Date", tracking=True)
@@ -326,11 +327,11 @@ class kkn_pop_module(models.Model):
         # We need country names in English below
         for partner in self.with_context(lang="en_US"):
             if result := self._geo_localize(
-                    partner.street,
-                    partner.zip_id,
-                    partner.city_id.name,
-                    partner.state_id.name,
-                    partner.country_id.name,
+                partner.street,
+                partner.zip_id,
+                partner.city_id.name,
+                partner.state_id.name,
+                partner.country_id.name,
             ):
                 partner.write(
                     {
@@ -340,39 +341,6 @@ class kkn_pop_module(models.Model):
                     }
                 )
         return True
-
-    def action_in_new(self):
-        for rec in self:
-            rec.state = 'New'
-
-    def action_in_approval_required(self):
-        for rec in self:
-            rec.state = 'Approval Required'
-
-    def action_in_coo_approval(self):
-        for rec in self:
-            rec.state = 'COO Approval'
-
-    def action_in_ceo_approval(self):
-        for rec in self:
-            rec.state = 'CEO Approval'
-
-    def action_in_approved(self):
-        for rec in self:
-            rec.state = 'Approved'
-
-    def action_in_rejected(self):
-        for rec in self:
-            rec.state = 'Rejected'
-
-    def action_in_closed(self):
-        for rec in self:
-            rec.state = 'Closed'
-
-    def action_reset_to_admin(self):
-        for rec in self:
-            rec.state = 'Approval Required'
-
 
 
 class noc_wireless_report(models.Model):
@@ -408,6 +376,7 @@ class noc_wireless_report(models.Model):
     #     ).report_action(self, data=data)
 
 
+
 class RentBillsHistory(models.Model):
     _name = "add.pop.rent.bill"
     _description = "POP RENT BILL HISTORY"
@@ -417,12 +386,14 @@ class RentBillsHistory(models.Model):
     billing_date = fields.Date("Billing Date")
 
 
+
 class ServiceBillsHistory(models.Model):
     _name = "add.pop.service.bill"
     _description = "POP SERVICE BILL HISTORY"
     name = fields.Many2one("add.pop.model")
     move_id = fields.Many2one("account.move")
     billing_date = fields.Date("Billing Date")
+
 
 
 class GeneratorBillsHistory(models.Model):
