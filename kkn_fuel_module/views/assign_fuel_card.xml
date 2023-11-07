@@ -1,0 +1,222 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record id="view_kkn_fuel_form" model="ir.ui.view">
+      <field name="name">assign.fuel.card.form.view</field>
+      <field name="model">assign.fuel.card.model</field>
+      <field name="arch" type="xml">
+        <form string="Assign Fuel Card">
+          <header>
+            <!-- states -->
+            <field name="state" widget="statusbar"
+              statusbar_visible="draft,admin_approval,assigned,unassign_request,unassigned,rejected,cancel" />
+
+            <button string="Reset to Draft" name="draft_state_method" type="object"
+              states="rejected,cancel"
+              class="oe_highlight" />
+            <button string="Admin Approval" name="admin_approval_state_method" type="object"
+              class="oe_highlight" states="draft" />
+            <button string="Assigned" name="assigned_state_method" type="object"
+              class="oe_highlight" states="admin_approval" />
+            <button string="Unassign Request" name="unassign_request_state_method" type="object"
+              class="oe_highlight" states="assigned" />
+            <button string="Unassign" name="unassigned_state_method" type="object"
+              class="oe_highlight" states="unassign_request" />
+            <button string="Reject" name="rejected_state_method" type="object"
+              states="admin_approval" class="oe_highlight" />
+            <button string="Cancel" name="cancel_state_method" type="object" class="oe_highlight"
+              attrs="{'invisible':[('state','in',('assigned','unassigned','cancel'))]}" />
+
+          </header>
+          <sheet>
+            <!-- employee -->
+            <div class="oe_title">
+
+              <label for="employee_id" />
+              <h3>
+                <field name="employee_id"
+                  options="{'no_open': True, 'no_create': True, 'no_edit': True}"
+                />
+              </h3>
+
+            </div>
+            <!-- card number  -->
+            <div class="oe_title">
+
+              <label for="fuel_card_id" />
+              <h3>
+                <field name="fuel_card_id"
+                  options="{'no_open': True, 'no_create': True, 'no_edit': True}"
+                />
+              </h3>
+            </div>
+
+
+            <!-- fuel card group  -->
+            <group name="fuel_card" string="Fuel Card Details"
+              attrs="{'invisible': [('fuel_card_id', '=', False)]}">
+              <group>
+                <field name="name_on_card" />
+                <label for='valid_from_month' />
+                <div>
+                  <field name="valid_from_month" class="oe_inline" />
+                  <span>/</span>
+                  <field name="valid_from_year" class="oe_inline" />
+                </div>
+                <label for='valid_till_month' />
+                <div>
+                  <field name="valid_till_month" class="oe_inline" />
+                  <span>/</span>
+                  <field name="valid_till_year" class="oe_inline" />
+                </div>
+              </group>
+              <group>
+                <field name="card_usage_limit" />
+                <field name="product_name" />
+              </group>
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" />
+            <field name="activity_ids" widget="mail_activity" />
+            <field name="message_ids" widget="mail_thread" />
+          </div>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- Kanban view -->
+    <record model="ir.ui.view" id="assign_fuel_card_kanban_view">
+      <field name="name">Assign Fuel Card Kanban</field>
+      <field name="model">assign.fuel.card.model</field>
+      <field name="arch" type="xml">
+        <kanban class="o_kanban_project_tasks o_kanban_small_column o_opportunity_kanban"
+          default_group_by="state"
+          quick_create="false"
+        >
+          <!-- records_draggable="false"
+        default_order="state" -->
+          <field name="state" />
+          <field name="employee_id" />
+          <field name="kanban_state" />
+
+          <progressbar field="kanban_state"
+            colors='{"draft": "secondary","admin_approval": "warning" ,"assigned": "success", "unassign_request": "primary","unassigned": "danger", "rejected": "danger", "cancel": "danger"}' />
+
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click o_has_icon oe_kanban_content oe_kanban_card"
+              >
+                <div class="oe_kanban_details d-flex flex-column"> Employee: <strong>
+                    <field name="employee_id"
+                    />
+                  </strong> 
+                  <hr />
+                  <ul>
+
+                    <li>
+                      <strong>Card Number: </strong>
+                      <field
+                        name="fuel_card_id" />
+
+                    </li>
+                    <li>
+                      <strong>
+                        Name on Card:
+                      </strong>
+                      <field name="name_on_card" />
+
+                    </li>
+                    <hr />
+                    <li>
+                      <strong>Product :</strong>
+                      <field name="product_name" />
+
+
+                    </li>
+                    <li>
+                      <strong>Card Usage Limit :</strong>
+                      <field name="card_usage_limit" />
+                    </li>
+                    <li>
+                      <strong>Valid From :</strong> <field name="valid_from_month" />/ <field
+                        name="valid_from_year" />
+
+                    </li>
+
+                    <li>
+                      <strong>Valid Till :</strong> <field name="valid_till_month" />/ <field
+                        name="valid_till_year" />
+                    </li>
+
+                  </ul>
+
+                </div>
+
+                <div class="oe_kanban_footer">
+                  <div class="o_kanban_record_bottom">
+                    <div class="oe_kanban_bottom_left">
+
+                    </div>
+
+                    <div class="oe_kanban_bottom_right">
+                      <i title="fuel card icon"
+                        t-attf-class="fa fa-credit-card #{record.kanban_state.raw_value == 'draft' ? 'text-secondary' : record.kanban_state.raw_value == 'admin_approval' ? 'text-warning' : record.kanban_state.raw_value == 'assigned' ? 'text-success' : record.kanban_state.raw_value == 'unassign_request' ? 'text-primary' : record.kanban_state.raw_value == 'unassigned' || record.kanban_state.raw_value == 'rejected' || record.kanban_state.raw_value == 'cancel' ? 'text-danger' : 'default_color'}"></i>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <!-- Tree view -->
+    <record model="ir.ui.view" id="assign_fuel_card_list_view">
+      <field name="name">Assign Fuel Card List</field>
+      <field name="model">assign.fuel.card.model</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="employee_id" />
+          <field name="fuel_card_id" />
+          <field name="name_on_card" />
+          <field name="product_name" />
+          <field name="card_usage_limit" />
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="assign_fuel_card_action_window">
+      <field name="name">Assign Fuel Card </field>
+      <field name="res_model">assign.fuel.card.model</field>
+      <field name="view_mode">kanban,tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Assign fuel card!
+        </p>
+      </field>
+    </record>
+
+
+    <!-- server action to the one above -->
+    <!-- 
+    <record model="ir.actions.server" id="kkn_fuel_module.action_server">
+      <field name="name">kkn_fuel_module server</field>
+      <field name="model_id" ref="model_kkn_fuel_module_kkn_fuel_module"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record> -->
+  </data>
+</odoo>
