@@ -42,7 +42,7 @@ class CreateFuelCard(models.Model):
     card_usage_limit = fields.Integer(
         string="Card Limit(Liters)",
         required=True,
-        default=1,
+        default=MIN_FUEL_LIMIT,
     )
     valid_from_month = fields.Selection(
         [
@@ -63,13 +63,11 @@ class CreateFuelCard(models.Model):
         string="Valid From",
         default="01",
     )
-
     valid_from_year = fields.Selection(
         [(str(num), str(num)) for num in range(2020, (datetime.now().year) + 10)],
         required=True,
         default=str(datetime.now().year),
     )
-
     valid_till_month = fields.Selection(
         [
             ("01", "01"),
