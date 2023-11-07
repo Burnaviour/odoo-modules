@@ -2,12 +2,11 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, AccessDenied
-
-AVAILABLE_PRIORITIES = [
-    ('0', 'Low'),
-    ('1', 'Medium'),
-    ('2', 'High'),
-    ('3', 'Very High'),
+STATES = [
+    ("draft", "Draft"),
+    ("approved", "Approved"),
+    ("rejected", "Rejected"),
+    ("cancel", "Cancel"),
 ]
 
 
@@ -19,20 +18,36 @@ class kkn_edit_pop_module(models.Model):
     def _expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
 
-    color = fields.Integer('Color Index')
-    kanban_state = fields.Selection([
-        ('normal', 'Grey'),
-        ('done', 'Green'),
-        ('blocked', 'Red')], string='Kanban State',
-        copy=False, default='normal', required=True)
-    priority = fields.Selection(AVAILABLE_PRIORITIES, string='Priority', index=True, default=AVAILABLE_PRIORITIES[0][0])
+    state = fields.Selection(
+        STATES,
+        string="State",
+        required=True,
+        default="draft",
+        tracking=True,
+        group_expand="_expand_states",
+    )
 
-    state = fields.Selection([
-        ('New', 'New'),
-        ('Updated', 'Updated'),
-        ('Rejected', 'Rejected')
-    ], string='State', group_expand='_expand_states', readonly=True, index=True, copy=False, default='New',
-        tracking=True)
+    kanban_state = fields.Selection(
+        [
+            ("draft", "Grey"),
+            ("approved", "Green"),
+            ("rejected", "Yellow"),
+            ("cancel", "Red"),
+        ],
+        string="Kanban State",
+        copy=False,
+        default="draft",
+        required=True,
+    )
+    kanban_state_label = fields.Char(
+        compute="_compute_kanban_state_label", string="Kanban State Label", store=True
+    )
+
+    @api.depends("state", "kanban_state")
+    def _compute_kanban_state_label(self):
+        for task in self:
+            task.kanban_state = task.state
+            task.kanban_state_label = task.state
 
     existing_location_id = fields.Many2one('stock.location', 'Existing Location', domain="['|', ('usage', '=', 'pop'),"
                                                                                          " ('customer_is_pop', '=', "
@@ -109,17 +124,34 @@ class kkn_edit_pop_module(models.Model):
                                  default=lambda self: self.env['res.country'].search(
                                      [('name', '=', 'PAKISTAN')]).id, required=True)
 
-    def action_in_updated(self):
-        for rec in self:
-            rec.state = 'Updated'
+    def draft_state_method(self):
+        # code for draft state method
+        self.set_state_draft()
 
-    def action_in_rejected(self):
-        for rec in self:
-            rec.state = 'Rejected'
+    def approved_state_method(self):
+        # code for assigned state method
+        self.set_state_approved()
 
-    def action_in_new(self):
-        for rec in self:
-            rec.state = 'New'
+    def rejected_state_method(self):
+        # code for rejected state method
+        self.set_state_rejected()
+
+    def cancel_state_method(self):
+        # code for cancel state method
+        self.set_state_cancel()
+
+    # state setter methods
+    def set_state_draft(self):
+        self.state = "draft"
+
+    def set_state_approved(self):
+        self.state = "approved"
+
+    def set_state_rejected(self):
+        self.state = "rejected"
+
+    def set_state_cancel(self):
+        self.state = "cancel"
 
     @api.model
     def _geo_localize(self, street='', zip='', city='', state='', country=''):

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="kkn_pop_module.monthly_pop_bill_report_temp">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" style='font-family:Tahoma; font-size:11px;line-height: 1.6; color:black;'
+                         t-att-data-oe-model="o and o._name"
+                         t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <div class="row">
+                            <div class="col-3">
+                                <br/>
+                                <img class="img img-responsive"
+                                     t-att-src="'/customer_invoice_report/static/description/logo.png'" width="200"
+                                     height="60"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="line-height: 2; text-align:center;">
+                                <br/>
+                                <br/>
+                                <h3 class="text-center">
+                                    <t t-esc="{'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June', '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December' }[o.month]"/>
+                                    Pop Rent Report
+                                </h3>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-6 text-left" style="line-height: 2;">
+                                <span>
+                                    <strong>Bill Period:</strong>
+                                </span>
+                                <span>
+                                    <t t-esc="{'1': 'JAN', '2': 'FEB', '3': 'MAR', '4': 'APR', '5': 'MAY', '6': 'JUN', '7': 'JUL', '8': 'AUG', '9': 'SEP', '10': 'OCT', '11': 'NOV', '12': 'DEC' }[o.month]"/>
+                                    <t t-esc="o.year"/>
+                                </span>
+                                <br/>
+                            </div>
+                            <div class="col-6 text-right" style="line-height: 2;">
+                                <span>
+                                    <strong>Date:</strong>
+                                </span>
+                                <span>
+                                    <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y %H:%M:%S')"/>
+                                </span>
+                                <br/>
+                            </div>
+                        </div>
+                        <t t-foreach="dat" t-as="data_line">
+                            <table class="table table-sm o_main_table table-bordered" style="width:100%;">
+                                <thead style="background-color:#c60808; color:white; font-size:11px;">
+                                    <th class="text-center" style="width: 5%; vertical-align:middle;">Sr#</th>
+                                    <th class="text-center" style="width: 15%; vertical-align:middle;">Unique ID</th>
+                                    <th class="text-center" style="width: 20%; vertical-align:middle;">Name</th>
+                                    <th class="text-center" style="width: 15%; vertical-align:middle;">POC</th>
+                                    <th class="text-center" style="width: 15%; vertical-align:middle;">Mobile No</th>
+                                    <th class="text-center" style="width: 15%; vertical-align:middle;">Payment Terms
+                                    </th>
+                                    <th class="text-center" style="width: 15%; vertical-align:middle;">Bill Amount</th>
+                                </thead>
+                                <t t-set="i" t-value="1"/>
+                                <t t-foreach="data_line[0]" t-as="m">
+                                    <tbody>
+                                        <td style="text-align:center">
+                                            <span t-esc="i"/>
+                                        </td>
+                                        <td style="text-align:left">
+                                            <span t-esc="m['id']"/>
+                                        </td>
+                                        <td style="text-align:left">
+                                            <span t-esc="m['name']"/>
+                                        </td>
+                                        <td style="text-align:left">
+                                            <span t-esc="m['poc']"/>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span t-esc="m['mobile']"/>
+                                        </td>
+                                        <td style="text-align:left">
+                                            <span t-esc="{'monthly': 'Monthly', 'quarterly': 'Quarterly', 'by annually': 'By Annually', 'annually': 'Annually'}[m['term']]"/>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span t-esc="'{0:,.2f}'.format(float(m['bill_amount']))"/>
+                                        </td>
+                                        <t t-set="i" t-value="i+1"/>
+                                    </tbody>
+                                </t>
+                                <tr style="background-color:#c60808; color:white; font-size:11px;">
+                                    <td class="text-right" colspan="6">
+                                        <b>Total</b>
+                                    </td>
+                                    <t t-set="bill_total_amount" t-value="0"/>
+                                    <t t-foreach="data_line[0]" t-as="s">
+                                        <t t-set="bill_total_amount" t-value="bill_total_amount+s['bill_amount']"/>
+                                    </t>
+                                    <td class="text-right">
+                                        <strong>
+                                            <span t-esc="'{0:,.2f}'.format(float(bill_total_amount))"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                    </div>
+                    <div class="footer" style='font-family:Tahoma; line-height: 1.6; color:black; font-size:11px;'>
+                        <div class="row" style="border-top:1px solid black;">
+                            <div class="col-6">
+                                <p style="text-align:left;">
+                                    <span>
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y %H:%M:%S')"/>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p style="text-align:right;">
+                                    <span>
+                                        Page:
+                                        <span class="page"/>
+                                        of
+                                        <span class="topage"/>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+</odoo>

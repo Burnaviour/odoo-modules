@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="monthly_pop_rent_bill_report_wizard">
+            <field name="name">monthly_pop_rent_bill_report_wizard</field>
+            <field name="model">pop.rent.bill.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="month" required="1"/>
+                            <field name="year" required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="" string="Print" class="oe_highlight"/>
+
+                        <button string="Close" class="btn btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="monthly_pop_rent_bill_report_wizard_action_window">
+            <field name="name">Monthly Pop Rent Bill Report</field>
+            <field name="res_model">pop.rent.bill.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="pop_reporting" name="Reporting" parent="menu_kkn_pop_root"
+                  sequence="10"/>
+
+        <menuitem id="menu_monthly_pop_rent_bill_report_wizard"
+                  name="Monthly Pop Rent Bill Report"
+                  action="monthly_pop_rent_bill_report_wizard_action_window"
+                  parent="pop_reporting"
+                  sequence="10"/>
+
+    </data>
+</odoo>

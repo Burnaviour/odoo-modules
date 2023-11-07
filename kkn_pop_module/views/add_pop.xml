@@ -6,8 +6,6 @@
         <field name="model">add.pop.model</field>
         <field name="arch" type="xml">
             <tree string="POP's" name="POP" export_xlsx="false" delete="false">
-                <!--                <field name="unique_id"/>-->
-                <!--                <field name="complete_name" string="Location"/>-->
                 <field name="usage"/>
                 <field name="name"/>
                 <field name="street"/>
@@ -26,92 +24,50 @@
         <field name="arch" type="xml">
             <form string="ADD POP" name="POP" delete="false">
                 <header>
-                    <button name="action_in_approval_required" type="object" string="Approval Required" class="oe_highlight" states="New"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,admin_approval,approved,coo_approval,ceo_approval,rejected,cancel"/>
 
-<!--                    <button name="" string="Generate Other Charges" class="oe_highlight"/>-->
-
-                    <button name="action_in_approved" type="object" string="Approved" class="oe_highlight"
-                            states="CEO Approval"/>
-
-                    <button name="action_in_rejected" type="object" string="Rejected" class="oe_highlight"
-                            states="Approval Required, COO Approval, CEO Approval"/>
-
-                    <button name="action_in_coo_approval" type="object" string="COO Approval" class="oe_highlight"
-                            states="Approval Required, COO Approval"/>
-
-                    <button name="action_in_ceo_approval" type="object" string="CEO Approval" class="oe_highlight"
-                            states="COO Approval, CEO Approval"/>
-
-                    <button name="action_reset_to_admin" type="object" string="Reset to Admin" class="oe_highlight"
-                            states="COO Approval, CEO Approval, Approved"/>
-
-                    <button name="action_in_new" type="object" string="Cancel"
-                            states="Rejected"/>
-
-                    <field name="state" widget="statusbar" options="{'clickable': '1'}"
-                           statusbar_visible="New,Approval Required,COO Approval,CEO Approval,Approved"
-                           readonly="1"/>
+                    <button string="Reset to Draft" name="draft_state_method" type="object"
+                            states="rejected,cancel"
+                            class="oe_highlight"/>
+                    <button string="Admin Approval" name="admin_approval_state_method" type="object"
+                            class="oe_highlight" states="draft"/>
+                    <button string="Approved" name="approved_state_method" type="object"
+                            class="oe_highlight" states="admin_approval"/>
+                    <button string="COO Approval" name="coo_approval_state_method" type="object"
+                            class="oe_highlight" states="approved"/>
+                    <button string="CEO Approval" name="ceo_approval_state_method" type="object"
+                            class="oe_highlight" states="coo_approval"/>
+                    <button string="Reject" name="rejected_state_method" type="object"
+                            states="admin_approval" class="oe_highlight"/>
+                    <button string="Cancel" name="cancel_state_method" type="object" class="oe_highlight"
+                            attrs="{'invisible':[('state','in',('approved','ceo_approval','cancel'))]}"/>
                 </header>
                 <sheet>
                     <group>
-                        <separator string="POP Details" colspan="2"/>
                         <group>
-                            <!--                    <label for="unique_id" class="oe_edit_only" modifiers="{}"/>-->
-                            <!--                    <h3 modifiers="{}">-->
-                            <!--                        <div>-->
-                            <!--                            <field name="city_code" invisible="1" style="width:5%; margin-right:2%;"
-                            force_save="1"-->
-                            <!--                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>-->
-                            <!--                            <field name="unique_id" readonly="1" modifiers="{'required':true}"
-                            style="width:10%"-->
-                            <!--                                   force_save="1"/>-->
-                            <!--                        </div>-->
-                            <!--                    </h3>-->
-                            <!--                            <label for="pop_new_type" class="oe_edit_only"/>-->
-                            <!--                            <h1>-->
                             <field name="pop_new_type" force_save="1"
                                    options="{'horizontal': true}" widget="radio"
-                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"
                                    style="font-size: 15px;" string="POP Type"/>
 
-                            <!--                            <label for="is_rental" class="oe_edit_only"-->
-                            <!--                                   attrs="{'invisible':[('pop_new_type', '!=', 'Existing')]}"/>-->
-                            <!--                            <h1 attrs="{'invisible':[('pop_new_type', '!=', 'Existing')]}">-->
                             <field name="is_rental" force_save="1"
                                    options="{'horizontal': true}" widget="radio"
-                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))], 'invisible':[('pop_new_type', '!=', 'Existing')]}"
+                                   attrs="{'invisible':[('pop_new_type', '!=', 'Existing')]}"
                                    style="font-size: 15px;" string="Is Rental"/>
-                            <!--                            </h1>-->
                         </group>
                         <group>
-                            <!--                            </h1>-->
-                            <!--                            <label for="existing_location_id" class="oe_edit_only"-->
-                            <!--                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'invisible':[('pop_new_type','not in',('Existing'))],'required':[('pop_new_type','in',('Existing'))]}"/>-->
-                            <!--                            <h1>-->
                             <field name="existing_location_id" style="width:100%;"
                                    options="{'no_open': True, 'no_edit': True, 'no_create': True}"
                                    force_save="1"
-                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'invisible':[('pop_new_type','not in',('Existing'))],'required':[('pop_new_type','in',('Existing'))]}"
+                                   attrs="{'invisible':[('pop_new_type','not in',('Existing'))],'required':[('pop_new_type','in',('Existing'))]}"
                                    string="Existing Location"/>
-                            <!--                            </h1>-->
-                            <!--                            <label for="name" class="oe_edit_only"-->
-                            <!--                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'invisible':[('pop_new_type','in',('Existing'))],'required':[('pop_new_type','not in',('Existing'))]}"/>-->
-                            <!--                            <h1>-->
+
                             <field name="name" force_save="1" options="{'no_quick_create': True}"
-                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'invisible':[('pop_new_type','in',('Existing'))],'required':[('pop_new_type','not in',('Existing'))]}"
+                                   attrs="{'invisible':[('pop_new_type','in',('Existing'))],'required':[('pop_new_type','not in',('Existing'))]}"
                                    string="Location Name"/>
-                            <!--                            </h1>-->
-                            <!--                            <label for="location_id" class="oe_edit_only"/>-->
-                            <!--                            <h2>-->
+
                             <field name="location_id" readonly="1" string="Parent Location"
                                    options="{'no_open': True, 'no_edit': True, 'no_create': True}"/>
-                            <!--                        <field name="location_id" readonly="1"-->
-                            <!--                               options="{'no_open': True, 'no_edit': True, 'no_create': True}"-->
-                            <!--                               attrs="{'readonly':[('state','not in',('New', 'Approval-->
-                            <!--                        Required'))],'invisible':[('pop_new_type','in',('Existing'))],'required':[('pop_new_type','not-->
-                            <!--                        in',('Existing'))]}"-->
-                            <!--                               force_save="1"/>-->
-                            <!--                            </h2>-->
                         </group>
                     </group>
                     <group style="margin-top: 50px;">
@@ -171,8 +127,7 @@
                         </group>
                     </group>
 
-                    <field name="comment" placeholder="External note..." force_save="1"
-                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                    <field name="comment" placeholder="External note..." force_save="1"/>
 
                     <notebook>
                         <page string="Location Coordinates" id="partner_assignation">
@@ -185,15 +140,15 @@
                                     <span class="oe_inline">( On</span>
                                     <field name="date_localization" nolabel="1" class="oe_inline"
                                            force_save="1"
-                                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                           attrs="{'required':[('is_rental','=','Yes')]}"/>
                                     <span>: Lat :</span>
                                     <field name="partner_latitude" nolabel="1" class="oe_inline"
                                            force_save="1"
-                                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                           attrs="{'required':[('is_rental','=','Yes')]}"/>
                                     <span>; Long:</span>
                                     <field name="partner_longitude" nolabel="1" class="oe_inline"
                                            force_save="1"
-                                           attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                           attrs="{'required':[('is_rental','=','Yes')]}"/>
                                     <span>)</span>
                                 </div>
                             </group>
@@ -205,19 +160,18 @@
                                            attrs="{'invisible':[('is_rental', '!=', 'Yes')]}">
                                         <group>
                                             <field name="landlord_name" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
                                             <field name="landlord_cnic" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
                                             <field name="landlord_mobile" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
                                         </group>
                                         <group>
-                                            <field name="landlord_email" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                            <field name="landlord_email" force_save="1"/>
                                             <field name="bank_id" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
                                             <field name="acc_number" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
                                         </group>
                                     </group>
                                 </page>
@@ -226,43 +180,56 @@
                                            attrs="{'invisible':[('is_rental', '!=', 'Yes')]}">
                                         <group>
                                             <field name="rent" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
+
                                             <field name="security" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
+
                                             <label for="time_period"/>
                                             <div class="o_row">
                                                 <field name="time_period" force_save="1"
-                                                       attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                       attrs="{'required':[('is_rental','=','Yes')]}"/>
                                                 <field name="time_period_unit"
                                                        options='{"no_open": True, "no_create": True, "no_edit": True}'
                                                        readonly="1"
                                                        force_save="1"/>
                                             </div>
+
                                             <field name="agreement_date" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
+
                                             <field name="annual_increment" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
+
 
                                             <field name="payment_terms" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
+
                                             <field name="payment_mode" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
 
                                         </group>
                                         <group>
                                             <field name="bank_name" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'invisible':[('payment_mode','!=', 'Bank')],'required':[('payment_mode','=', 'Bank')]}"/>
+                                                   attrs="{'invisible':[('payment_mode','!=', 'Bank')],'required':[('payment_mode','=', 'Bank')]}"/>
+
                                             <field name="account_no" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'invisible':[('payment_mode','!=', 'Bank')],'required':[('payment_mode','=', 'Bank')]}"/>
+                                                   attrs="{'invisible':[('payment_mode','!=', 'Bank')],'required':[('payment_mode','=', 'Bank')]}"/>
+
                                             <field name="account_title" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'invisible':[('payment_mode','!=', 'Bank')],'required':[('payment_mode','=', 'Bank')]}"/>
+                                                   attrs="{'invisible':[('payment_mode','!=', 'Bank')],'required':[('payment_mode','=', 'Bank')]}"/>
+
                                             <field name="tax_ids" widget="many2many_tags" string="Taxes"
                                                    options="{'no_open': True, 'no_create': True, 'no_edit': True}"/>
-                                            <field name="vat" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+
+                                            <field name="vat" force_save="1"/>
+
                                             <field name="next_amount_paid" force_save="1"/>
+
                                             <field name="no_of_years" force_save="1" readonly="1"/>
+
                                             <field name="cost_center_id" invisible="1"/>
+
                                             <field name="created_location" invisible="1"/>
                                         </group>
                                     </group>
@@ -276,22 +243,27 @@
                                     <group string="Billing Details" name="billing_details"
                                            attrs="{'invisible':[('is_rental', '!=', 'Yes')]}">
                                         <group>
-                                            <field name="company_type" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                            <field name="company_type" force_save="1"/>
+
                                             <field name="partner_id" force_save="1"/>
+
                                             <field name="next_billing_date" force_save="1" readonly="1"/>
+
                                             <field name="utility_status" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
                                         </group>
                                         <group>
                                             <field name="meter_num" force_save="1"
-                                                   attrs="{'required':[('utility_status','=','Not Included')],'invisible':[('utility_status','!=','Not Included')],'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                                   attrs="{'required':[('utility_status','=','Not Included')],'invisible':[('utility_status','!=','Not Included')]}"/>
+
                                             <field name="billing_date" force_save="1"
-                                                   attrs="{'required':[('utility_status','=','Not Included')],'invisible':[('utility_status','!=','Not Included')],'readonly':[('state','not in',('New', 'Approval Required','Approved'))]}"/>
+                                                   attrs="{'required':[('utility_status','=','Not Included')],'invisible':[('utility_status','!=','Not Included')]}"/>
+
                                             <field name="rent_electricity_bill_due" force_save="1"
-                                                   attrs="{'required':[('utility_status','=','Not Included')],'invisible':[('utility_status','!=','Not Included')],'readonly':[('state','not in',('New', 'Approval Required','Approved'))]}"/>
+                                                   attrs="{'required':[('utility_status','=','Not Included')],'invisible':[('utility_status','!=','Not Included')]}"/>
+
                                             <field name="rent_electricity_amount" force_save="1"
-                                                   attrs="{'required':[('utility_status','=','Not Included')],'invisible':[('utility_status','!=','Not Included')],'readonly':[('state','not in',('New', 'Approval Required','Approved'))]}"/>
+                                                   attrs="{'required':[('utility_status','=','Not Included')],'invisible':[('utility_status','!=','Not Included')]}"/>
                                         </group>
                                     </group>
                                 </page>
@@ -300,39 +272,47 @@
                                            attrs="{'invisible':[('is_rental', '!=', 'Yes')]}">
                                         <group>
                                             <field name="room_loc" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
+
                                             <label for="room_size"/>
                                             <div class="o_row">
+
                                                 <field name="room_size" force_save="1"
-                                                       attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                       attrs="{'required':[('is_rental','=','Yes')]}"/>
+
                                                 <field name="room_size_unit"
                                                        options='{"no_open": True, "no_create": True, "no_edit": True}'
                                                        readonly="1"
                                                        force_save="1"/>
                                             </div>
+
                                             <label for="roof_size"/>
                                             <div class="o_row">
                                                 <field name="roof_size" force_save="1"
-                                                       attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                       attrs="{'required':[('is_rental','=','Yes')]}"/>
+
                                                 <field name="roof_size_unit"
                                                        options='{"no_open": True, "no_create": True, "no_edit": True}'
                                                        readonly="1"
                                                        force_save="1"/>
                                             </div>
+
                                             <field name="access_status" force_save="1"
                                                    widget="toggle_button"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
                                         </group>
                                         <group>
                                             <field name="tower_installed" force_save="1"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))],'required':[('is_rental','=','Yes')]}"/>
+                                                   attrs="{'required':[('is_rental','=','Yes')]}"/>
+
                                             <field name="tower_height"
-                                                   attrs="{'required':[('tower_installed','=','Yes')],'invisible':[('tower_installed','!=','Yes')],'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                                   attrs="{'required':[('tower_installed','=','Yes')],'invisible':[('tower_installed','!=','Yes')]}"/>
+
                                             <field name="file_upload" filename="file_name" force_save='True'
                                                    class="oe_highlight"
                                                    string="Rental Agreement"
-                                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"
                                                    type="object" icon="fa-paperclip" colspan='1'/>
+
                                             <field name="file_name" invisible="1" force_save='True'/>
                                         </group>
                                     </group>
@@ -431,82 +411,54 @@
     <record id="add_pops_kanban" model="ir.ui.view">
         <field name="name">add.pops.kanban</field>
         <field name="model">add.pop.model</field>
-        <field name="priority" eval="1"/>
         <field name="arch" type="xml">
-            <kanban default_group_by="state" default_order="state"
-                    class="o_kanban_small_column o_kanban_project_tasks" quick_create="false"
-                    records_draggable="true" on_create="quick_create" quick_create_view="view_pop_form">
+            <kanban default_group_by="state" class="o_kanban_project_tasks o_kanban_small_column o_opportunity_kanban"
+                    quick_create="false">
                 <field name="state"/>
                 <field name="name"/>
                 <field name="pop_new_type"/>
-                <field name="color"/>
-                <field name="priority"/>
+                <field name="kanban_state"/>
                 <progressbar field="kanban_state"
-                             colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;, &quot;normal&quot;: &quot;muted&quot;}"/>
+                             colors='{"draft": "secondary","admin_approval": "warning" ,"approved": "success", "coo_approval": "primary","ceo_approval": "info", "rejected": "danger", "cancel": "danger"}'/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div
-                                t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
-                            <div class="oe_kanban_content">
-                                <div class="o_kanban_record_top">
-                                    <div class="o_kanban_record_headings">
-                                        <strong class="o_kanban_record_title">
-                                            <field name="name"/>
-                                        </strong>
-                                        <br/>
-                                        Type:
-                                        <field name="pop_new_type"/>
-                                        <br/>
-                                        Rental:
+                        <div class="oe_kanban_global_click o_has_icon oe_kanban_content oe_kanban_card"
+                        >
+                            <div class="oe_kanban_details d-flex flex-column">
+                                <span>POP:
+                                    <strong>
+                                        <field name="name"/>
+                                    </strong>
+                                </span>
+                                <hr/>
+                                <ul>
+
+                                    <li>
+                                        <strong>POP Type:</strong>
                                         <field
-                                                name="is_rental"/>
-                                        <br/>
-                                    </div>
-                                    <div class="o_dropdown_kanban dropdown" t-if="!selection_mode"
-                                         groups="base.group_user">
-                                        <a role="button" class="dropdown-toggle o-no-caret btn"
-                                           data-toggle="dropdown" data-display="static" href="#"
-                                           aria-label="Dropdown menu" title="Dropdown menu">
-                                            <span class="fa fa-ellipsis-v"/>
-                                        </a>
-                                        <div class="dropdown-menu" role="menu">
-                                            <a t-if="widget.editable" role="menuitem"
-                                               type="set_cover"
-                                               class="dropdown-item"
-                                               data-field="displayed_image_id">Set Cover Image
-                                            </a>
-                                            <a name="144" role="menuitem" type="action"
-                                               class="dropdown-item">
-                                                Share
-                                            </a>
-                                            <a t-if="widget.editable" role="menuitem" type="edit"
-                                               class="dropdown-item">Edit Task
-                                            </a>
-                                            <a t-if="widget.deletable" role="menuitem" type="delete"
-                                               class="dropdown-item">Delete
-                                            </a>
-                                            <div role="separator" class="dropdown-divider"/>
-                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="o_kanban_record_bottom" t-if="!selection_mode">
+                                                name="pop_new_type"/>
+
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                            <div class="oe_kanban_footer">
+                                <div class="o_kanban_record_bottom">
                                     <div class="oe_kanban_bottom_left">
-                                        <t t-set="date_format" t-value="'MM/DD/YY'"/>
-                                        <t t-set="date" t-value=""/>
-                                        <span name="date" t-attf-class="#{deadline_class || ''}">
-                                            <t t-esc="date"/>
-                                        </span>
+
                                     </div>
-                                    <div class="oe_kanban_bottom_right" t-if="!selection_mode">
-                                        <field name="kanban_state" widget="state_selection"
-                                               groups="base.group_user"
-                                               invisible="context.get('fsm_mode', False)"/>
+
+                                    <div class="oe_kanban_bottom_right">
+                                        <i title="fuel card icon"
+                                           t-attf-class="fa fa-podcast #{record.kanban_state.raw_value == 'draft' ? 'text-secondary' : record.kanban_state.raw_value == 'admin_approval' ? 'text-warning' : record.kanban_state.raw_value == 'approved' ? 'text-success' : record.kanban_state.raw_value == 'coo_approval' ? 'text-primary' : record.kanban_state.raw_value == 'ceo_approval' || record.kanban_state.raw_value == 'rejected' || record.kanban_state.raw_value == 'cancel' ? 'text-danger' : 'default_color'}"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="oe_clear"/>
+
                         </div>
+
+
                     </t>
                 </templates>
             </kanban>

@@ -39,6 +39,11 @@
         "views/add_pop.xml",
         "views/edit_pop.xml",
         "views/close_pop.xml",
+        "views/all_pop.xml",
+        "reports/report.xml",
+        "reports/all_reports.xml",
+        "reports/monthly_pop_rent_bill_report.xml",
+        "wizards/monthly_pop_rent_bill_report_wiz.xml",
     ],
     # only loaded in demonstration mode
     "demo": [

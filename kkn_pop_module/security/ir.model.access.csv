@@ -2,7 +2,8 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_add_pop_model,access.add.pop.model,model_add_pop_model,base.group_user,1,1,1,1
 access_edit_pop_model,access.edit.pop.model,model_edit_pop_model,base.group_user,1,1,1,1
 access_close_pop_model,access.close.pop.model,model_close_pop_model,base.group_user,1,1,1,1
-access_stock_location_pop_report,access.stock.location.pop.report,model_stock_location_pop_report,base.group_user,1,1,1,1
+access_all_pop_location_report,access.all.pop.location.report,model_all_pop_location_report,base.group_user,1,1,1,1
 access_add_pop_rent_bill,access.add.pop.rent.bill,model_add_pop_rent_bill,base.group_user,1,1,1,1
 access_add_pop_service_bill,access.add.pop.service.bill,model_add_pop_service_bill,base.group_user,1,1,1,1
 access_add_pop_generator_bill,access.add.pop.generator.bill,model_add_pop_generator_bill,base.group_user,1,1,1,1
+access_pop_rent_bill_report,access.pop.rent.bill.report,model_pop_rent_bill_report,base.group_user,1,1,1,1

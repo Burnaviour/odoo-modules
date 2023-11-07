@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
-<!--    main menu of pop module-->
+    <!--    main menu of pop module-->
     <menuitem id="menu_kkn_pop_root"
               name="Pop"
               web_icon="kkn_pop_module,static/description/icon.png"
               sequence="1"/>
 
-<!--    operation menu of pop module-->
+    <!--    operation menu of pop module-->
     <menuitem id="menu_kkn_pop_operation_root"
               name="Operation"
               parent="menu_kkn_pop_root"
               sequence="0"/>
 
-<!--    reporting menu of pop module-->
+    <!--    reporting menu of pop module-->
     <menuitem id="menu_kkn_pop_reporting_root"
               name="Reporting"
               parent="menu_kkn_pop_root"
               sequence="1"/>
-
-<!--    reporting sub menu of pop module-->
-<!--    <menuitem id="menu_kkn_monthly_pop_report"-->
-<!--              name="Pop Monthly report"-->
-<!--              action="action_edit_pop"-->
-<!--              parent="menu_kkn_pop_reporting_root"-->
-<!--              sequence="0"/>-->
 
 </odoo>

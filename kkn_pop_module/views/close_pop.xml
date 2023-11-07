@@ -25,41 +25,36 @@
         <field name="arch" type="xml">
             <form string="Close POP" name="POP" delete="false">
                 <header>
-                    <button name="action_in_approval_required" type="object" string="Approval Required" class="oe_highlight" states="New"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,admin_approval,approved,coo_approval,ceo_approval,rejected,cancel"/>
 
-<!--                    <button name="" string="Approved" class="oe_highlight" states="Approval Required"/>-->
+                    <button string="Reset to Draft" name="draft_state_method" type="object"
+                            states="rejected,cancel"
+                            class="oe_highlight"/>
 
-                    <button name="action_in_rejected" type="object" string="Rejected" class="oe_highlight"
-                            states="Approval Required, COO Approval, CEO Approval"/>
+                    <button string="Admin Approval" name="admin_approval_state_method" type="object"
+                            class="oe_highlight" states="draft"/>
 
-                    <button name="action_in_new" type="object" string="Reset To Draft" class="oe_highlight"
-                            states="Approval Required"/>
+                    <button string="Approved" name="approved_state_method" type="object"
+                            class="oe_highlight" states="admin_approval"/>
 
-<!--                    <button name="" string="Approved" class="oe_highlight" states="COO Approval"/>-->
+                    <button string="COO Approval" name="coo_approval_state_method" type="object"
+                            class="oe_highlight" states="approved"/>
 
-                    <button name="action_reset_to_admin" type="object" string="Reset To Admin" class="oe_highlight" states="COO Approval, CEO Approval"/>
+                    <button string="CEO Approval" name="ceo_approval_state_method" type="object"
+                            class="oe_highlight" states="coo_approval"/>
 
-<!--                    <button name="" string="Approved" class="oe_highlight" states="CEO Approval"/>-->
+                    <button string="Reject" name="rejected_state_method" type="object"
+                            states="admin_approval" class="oe_highlight"/>
 
-                    <button name="action_in_store_return" type="object" string="Done" class="oe_highlight" states="Store Return"/>
-
-                    <button name="action_in_coo_approval" type="object" string="COO Approval" class="oe_highlight"
-                            states="Approval Required, COO Approval"/>
-
-                    <button name="action_in_ceo_approval" type="object" string="CEO Approval" class="oe_highlight"
-                            states="COO Approval, CEO Approval"/>
-
-
-                    <field name="state" widget="statusbar" options="{'clickable': '1'}"
-                           statusbar_visible="New,Approval Required,COO Approval,CEO Approval,Store Return,Closed"
-                           readonly="1"/>
+                    <button string="Cancel" name="cancel_state_method" type="object" class="oe_highlight"
+                            attrs="{'invisible':[('state','in',('approved','ceo_approval','cancel'))]}"/>
                 </header>
                 <sheet>
                     <group>
                         <group>
                             <field name="existing_location_id" style="width:100%;" string="Existing Location"
-                                   options="{'no_open': True, 'no_edit': True, 'no_create': True}" force_save="1"
-                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+                                   options="{'no_open': True, 'no_edit': True, 'no_create': True}" force_save="1"/>
 
                             <br/>
                             <br/>
@@ -75,11 +70,6 @@
                                 <field name="unique_id" readonly="1" modifiers="{'required':true}" style="width:10%"
                                        force_save="1"/>
                             </div>
-                            <!--                    <label for="location_id" class="oe_edit_only"/>-->
-                            <!--                    <h2>-->
-                            <!--                        <field name="location_id" readonly="1"-->
-                            <!--                               options="{'no_open': True, 'no_edit': True, 'no_create': True}" force_save="1"/>-->
-                            <!--                    </h2>-->
                         </group>
                     </group>
                     <br/>
@@ -169,72 +159,44 @@
     <record id="close_pops_kanban" model="ir.ui.view">
         <field name="name">close.pops.kanban</field>
         <field name="model">close.pop.model</field>
-        <field name="priority" eval="1"/>
         <field name="arch" type="xml">
-            <kanban default_group_by="state" default_order="state" class="o_kanban_small_column o_kanban_project_tasks"
-                    quick_create="false" records_draggable="false" on_create="quick_create"
-                    quick_create_view="close_view_pop_form">
+            <kanban default_group_by="state" class="o_kanban_project_tasks o_kanban_small_column o_opportunity_kanban"
+                    quick_create="false">
 
                 <field name="state"/>
                 <field name="name"/>
-                <field name="color"/>
-                <field name="priority"/>
 
                 <progressbar field="kanban_state"
-                             colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;, &quot;normal&quot;: &quot;muted&quot;}"/>
+                             colors='{"draft": "secondary","admin_approval": "warning" ,"approved": "success", "coo_approval": "primary","ceo_approval": "info", "rejected": "danger", "cancel": "danger"}'/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
-                            <div class="oe_kanban_content">
-                                <div class="o_kanban_record_top">
-                                    <div class="o_kanban_record_headings">
-                                        <strong class="o_kanban_record_title">
-                                            <field name="name"/>
-                                        </strong>
-                                        <br/>
-                                        Note:
-                                        <field name="comment"/>
-                                        <br/>
-                                    </div>
-                                    <div class="o_dropdown_kanban dropdown" t-if="!selection_mode"
-                                         groups="base.group_user">
-                                        <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
-                                           data-display="static" href="#" aria-label="Dropdown menu"
-                                           title="Dropdown menu">
-                                            <span class="fa fa-ellipsis-v"/>
-                                        </a>
-                                        <div class="dropdown-menu" role="menu">
-                                            <a t-if="widget.editable" role="menuitem" type="set_cover"
-                                               class="dropdown-item" data-field="displayed_image_id">Set Cover Image
-                                            </a>
-                                            <a name="144" role="menuitem" type="action" class="dropdown-item">Share</a>
-                                            <a t-if="widget.editable" role="menuitem" type="edit" class="dropdown-item">
-                                                Edit Task
-                                            </a>
-                                            <a t-if="widget.deletable" role="menuitem" type="delete"
-                                               class="dropdown-item">Delete
-                                            </a>
-                                            <div role="separator" class="dropdown-divider"/>
-                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="o_kanban_record_bottom" t-if="!selection_mode">
+                        <div class="oe_kanban_global_click o_has_icon oe_kanban_content oe_kanban_card"
+                        >
+                            <div class="oe_kanban_details d-flex flex-column">
+                                <span>POP:
+                                    <strong>
+                                        <field name="name"/>
+                                    </strong>
+                                </span>
+                                <hr/>
+                            </div>
+
+                            <div class="oe_kanban_footer">
+                                <div class="o_kanban_record_bottom">
                                     <div class="oe_kanban_bottom_left">
-                                        <t t-set="date_format" t-value="'MM/DD/YY'"/>
-                                        <t t-set="date" t-value=""/>
-                                        <span name="date" t-attf-class="#{deadline_class || ''}">
-                                            <t t-esc="date"/>
-                                        </span>
+
                                     </div>
-                                    <div class="oe_kanban_bottom_right" t-if="!selection_mode">
-                                        <field name="kanban_state" widget="state_selection" groups="base.group_user"
-                                               invisible="context.get('fsm_mode', False)"/>
+
+                                    <div class="oe_kanban_bottom_right">
+                                        <i title="fuel card icon"
+                                           t-attf-class="fa fa-podcast #{record.kanban_state === 'draft' ? 'text-secondary' : record.kanban_state === 'admin_approval' ? 'text-warning' : record.kanban_state === 'approved' ? 'text-success' : record.kanban_state === 'coo_approval' ? 'text-primary' : record.kanban_state === 'ceo_approval' || record.kanban_state === 'rejected' || record.kanban_state === 'cancel' ? 'text-danger' : 'default_color'}"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="oe_clear"/>
+
                         </div>
+
+
                     </t>
                 </templates>
             </kanban>
