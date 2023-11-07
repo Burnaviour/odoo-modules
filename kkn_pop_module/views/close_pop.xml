@@ -25,71 +25,82 @@
         <field name="arch" type="xml">
             <form string="Close POP" name="POP" delete="false">
                 <header>
-                    <button name="" string="Approval Required" class="oe_highlight" states="New"
-                    />
+                    <button name="action_in_approval_required" type="object" string="Approval Required" class="oe_highlight" states="New"/>
 
-                    <button name="" string="Approved" class="oe_highlight" states="Approval Required"
-                            groups="kkn_pop_module.pop_approved_rejected"/>
-                    <button name="" string="Rejected" class="oe_highlight" states="Approval Required"
-                            groups="kkn_pop_module.pop_approved_rejected"/>
-                    <button name="" string="Reset To Draft" class="oe_highlight"
-                            states="Approval Required" groups="kkn_pop_module.pop_approved_rejected"/>
+<!--                    <button name="" string="Approved" class="oe_highlight" states="Approval Required"/>-->
 
-                    <button name="" string="Approved" class="oe_highlight"
-                            groups="kkn_pop_module.pop_coo_approved_rejected" states="COO Approval"/>
-                    <button name="" string="Rejected" class="oe_highlight"
-                            groups="kkn_pop_module.pop_coo_approved_rejected" states="COO Approval"/>
-                    <button name="" string="Reset To Admin" class="oe_highlight"
-                            groups="kkn_pop_module.pop_coo_approved_rejected" states="COO Approval"/>
+                    <button name="action_in_rejected" type="object" string="Rejected" class="oe_highlight"
+                            states="Approval Required, COO Approval, CEO Approval"/>
 
-                    <button name="" string="Approved" class="oe_highlight"
-                            groups="kkn_pop_module.pop_ceo_approved_rejected" states="CEO Approval"/>
-                    <button name="" string="Rejected" class="oe_highlight"
-                            groups="kkn_pop_module.pop_ceo_approved_rejected" states="CEO Approval"/>
-                    <button name="" string="Reset To Admin" class="oe_highlight"
-                            groups="kkn_pop_module.pop_ceo_approved_rejected" states="CEO Approval"/>
+                    <button name="action_in_new" type="object" string="Reset To Draft" class="oe_highlight"
+                            states="Approval Required"/>
 
-                    <button name="" string="Done" class="oe_highlight"
-                            groups="kkn_pop_module.pop_store_approved_rejected" states="Store Return"/>
+<!--                    <button name="" string="Approved" class="oe_highlight" states="COO Approval"/>-->
+
+                    <button name="action_reset_to_admin" type="object" string="Reset To Admin" class="oe_highlight" states="COO Approval, CEO Approval"/>
+
+<!--                    <button name="" string="Approved" class="oe_highlight" states="CEO Approval"/>-->
+
+                    <button name="action_in_store_return" type="object" string="Done" class="oe_highlight" states="Store Return"/>
+
+                    <button name="action_in_coo_approval" type="object" string="COO Approval" class="oe_highlight"
+                            states="Approval Required, COO Approval"/>
+
+                    <button name="action_in_ceo_approval" type="object" string="CEO Approval" class="oe_highlight"
+                            states="COO Approval, CEO Approval"/>
 
 
-                    <field name="state" widget="statusbar"
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"
                            statusbar_visible="New,Approval Required,COO Approval,CEO Approval,Store Return,Closed"
                            readonly="1"/>
                 </header>
                 <sheet>
-                    <label for="existing_location_id" class="oe_edit_only"/>
-                    <h1>
-                        <field name="existing_location_id" style="width:100%;"
-                               options="{'no_open': True, 'no_edit': True, 'no_create': True}" force_save="1"
-                               attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
-                    </h1>
-                    <label for="unique_id" class="oe_edit_only" modifiers="{}"/>
-                    <h3 modifiers="{}">
-                        <div>
-                            <field name="city_code" invisible="1" style="width:5%; margin-right:2%;" force_save="1"/>
-                            <field name="unique_id" readonly="1" modifiers="{'required':true}" style="width:10%"
-                                   force_save="1"/>
-                        </div>
-                    </h3>
-                    <label for="name" class="oe_edit_only"/>
-                    <h1>
-                        <field name="name" readonly="1" force_save="1"/>
-                    </h1>
-                    <!--                    <label for="location_id" class="oe_edit_only"/>-->
-                    <!--                    <h2>-->
-                    <!--                        <field name="location_id" readonly="1"-->
-                    <!--                               options="{'no_open': True, 'no_edit': True, 'no_create': True}" force_save="1"/>-->
-                    <!--                    </h2>-->
                     <group>
-                        <group string="Additional Information" name="additional_info">
-                            <field name="usage" readonly="1" force_save="1"/>
-                            <field name="company_id" groups="base.group_multi_company" readonly="1"
-                                   options="{'no_create': True}" force_save="1"/>
-                            <field name="picking_id" readonly="1" force_save="1"
-                                   attrs="{'invisible':[('picking_id', '=', False)]}"/>
+                        <group>
+                            <field name="existing_location_id" style="width:100%;" string="Existing Location"
+                                   options="{'no_open': True, 'no_edit': True, 'no_create': True}" force_save="1"
+                                   attrs="{'readonly':[('state','not in',('New', 'Approval Required'))]}"/>
+
+                            <br/>
+                            <br/>
+                            <field name="name" readonly="1" force_save="1" string="Location Name"
+                                   attrs="{'invisible':[('existing_location_id','=',False)]}"/>
                         </group>
-                        <group string="Address" name="address">
+                        <group>
+                            <label for="unique_id" class="oe_edit_only"
+                                   attrs="{'invisible':[('existing_location_id','=',False)]}"/>
+                            <div>
+                                <field name="city_code" invisible="1" style="width:5%; margin-right:2%;"
+                                       force_save="1" attrs="{'invisible':[('existing_location_id','=',False)]}"/>
+                                <field name="unique_id" readonly="1" modifiers="{'required':true}" style="width:10%"
+                                       force_save="1"/>
+                            </div>
+                            <!--                    <label for="location_id" class="oe_edit_only"/>-->
+                            <!--                    <h2>-->
+                            <!--                        <field name="location_id" readonly="1"-->
+                            <!--                               options="{'no_open': True, 'no_edit': True, 'no_create': True}" force_save="1"/>-->
+                            <!--                    </h2>-->
+                        </group>
+                    </group>
+                    <br/>
+                    <br/>
+                    <group>
+                        <group string="Additional Information" name="additional_info"
+                               attrs="{'invisible':[('existing_location_id','=',False)]}">
+                            <field name="usage" readonly="1" force_save="1"
+                                   attrs="{'invisible':[('existing_location_id','=',False)]}"/>
+                            <br/>
+                            <br/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"
+                                   options="{'no_create': True}" force_save="1"
+                                   attrs="{'invisible':[('existing_location_id','=',False)]}"/>
+                            <br/>
+                            <br/>
+                            <field name="picking_id" readonly="1" force_save="1"
+                                   attrs="{'invisible':[('picking_id', '=', False), ('existing_location_id','=',False)]}"/>
+                        </group>
+                        <group string="Address" name="address"
+                               attrs="{'invisible':[('existing_location_id','=',False)]}">
                             <b>Address</b>
                             <div class="o_address_format" modifiers="{}">
                                 <field name="street" placeholder="Street..." class="o_address_street" readonly="1"
@@ -112,7 +123,8 @@
                             </div>
                         </group>
                     </group>
-                    <field name="comment" placeholder="External note..." force_save="1"/>
+                    <field name="comment" placeholder="External note..." force_save="1"
+                           attrs="{'invisible':[('existing_location_id','=',False)]}"/>
                     <notebook>
                         <page string="Location Coordinates" id="partner_assignation">
                             <group colspan="2" col="2" readonly="1" force_save="1">
