@@ -19,6 +19,7 @@
     "depends": ["base", "hr", "mail"],
     # always loaded
     "data": [
+        "security/fuel_groups.xml",
         "security/ir.model.access.csv",
         "views/assign_fuel_card.xml",
         "wizard/fuel_monthly_report_wizard.xml",

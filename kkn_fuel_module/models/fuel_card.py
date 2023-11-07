@@ -1,6 +1,11 @@
 from datetime import datetime
+import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from lxml import etree
+import json
+
+_logger = logging.getLogger(__name__)
 
 
 STATES = [
@@ -141,3 +146,40 @@ class CreateFuelCard(models.Model):
         for task in self:
             task.kanban_state = task.state
             task.kanban_state_label = task.state
+
+    def draft_state_method(self):
+        # code for draft state method
+
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "create.fuel.card.model",
+            "res_id": self.id,
+            "view_mode": "form",
+            "view_id": self.env.ref("kkn_fuel_module.view_create_fuel_card_form").id,
+            "target": "current",
+            "context": {"turn_view_readonly": True},
+        }
+
+    @api.model
+    def get_view(self, view_id=None, view_type="form", **options):
+        context = self._context
+        _logger.error("%s", context)
+        res = super().get_view(view_id=view_id, view_type=view_type, **options)
+        if view_type == "form" and (
+            context.get("active_id")
+            and self.browse(context.get("active_id")).state != "draft"
+        ):
+            doc = etree.XML(res["arch"])
+            # Applies only for form view
+            for node in doc.xpath("//field"):
+                # All the view fields to readonly
+                node.set("readonly", "1")
+                if modifiers := node.get("modifiers"):
+                    # Check if modifiers is not None
+                    modifiers = json.loads(modifiers)
+                    modifiers["readonly"] = True
+                    # print(modifiers)
+                    node.set("modifiers", json.dumps(modifiers))
+
+            res["arch"] = etree.tostring(doc, encoding="unicode")
+        return res

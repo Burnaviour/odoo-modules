@@ -112,7 +112,10 @@
                     <header>
                         <field name="state" widget="statusbar"
                             statusbar_visible="draft,admin_approval,approved,rejected,cancel"
-                            readonly="1" />
+                        />
+
+                        <button string="Reset to Draft" name="draft_state_method" type="object"
+                            class="oe_highlight" context="{'turn_view_readonly':True}" />
                     </header>
                     <sheet>
                         <group>
