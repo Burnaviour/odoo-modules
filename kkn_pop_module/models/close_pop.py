@@ -3,15 +3,25 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, AccessDenied
 
-AVAILABLE_PRIORITIES = [
-    ('0', 'Low'),
-    ('1', 'Medium'),
-    ('2', 'High'),
-    ('3', 'Very High'),
+# AVAILABLE_PRIORITIES = [
+#     ('0', 'Low'),
+#     ('1', 'Medium'),
+#     ('2', 'High'),
+#     ('3', 'Very High'),
+# ]
+
+STATES = [
+    ("draft", "Draft"),
+    ("admin_approval", "Admin Approval"),
+    ("approved", "Approved"),
+    ("coo_approval", "COO Approval"),
+    ("ceo_approval", "CEO Approval"),
+    ("rejected", "Rejected"),
+    ("cancel", "Cancel"),
 ]
 
 
-class kkn_close_pop_module(models.Model):
+class kknClosePopModel(models.Model):
     _name = 'close.pop.model'
     _description = 'Close POP'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -19,23 +29,47 @@ class kkn_close_pop_module(models.Model):
     def _expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
 
-    color = fields.Integer('Color Index')
-    kanban_state = fields.Selection([
-        ('normal', 'Grey'),
-        ('done', 'Green'),
-        ('blocked', 'Red')], string='Kanban State',
-        copy=False, default='normal', required=True)
-    priority = fields.Selection(AVAILABLE_PRIORITIES, string='Priority', index=True, default=AVAILABLE_PRIORITIES[0][0])
+    state = fields.Selection(
+        STATES,
+        string="State",
+        required=True,
+        default="draft",
+        tracking=True,
+        group_expand="_expand_states",
+    )
 
-    state = fields.Selection([
-        ('New', 'New'),
-        ('Approval Required', 'Approval Required'),
-        ('COO Approval', 'COO Approval'),
-        ('CEO Approval', 'CEO Approval'),
-        ('Store Return', 'Store Return'),
-        ('Closed', 'Closed'),
-        ('Rejected', 'Rejected'),
-    ], string='State', readonly=True, index=True, copy=False, default='New', tracking=True)
+    # color = fields.Integer("Color Index")
+    # priority = fields.Selection(
+    #     AVAILABLE_PRIORITIES,
+    #     string="Priority",
+    #     index=True,
+    #     default=AVAILABLE_PRIORITIES[0][0],
+    # )
+
+    kanban_state = fields.Selection(
+        [
+            ("draft", "Grey"),
+            ("admin_approval", "Yellow"),
+            ("approved", "Green"),
+            ("ceo_approval", "Red"),
+            ("coo_approval", "Blue"),
+            ("rejected", "Red"),
+            ("cancel", "Red"),
+        ],
+        string="Kanban State",
+        copy=False,
+        default="draft",
+        required=True,
+    )
+    kanban_state_label = fields.Char(
+        compute="_compute_kanban_state_label", string="Kanban State Label", store=True
+    )
+
+    @api.depends("state", "kanban_state")
+    def _compute_kanban_state_label(self):
+        for task in self:
+            task.kanban_state = task.state
+            task.kanban_state_label = task.state
 
     existing_location_id = fields.Many2one('stock.location', 'Existing Location', domain="['|', ('usage', '=', 'pop'),"
                                                                                          " ('customer_is_pop', '=', "
@@ -114,44 +148,55 @@ class kkn_close_pop_module(models.Model):
                                      [('name', '=', 'PAKISTAN')]).id, required=True)
     picking_id = fields.Many2one('stock.picking', 'Return Transfer')
 
-    def action_in_new(self):
-        for rec in self:
-            rec.state = 'New'
+    def draft_state_method(self):
+        # code for draft state method
+        self.set_state_draft()
 
-    def action_in_approval_required(self):
-        for rec in self:
-            rec.state = 'Approval Required'
+    def admin_approval_state_method(self):
+        # code for admin_approval state method
+        self.set_state_admin_approval()
 
-    def action_in_coo_approval(self):
-        for rec in self:
-            rec.state = 'COO Approval'
+    def approved_state_method(self):
+        # code for assigned state method
+        self.set_state_approved()
 
-    def action_in_ceo_approval(self):
-        for rec in self:
-            rec.state = 'CEO Approval'
+    def coo_approval_state_method(self):
+        # code for unassign_request state method
+        self.set_state_coo_approval()
 
-    def action_in_store_return(self):
-        for rec in self:
-            rec.state = 'Store Return'
-        return {
-            'effect': {
-                'fadeout': 'slow',
-                'message': 'Click Successfully',
-                'type': 'rainbow_man',
-            }
-        }
+    def ceo_approval_state_method(self):
+        # code for unassigned state method
+        self.set_state_ceo_approval()
 
-    def action_in_rejected(self):
-        for rec in self:
-            rec.state = 'Rejected'
+    def rejected_state_method(self):
+        # code for rejected state method
+        self.set_state_rejected()
 
-    def action_in_closed(self):
-        for rec in self:
-            rec.state = 'Closed'
+    def cancel_state_method(self):
+        # code for cancel state method
+        self.set_state_cancel()
 
-    def action_reset_to_admin(self):
-        for rec in self:
-            rec.state = 'Approval Required'
+    # state setter methods
+    def set_state_draft(self):
+        self.state = "draft"
+
+    def set_state_admin_approval(self):
+        self.state = "admin_approval"
+
+    def set_state_approved(self):
+        self.state = "approved"
+
+    def set_state_coo_approval(self):
+        self.state = "coo_approval"
+
+    def set_state_ceo_approval(self):
+        self.state = "ceo_approval"
+
+    def set_state_rejected(self):
+        self.state = "rejected"
+
+    def set_state_cancel(self):
+        self.state = "cancel"
 
     @api.model
     def _geo_localize(self, street='', zip='', city='', state='', country=''):

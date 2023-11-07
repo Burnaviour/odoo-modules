@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_location_form_all_pop" model="ir.ui.view">
+        <field name="name">all.pop.location.report.form</field>
+        <field name="model">all.pop.location.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="type_of" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <group>
+                        <field name="location_id" widget="many2many_tags"
+                               options="{'no_create': True, 'no_edit': True, 'no_open': 'True'}"
+                               attrs="{'invisible': [ ('type_of', '=', 'all')], 'required':[('type_of','=','custom')]}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_report" type="object" string="Print (PDF)" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_location_form_pop" model="ir.actions.act_window">
+        <field name="name">Location(s) Report</field>
+        <field name="res_model">all.pop.location.report</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_location_form_all_pop"/>
+        <field name="view_mode">form</field>
+    </record>
+
+    <menuitem id="menu_show_pop_location_new"
+              name="All POP(s)"
+              action="action_location_form_pop"
+              parent="menu_kkn_pop_root"
+              sequence="2"/>
+</odoo>
