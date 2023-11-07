@@ -30,6 +30,10 @@
             action="kkn_fuel_module.assign_fuel_card_action_window"
         />
 
+        <!-- Menu Item -->
+        <menuitem id="menu_create_fuel_card" name="Fuel Cards" parent="kkn_fuel_module.menu_3"
+            action="kkn_fuel_module.create_fuel_card_action_window" />
+
 
         <!-- <menuitem name="Server to list" id="kkn_fuel_module" parent="kkn_fuel_module.menu_2"
                   action="kkn_fuel_module.action_server"/> -->

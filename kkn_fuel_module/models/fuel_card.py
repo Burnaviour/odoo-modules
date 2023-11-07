@@ -1,5 +1,6 @@
 from datetime import datetime
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 STATES = [
@@ -9,6 +10,8 @@ STATES = [
     ("rejected", "Rejected"),
     ("cancel", "Cancel"),
 ]
+
+MIN_FUEL_LIMIT = 1
 
 
 class CreateFuelCard(models.Model):
@@ -39,6 +42,7 @@ class CreateFuelCard(models.Model):
     card_usage_limit = fields.Integer(
         string="Card Limit(Liters)",
         required=True,
+        default=1,
     )
     valid_from_month = fields.Selection(
         [
@@ -125,6 +129,14 @@ class CreateFuelCard(models.Model):
     _sql_constraints = [
         ("card_number_unique", "unique(card_number)", "Card number already exist!"),
     ]
+
+    @api.constrains("card_usage_limit")
+    def _check_fuel_limit(self):
+        for record in self:
+            if record.card_usage_limit < MIN_FUEL_LIMIT:
+                raise ValidationError(
+                    _("Fuel limit should be greater than or equal to 1")
+                )
 
     @api.depends("state", "kanban_state")
     def _compute_kanban_state_label(self):

@@ -173,9 +173,6 @@
             </field>
         </record>
 
-        <!-- Menu Item -->
-        <menuitem id="menu_create_fuel_card" name="Fuel Cards" parent="kkn_fuel_module.menu_3"
-            action="create_fuel_card_action_window" />
 
     </data>
 </odoo>
