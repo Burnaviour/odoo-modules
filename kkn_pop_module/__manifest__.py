@@ -43,7 +43,7 @@
         "reports/report.xml",
         "reports/all_reports.xml",
         "reports/monthly_pop_rent_bill_report.xml",
-        "wizards/monthly_pop_rent_bill_report_wiz.xml",
+        "wizard/monthly_pop_rent_bill_report_wiz.xml",
     ],
     # only loaded in demonstration mode
     "demo": [
