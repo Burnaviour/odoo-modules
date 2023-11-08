@@ -2,8 +2,9 @@ from datetime import datetime
 import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from lxml import etree
-import json
+
+# from lxml import etree
+# import json
 
 _logger = logging.getLogger(__name__)
 
@@ -13,7 +14,7 @@ STATES = [
     ("admin_approval", "Admin Approval"),
     ("approved", "Approved"),
     ("rejected", "Rejected"),
-    ("cancel", "Cancel"),
+    ("cancel", "Cancelled"),
 ]
 
 MIN_FUEL_LIMIT = 1
@@ -97,6 +98,7 @@ class CreateFuelCard(models.Model):
         required=True,
         default=str(datetime.now().year),
     )
+    is_assigned = fields.Boolean(string="Assigned", tracking=True, default=False)
 
     def _expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
@@ -126,7 +128,6 @@ class CreateFuelCard(models.Model):
         compute="_compute_kanban_state_label",
         string="Kanban State Label",
         store=True,
-        tracking=True,
     )
 
     _sql_constraints = [
@@ -149,37 +150,65 @@ class CreateFuelCard(models.Model):
 
     def draft_state_method(self):
         # code for draft state method
+        for record in self:
+            record.set_state_draft()
 
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "create.fuel.card.model",
-            "res_id": self.id,
-            "view_mode": "form",
-            "view_id": self.env.ref("kkn_fuel_module.view_create_fuel_card_form").id,
-            "target": "current",
-            "context": {"turn_view_readonly": True},
-        }
+    def admin_approval_state_method(self):
+        # code for admin_approval state method
+        for record in self:
+            record.set_state_admin_approval()
 
-    @api.model
-    def get_view(self, view_id=None, view_type="form", **options):
-        context = self._context
-        _logger.error("%s", context)
-        res = super().get_view(view_id=view_id, view_type=view_type, **options)
-        if view_type == "form" and (
-            context.get("active_id")
-            and self.browse(context.get("active_id")).state != "draft"
-        ):
-            doc = etree.XML(res["arch"])
-            # Applies only for form view
-            for node in doc.xpath("//field"):
-                # All the view fields to readonly
-                node.set("readonly", "1")
-                if modifiers := node.get("modifiers"):
-                    # Check if modifiers is not None
-                    modifiers = json.loads(modifiers)
-                    modifiers["readonly"] = True
-                    # print(modifiers)
-                    node.set("modifiers", json.dumps(modifiers))
+    def approved_state_method(self):
+        # code for approved state method
+        for record in self:
+            record.set_state_approved()
 
-            res["arch"] = etree.tostring(doc, encoding="unicode")
-        return res
+    def rejected_state_method(self):
+        # code for rejected state method
+        for record in self:
+            record.set_state_rejected()
+
+    def cancel_state_method(self):
+        # code for cancel state method
+        for record in self:
+            record.set_state_cancel()
+
+    # state setter methods
+    def set_state_draft(self):
+        self.state = "draft"
+
+    def set_state_admin_approval(self):
+        self.state = "admin_approval"
+
+    def set_state_approved(self):
+        self.state = "approved"
+
+    def set_state_rejected(self):
+        self.state = "rejected"
+
+    def set_state_cancel(self):
+        self.state = "cancel"
+
+    # @api.model
+    # def get_view(self, view_id=None, view_type="form", **options):
+    #     context = self._context
+    #     _logger.error("%s", context)
+    #     res = super().get_view(view_id=view_id, view_type=view_type, **options)
+    #     if view_type == "form" and (
+    #         context.get("active_id")
+    #         and self.browse(context.get("active_id")).state != "draft"
+    #     ):
+    #         doc = etree.XML(res["arch"])
+    #         # Applies only for form view
+    #         for node in doc.xpath("//field"):
+    #             # All the view fields to readonly
+    #             node.set("readonly", "1")
+    #             if modifiers := node.get("modifiers"):
+    #                 # Check if modifiers is not None
+    #                 modifiers = json.loads(modifiers)
+    #                 modifiers["readonly"] = True
+    #                 # print(modifiers)
+    #                 node.set("modifiers", json.dumps(modifiers))
+
+    #         res["arch"] = etree.tostring(doc, encoding="unicode")
+    #     return res

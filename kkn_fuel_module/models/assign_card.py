@@ -9,7 +9,7 @@ STATES = [
     ("unassign_request", "Unassign Request"),
     ("unassigned", "Unassigned"),
     ("rejected", "Rejected"),
-    ("cancel", "Cancel"),
+    ("cancel", "Cancelled"),
 ]
 
 
@@ -102,31 +102,38 @@ class AssignFuelCard(models.Model):
 
     def draft_state_method(self):
         # code for draft state method
-        self.set_state_draft()
+        for record in self:
+            record.set_state_draft()
 
     def admin_approval_state_method(self):
         # code for admin_approval state method
-        self.set_state_admin_approval()
+        for record in self:
+            record.set_state_admin_approval()
 
     def assigned_state_method(self):
         # code for assigned state method
-        self.set_state_assigned()
+        for record in self:
+            record.set_state_assigned()
 
     def unassign_request_state_method(self):
         # code for unassign_request state method
-        self.set_state_unassign_request()
+        for record in self:
+            record.set_state_unassign_request()
 
     def unassigned_state_method(self):
         # code for unassigned state method
-        self.set_state_unassigned()
+        for record in self:
+            record.set_state_unassigned()
 
     def rejected_state_method(self):
         # code for rejected state method
-        self.set_state_rejected()
+        for record in self:
+            record.set_state_rejected()
 
     def cancel_state_method(self):
         # code for cancel state method
-        self.set_state_cancel()
+        for record in self:
+            record.set_state_cancel()
 
     # state setter methods
     def set_state_draft(self):

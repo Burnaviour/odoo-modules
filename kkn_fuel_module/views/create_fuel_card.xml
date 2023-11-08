@@ -110,49 +110,87 @@
             <field name="arch" type="xml">
                 <form string="Fuel Cards">
                     <header>
+
                         <field name="state" widget="statusbar"
                             statusbar_visible="draft,admin_approval,approved,rejected,cancel"
                         />
 
+                        <!-- buttons on header -->
                         <button string="Reset to Draft" name="draft_state_method" type="object"
-                            class="oe_highlight" context="{'turn_view_readonly':True}" />
+                            states="rejected"
+                            class="oe_highlight" />
+                        <button string="Admin Approval" name="admin_approval_state_method"
+                            type="object"
+                            class="oe_highlight" states="draft" />
+                        <button string="Approve" name="approved_state_method" type="object"
+                            confirm="Are you sure you want to approve this fuel card ? "
+                            class="oe_highlight" states="admin_approval" />
+                        <button string="Reject" name="rejected_state_method" type="object"
+                            states="admin_approval" class="oe_highlight" />
+                        <button string="Cancel" name="cancel_state_method" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible':[('state','in',('approved','cancel'))]}" />
                     </header>
                     <sheet>
                         <group>
                             <group>
-                                <field name="card_number" />
-                                <field name="name_on_card" />
+
+                                <field name="card_number"
+                                    attrs="{ 
+                                    'readonly': [('state','not in',('draft'))] 
+                                     }"
+                                />
+                                <field name="name_on_card"
+                                    attrs="{ 
+                                    'readonly': [('state','not in',('draft'))] 
+                                     }" />
                                 <label for='valid_from_month' />
                                 <div>
                                     <field name="valid_from_month"
                                         class="oe_inline"
+                                        attrs="{ 
+                                            'readonly': [('state','not in',('draft'))] 
+                                             }"
                                     />
                                     <span>/</span>
-                                    <field name="valid_from_year" class="oe_inline" />
+                                    <field name="valid_from_year" class="oe_inline"
+                                        attrs="{ 
+                                        'readonly': [('state','not in',('draft'))] 
+                                         }" />
                                 </div>
 
                                 <label for='valid_till_month' />
                                 <div>
                                     <field name="valid_till_month"
                                         class="oe_inline"
+                                        attrs="{ 
+                                            'readonly': [('state','not in',('draft'))] 
+                                             }"
                                     />
                                     <span>/</span>
 
-                                    <field name="valid_till_year" class="oe_inline" />
+                                    <field name="valid_till_year" class="oe_inline"
+                                        attrs="{ 
+                                        'readonly': [('state','not in',('draft'))] 
+                                         }" />
                                 </div>
 
                             </group>
 
                             <group>
-                                <field name="product_name" />
-                                <field name="card_usage_limit" />
+                                <field name="product_name"
+                                    attrs="{ 
+                                    'readonly': [('state','not in',('draft'))] 
+                                     }" />
+                                <field name="card_usage_limit"
+                                    attrs="{ 
+                                    'readonly': [('state','not in',('draft'))] 
+                                     }" />
                             </group>
 
                         </group>
 
-
                     </sheet>
-
 
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" />
