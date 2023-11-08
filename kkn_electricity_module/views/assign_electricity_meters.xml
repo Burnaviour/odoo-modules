@@ -26,39 +26,42 @@
         <field name="arch" type="xml">
             <form string="Assign Electricity Meters" delete="false">
                 <header>
-                    <button name="" string="Admin Approval" class="oe_highlight"
-                            attrs="{'invisible':[('state','!=','draft')]}"/>
-                    <button name="" string="Reset to Draft" class="oe_highlight"
-                            states="cancel,admin_approval,approved,rejected,cancel"
-                            groups="kkn_electricity_module.group_electricity_admin_rights"/>
-                    <button name="" string="Assign" class="oe_highlight"
-                            attrs="{'invisible':[('state','!=','admin')]}"
-                            groups="kkn_electricity_module.group_electricity_admin_rights"/>
-                    <button name="" string="Reject" class="oe_highlight"
-                            attrs="{'invisible':[('state','!=','admin')]}"
-                            groups="kkn_electricity_module.group_electricity_reject_rights"/>
-                    <button name="" string="Cancel" class="oe_highlight"
-                            attrs="{'invisible':[('state','=','cancel')]}"
-                            groups="kkn_electricity_module.group_electricity_cancel_rights"/>
-
                     <field name="state" widget="statusbar"
-                           statusbar_visible="draft,admin,approved,unassign,rejected,cancel" readonly="1"/>
+                           statusbar_visible="draft,admin,approved,unassign,rejected,cancel"/>
+
+                    <button string="Reset to Draft" name="draft_state_method" type="object"
+                            states="rejected,cancel"
+                            class="oe_highlight"/>
+
+                    <button string="Admin Approval" name="admin_approval_state_method" type="object"
+                            class="oe_highlight" states="draft"/>
+
+                    <button string="Approved" name="approved_state_method" type="object"
+                            class="oe_highlight" states="admin"/>
+
+                    <button string="Unassign" name="unassign_state_method" type="object"
+                            class="oe_highlight" states="rejected"/>
+
+
+                    <button string="Reject" name="rejected_state_method" type="object"
+                            states="admin" class="oe_highlight"/>
+
+                    <button string="Cancel" name="cancel_state_method" type="object" class="oe_highlight"
+                            attrs="{'invisible':[('state','in',('approved','unassign','cancel'))]}"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
                         <label for="pop_id"/>
                         <h3>
                             <field name="pop_id" force_save="1"
-                                   options="{'no_open': True, 'no_create': True, 'no_edit': True}"
-                                   attrs="{'readonly':[('state','!=','draft')]}"/>
+                                   options="{'no_open': True, 'no_create': True, 'no_edit': True}"/>
                         </h3>
                     </div>
                     <group>
                         <group>
                             <field name="meter_number" force_save="True"
                                    options="{'no_open': True, 'no_create': True, 'no_edit': True}"
-                                   domain="[('state', '=', 'approved'),('availability', '=', 'available')]"
-                                   attrs="{'invisible':[('pop_id','=',False)],'readonly':[('state','in',('admin','approved','rejected','cancel'))]}"/>
+                                   attrs="{'invisible':[('pop_id','=',False)]}"/>
                             <field name="vendor" options="{'no_create': True, 'no_edit': True, 'no_open': True}"
                                    force_save="True" attrs="{'invisible':[('meter_number','=',False)]}"/>
                             <field name="bill_amount" force_save="True"
@@ -123,86 +126,48 @@
     <record id="meters_assign_kanban_view_leads" model="ir.ui.view">
         <field name="name">assign.meters.kanban</field>
         <field name="model">assign.electricity.model</field>
-        <field name="priority" eval="1"/>
         <field name="arch" type="xml">
-            <kanban default_group_by="state" default_order="state"
-                    class="o_kanban_small_column o_kanban_project_tasks" quick_create="false"
-                    records_draggable="false" on_create="quick_create" quick_create_view="mobile_packages_form">
+            <kanban default_group_by="state" class="o_kanban_project_tasks o_kanban_small_column o_opportunity_kanban"
+                    quick_create="false">
 
                 <field name="state"/>
                 <field name="pop_id"/>
-                <field name="color"/>
-                <field name="priority"/>
 
                 <progressbar field="kanban_state"
-                             colors="{&quot;done&quot;: &quot;success&quot;, &quot;blocked&quot;: &quot;danger&quot;, &quot;normal&quot;: &quot;muted&quot;}"/>
+                             colors='{"draft": "secondary","admin": "warning" ,"approved": "success", "unassign": "primary", "rejected": "info", "cancel": "danger"}'/>
+
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
-                            <div class="oe_kanban_content">
-                                <div class="o_kanban_record_top">
-                                    <div class="o_kanban_record_headings">
-                                        <strong class="o_kanban_record_title">
-                                            <field name="pop_id"/>
-                                        </strong>
-                                        <br/>
-                                        <br/>
-                                        Meter Number:
-                                        <field name="meter_number"/>
-                                        <br/>
-                                        Vendor:
-                                        <field name="vendor"/>
-                                        <br/>
-                                        Billing Date:
-                                        <field name="billing_date"/>
-                                        <br/>
-                                        Due Date:
-                                        <field name="due_date"/>
-                                        <br/>
-                                        Tentative Bill Amount:
-                                        <field name="bill_amount"/>
-                                    </div>
-                                    <div class="o_dropdown_kanban dropdown" t-if="!selection_mode"
-                                         groups="base.group_user">
-                                        <a role="button" class="dropdown-toggle o-no-caret btn"
-                                           data-toggle="dropdown" data-display="static" href="#"
-                                           aria-label="Dropdown menu" title="Dropdown menu">
-                                            <span class="fa fa-ellipsis-v"/>
-                                        </a>
-                                        <div class="dropdown-menu" role="menu">
-                                            <a t-if="widget.editable" role="menuitem" type="set_cover"
-                                               class="dropdown-item" data-field="displayed_image_id">Set Cover Image
-                                            </a>
-                                            <a name="144" role="menuitem" type="action" class="dropdown-item">
-                                                Share
-                                            </a>
-                                            <a t-if="widget.editable" role="menuitem" type="edit"
-                                               class="dropdown-item">Edit Task
-                                            </a>
-                                            <a t-if="widget.deletable" role="menuitem" type="delete"
-                                               class="dropdown-item">Delete
-                                            </a>
-                                            <div role="separator" class="dropdown-divider"/>
-                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="o_kanban_record_bottom" t-if="!selection_mode">
+                        <div class="oe_kanban_global_click o_has_icon oe_kanban_content oe_kanban_card"
+                        >
+                            <div class="oe_kanban_details d-flex flex-column">
+                                <strong class="o_kanban_record_title">
+                                    <field name="pop_id"/>
+                                </strong>
+                                <span> <strong>Meter Number:</strong> <field name="meter_number"/></span>
+                                <span> <strong>Vendor:</strong> <field name="vendor"/></span>
+                                <span> <strong>Billing Date:</strong> <field name="billing_date"/></span>
+                                <span> <strong>Due Date:</strong> <field name="due_date"/></span>
+                                <span> <strong>Tentative Bill Amount:</strong> <field name="bill_amount"/></span>
+
+                            </div>
+
+                            <div class="oe_kanban_footer">
+                                <div class="o_kanban_record_bottom">
                                     <div class="oe_kanban_bottom_left">
-                                        <t t-set="date_format" t-value="'MM/DD/YY'"/>
-                                        <t t-set="date" t-value=""/>
-                                        <span name="date" t-attf-class="#{deadline_class || ''}">
-                                            <t t-esc="date"/>
-                                        </span>
+
                                     </div>
-                                    <div class="oe_kanban_bottom_right" t-if="!selection_mode">
-                                        <field name="kanban_state" widget="state_selection" groups="base.group_user"
-                                               invisible="context.get('fsm_mode', False)"/>
+
+                                    <div class="oe_kanban_bottom_right">
+                                        <i title="electricity card"
+                                           t-attf-class="fa fa-bolt #{record.kanban_state === 'draft' ? 'text-secondary' : record.kanban_state === 'admin' ? 'text-warning' : record.kanban_state === 'approved' ? 'text-success' : record.kanban_state === 'unassign' ? 'text-primary' : record.kanban_state === 'rejected' || record.kanban_state === 'cancel' ? 'text-danger' : 'default_color'}"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="oe_clear"/>
+
                         </div>
+
+
                     </t>
                 </templates>
             </kanban>

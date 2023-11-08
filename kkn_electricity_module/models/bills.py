@@ -6,11 +6,19 @@ from odoo.exceptions import UserError, ValidationError
 import datetime
 from dateutil.relativedelta import relativedelta
 
-AVAILABLE_PRIORITIES = [
-    ('0', 'Low'),
-    ('1', 'Medium'),
-    ('2', 'High'),
-    ('3', 'Very High'),
+# AVAILABLE_PRIORITIES = [
+#     ('0', 'Low'),
+#     ('1', 'Medium'),
+#     ('2', 'High'),
+#     ('3', 'Very High'),
+# ]
+
+STATES = [
+    ('draft', 'Draft'),
+    ('admin', 'Admin Approval'),
+    ('iaapproval', 'IA Approval'),
+    ('approved', 'Approved'),
+    ('cancel', 'Cancel'),
 ]
 
 
@@ -20,24 +28,48 @@ class kkn_bills_electricity_module(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'name'
 
-    color = fields.Integer('Color Index')
-    kanban_state = fields.Selection([
-        ('normal', 'Grey'),
-        ('done', 'Green'),
-        ('blocked', 'Red')], string='Kanban State',
-        copy=False, default='normal', required=True)
-    priority = fields.Selection(AVAILABLE_PRIORITIES, string='Priority', index=True, default=AVAILABLE_PRIORITIES[0][0])
-
     def _expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
 
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('admin', 'Admin Approval'),
-        ('iaapproval', 'IA Approval'),
-        ('approved', 'Approved'),
-        ('cancel', 'Cancel'),
-    ], string='State', required=1, group_expand='_expand_states', default='draft', tracking=True)
+    state = fields.Selection(
+        STATES,
+        string="State",
+        required=True,
+        default="draft",
+        tracking=True,
+        group_expand="_expand_states",
+    )
+
+    # color = fields.Integer("Color Index")
+    # priority = fields.Selection(
+    #     AVAILABLE_PRIORITIES,
+    #     string="Priority",
+    #     index=True,
+    #     default=AVAILABLE_PRIORITIES[0][0],
+    # )
+
+    kanban_state = fields.Selection(
+        [
+            ("draft", "Grey"),
+            ("admin", "Yellow"),
+            ("approved", "Green"),
+            ("iaapproval", "blue"),
+            ("cancel", "Red"),
+        ],
+        string="Kanban State",
+        copy=False,
+        default="draft",
+        required=True,
+    )
+    kanban_state_label = fields.Char(
+        compute="_compute_kanban_state_label", string="Kanban State Label", store=True
+    )
+
+    @api.depends("state", "kanban_state")
+    def _compute_kanban_state_label(self):
+        for task in self:
+            task.kanban_state = task.state
+            task.kanban_state_label = task.state
 
     date_start = fields.Date(string='Date From', required=True, readonly=True,
                              states={'draft': [('readonly', False)]},
@@ -83,16 +115,53 @@ class kkn_bills_electricity_module(models.Model):
         ('Internal Audit', "Audited"),
         ('posted', "Posted"),
         ('cancel', "Cancel"),
-    ], string="Bill Status", default='not_bill', compute='compute_bill_status')
+    ], string="Bill Status", default='not_bill')
     bill_payment_state = fields.Selection([
         ('not_bill', "Not Billed"),
         ('not_paid', "Not Paid"),
         ('in_payment', "In Payment"),
         ('paid', "Paid"),
-    ], string="Bill Payment Status", default='not_bill', compute='compute_bill_status')
+    ], string="Bill Payment Status", default='not_bill')
     draft_date = fields.Datetime(string="Draft Date", default=datetime.datetime.today())
     admin_approval_date = fields.Datetime(string="Admin Approval Date")
     approval_date = fields.Datetime(string="Approved Date")
     cancel_date = fields.Datetime(string="Cancelled Date")
     draft_admin_time = fields.Char(string="Draft to Admin Approval Time")
     admin_to_approve_time = fields.Char(string="Admin to Approve Time")
+
+
+    def draft_state_method(self):
+        # code for draft state method
+        self.set_state_draft()
+
+    def admin_approval_state_method(self):
+        # code for admin_approval state method
+        self.set_state_admin_approval()
+
+    def approved_state_method(self):
+        # code for assigned state method
+        self.set_state_approved()
+
+    def iaapproval_state_method(self):
+        # code for unassign_request state method
+        self.set_state_iaapproval()
+
+    def cancel_state_method(self):
+        # code for cancel state method
+        self.set_state_cancel()
+
+    # state setter methods
+    def set_state_draft(self):
+        self.state = "draft"
+
+    def set_state_admin_approval(self):
+        self.state = "admin"
+
+    def set_state_approved(self):
+        self.state = "approved"
+
+    def set_state_iaapproval(self):
+        self.state = "iaapproval"
+
+    def set_state_cancel(self):
+        self.state = "cancel"

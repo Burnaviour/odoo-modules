@@ -188,7 +188,7 @@
                                     </div>
 
                                     <div class="oe_kanban_bottom_right">
-                                        <i title="fuel card icon"
+                                        <i title="pop icon"
                                            t-attf-class="fa fa-podcast #{record.kanban_state === 'draft' ? 'text-secondary' : record.kanban_state === 'admin_approval' ? 'text-warning' : record.kanban_state === 'approved' ? 'text-success' : record.kanban_state === 'coo_approval' ? 'text-primary' : record.kanban_state === 'ceo_approval' || record.kanban_state === 'rejected' || record.kanban_state === 'cancel' ? 'text-danger' : 'default_color'}"></i>
                                     </div>
                                 </div>

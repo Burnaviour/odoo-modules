@@ -5,11 +5,19 @@ from odoo.exceptions import AccessDenied
 from odoo.exceptions import UserError, ValidationError
 import datetime
 
-AVAILABLE_PRIORITIES = [
-    ('0', 'Low'),
-    ('1', 'Medium'),
-    ('2', 'High'),
-    ('3', 'Very High'),
+# AVAILABLE_PRIORITIES = [
+#     ('0', 'Low'),
+#     ('1', 'Medium'),
+#     ('2', 'High'),
+#     ('3', 'Very High'),
+# ]
+
+STATES = [
+    ('draft', 'Draft'),
+    ('admin', 'Admin Approval'),
+    ('approved', 'Approved'),
+    ('rejected', 'Rejected'),
+    ('cancel', 'Cancel'),
 ]
 
 
@@ -19,24 +27,48 @@ class kkn_electricity_meters_module(models.Model):
     _inherit = 'mail.thread', 'mail.activity.mixin'
     _rec_name = 'meter_number'
 
-    color = fields.Integer('Color Index')
-    kanban_state = fields.Selection([
-        ('normal', 'Grey'),
-        ('done', 'Green'),
-        ('blocked', 'Red')], string='Kanban State',
-        copy=False, default='normal', required=True)
-    priority = fields.Selection(AVAILABLE_PRIORITIES, string='Priority', index=True, default=AVAILABLE_PRIORITIES[0][0])
-
     def _expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
 
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('admin', 'Admin Approval'),
-        ('approved', 'Approved'),
-        ('rejected', 'Rejected'),
-        ('cancel', 'Cancel'),
-    ], string='State', required=1, group_expand='_expand_states', default='draft', tracking=True)
+    state = fields.Selection(
+        STATES,
+        string="State",
+        required=True,
+        default="draft",
+        tracking=True,
+        group_expand="_expand_states",
+    )
+
+    # color = fields.Integer("Color Index")
+    # priority = fields.Selection(
+    #     AVAILABLE_PRIORITIES,
+    #     string="Priority",
+    #     index=True,
+    #     default=AVAILABLE_PRIORITIES[0][0],
+    # )
+
+    kanban_state = fields.Selection(
+        [
+            ("draft", "Grey"),
+            ("admin", "Yellow"),
+            ("approved", "Green"),
+            ("rejected", "Red"),
+            ("cancel", "Red"),
+        ],
+        string="Kanban State",
+        copy=False,
+        default="draft",
+        required=True,
+    )
+    kanban_state_label = fields.Char(
+        compute="_compute_kanban_state_label", string="Kanban State Label", store=True
+    )
+
+    @api.depends("state", "kanban_state")
+    def _compute_kanban_state_label(self):
+        for task in self:
+            task.kanban_state = task.state
+            task.kanban_state_label = task.state
 
     # domain = "[('contact_type', '=', 'vendor'), ('active_status', '=', True)]"
 
@@ -61,50 +93,38 @@ class kkn_electricity_meters_module(models.Model):
     draft_admin_time = fields.Char(string="Draft to Admin Approval Time")
     admin_to_approve_time = fields.Char(string="Admin to Approve Time")
 
-    # def admin_approval(self):
-    #
-    #     self.state = 'admin'
-    #     self.admin_approval_date = datetime.datetime.today()
-    #     if self.admin_approval_date and self.draft_date:
-    #         delta = self.admin_approval_date - self.draft_date
-    #         sec = delta.total_seconds()
-    #         self.draft_admin_time = sec / (60 * 60)
-    #
-    # def reset_to_draft(self):
-    #
-    #     self.state = 'draft'
-    #     self.draft_date = datetime.datetime.today()
-    #
-    # def approved(self):
-    #
-    #     # vals = {
-    #     #     'name': "Electricity Bill - " + self.meter_number,
-    #     #     'sale_ok': False,
-    #     #     'purchase_ok': True,
-    #     #     'can_be_expensed': True,
-    #     #     'type': 'consu',
-    #     #     'categ_id': self.env['product.category'].search([('is_electricitybill', '=', True)]).id,
-    #     #     'description_purchase': self.meter_number,
-    #     #     'property_account_expense_id': self.env['account.account'].search([('code', '=', '200110010003')]).id,
-    #     # }
-    #     # self.is_created = True
-    #     # if self.env['product.template'].search_count([('name', 'ilike', self.meter_number)]) == 0:
-    #     #     product_id = self.env['product.template'].create(vals)
-    #     #     self.product_template_id = product_id.id
-    #
-    #     self.state = 'approved'
-    #     self.approval_date = datetime.datetime.today()
-    #     if self.approval_date and self.admin_approval_date:
-    #         delta = self.approval_date - self.admin_approval_date
-    #         sec = delta.total_seconds()
-    #         self.admin_to_approve_time = sec / (60 * 60)
-    #
-    # def rejected(self):
-    #
-    #     self.state = 'rejected'
-    #     self.rejected_date = datetime.datetime.today()
-    #
-    # def cancelled(self):
-    #
-    #     self.state = 'cancel'
-    #     self.cancel_date = datetime.datetime.today()
+    def draft_state_method(self):
+        # code for draft state method
+        self.set_state_draft()
+
+    def admin_approval_state_method(self):
+        # code for admin_approval state method
+        self.set_state_admin_approval()
+
+    def approved_state_method(self):
+        # code for assigned state method
+        self.set_state_approved()
+
+    def rejected_state_method(self):
+        # code for rejected state method
+        self.set_state_rejected()
+
+    def cancel_state_method(self):
+        # code for cancel state method
+        self.set_state_cancel()
+
+    # state setter methods
+    def set_state_draft(self):
+        self.state = "draft"
+
+    def set_state_admin_approval(self):
+        self.state = "admin"
+
+    def set_state_approved(self):
+        self.state = "approved"
+
+    def set_state_rejected(self):
+        self.state = "rejected"
+
+    def set_state_cancel(self):
+        self.state = "cancel"
