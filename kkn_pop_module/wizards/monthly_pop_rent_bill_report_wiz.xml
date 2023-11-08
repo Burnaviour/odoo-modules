@@ -38,5 +38,11 @@
                   parent="pop_reporting"
                   sequence="10"/>
 
+        <menuitem id="menu_show_pop_location_new"
+              name="All POP(s)"
+              action="action_location_form_pop"
+              parent="pop_reporting"
+              sequence="11"/>
+
     </data>
 </odoo>
