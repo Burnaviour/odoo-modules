@@ -98,7 +98,6 @@ class CreateFuelCard(models.Model):
         required=True,
         default=str(datetime.now().year),
     )
-    is_assigned = fields.Boolean(string="Assigned", tracking=True, default=False)
 
     def _expand_states(self, states, domain, order):
         return [key for key, val in type(self).state.selection]
@@ -129,6 +128,8 @@ class CreateFuelCard(models.Model):
         string="Kanban State Label",
         store=True,
     )
+
+    is_assigned = fields.Boolean(string="Assigned", tracking=True, default=False)
 
     _sql_constraints = [
         ("card_number_unique", "unique(card_number)", "Card number already exist!"),

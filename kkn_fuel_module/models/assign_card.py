@@ -25,7 +25,7 @@ class AssignFuelCard(models.Model):
     fuel_card_id = fields.Many2one(
         "create.fuel.card.model",
         string="Card Number",
-        domain=[("state", "=", "approved")],
+        domain=[("state", "=", "approved"), ("is_assigned", "=", False)],
         tracking=True,
         required=True,
     )
@@ -113,6 +113,7 @@ class AssignFuelCard(models.Model):
     def assigned_state_method(self):
         # code for assigned state method
         for record in self:
+            record.fuel_card_id.is_assigned = True
             record.set_state_assigned()
 
     def unassign_request_state_method(self):
@@ -123,6 +124,7 @@ class AssignFuelCard(models.Model):
     def unassigned_state_method(self):
         # code for unassigned state method
         for record in self:
+            record.fuel_card_id.is_assigned = False
             record.set_state_unassigned()
 
     def rejected_state_method(self):
