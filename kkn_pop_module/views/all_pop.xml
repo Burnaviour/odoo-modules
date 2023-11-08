@@ -31,9 +31,4 @@
         <field name="view_mode">form</field>
     </record>
 
-    <menuitem id="menu_show_pop_location_new"
-              name="All POP(s)"
-              action="action_location_form_pop"
-              parent="menu_kkn_pop_root"
-              sequence="2"/>
 </odoo>
