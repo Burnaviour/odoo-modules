@@ -1,4 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_assign_fuel_card_model,access.assign.fuel.card.model,model_assign_fuel_card_model,base.group_user,1,1,1,1
-access_create_fuel_card_model,access.create.fuel.card.model,model_create_fuel_card_model,base.group_user,1,1,1,1
-access_fuel_monthly_report_wizard,access.fuel.monthly.report.wizard,model_fuel_monthly_report_wizard,base.group_user,1,1,1,1
+access_assign_fuel_card_lw_lvl_model,access.assign.fuel.card.lw.lvl.right,model_assign_fuel_card_model,fuel_card_read_group_id,1,0,0,0
+access_assign_fuel_card_mid_lvl_model,access.assign.fuel.card.mid.lvl.right,model_assign_fuel_card_model,fuel_card_read_write_group_id,1,1,1,0
+access_assign_fuel_card_admin_model,access.assign.fuel.card.admin.lvl.right,model_assign_fuel_card_model,fuel_card_admin_group_id,1,1,1,1
+access_create_fuel_card_low_lvl_model,access.create.fuel.card.low.lvl.right,model_create_fuel_card_model,fuel_card_read_group_id,1,0,0,0
+access_create_fuel_card_mid_lvl_model,access.create.fuel.card.mid.lvl.right,model_create_fuel_card_model,fuel_card_read_write_group_id,1,1,1,0
+access_create_fuel_card_admin_lvl_model,access.create.fuel.card.admin.lvl.right,model_create_fuel_card_model,fuel_card_admin_group_id,1,1,1,1
+access_fuel_monthly_report_wizard,access.fuel.monthly.report.wizard,model_fuel_monthly_report_wizard,fuel_card_admin_group_id,1,1,1,1

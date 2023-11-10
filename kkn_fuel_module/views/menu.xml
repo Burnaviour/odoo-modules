@@ -9,7 +9,11 @@
         <!-- menu Operations -->
         <menuitem name="Operations" id="kkn_fuel_module.menu_1" sequence="0"
             parent="kkn_fuel_module.menu_root"
-            action="kkn_fuel_module.assign_fuel_card_action_window" />
+        />
+        <menuitem name="Assign/Unassign Fuel Cards" id="assign_fuel_card_menu"
+            sequence="1"
+            parent="kkn_fuel_module.menu_1" action="kkn_fuel_module.assign_fuel_card_action_window"
+        />
 
 
         <!-- Reporting -->
@@ -27,9 +31,7 @@
         <!-- configuration -->
         <menuitem name="Configuration" id="kkn_fuel_module.menu_3"
             parent="kkn_fuel_module.menu_root" sequence="2"
-            action="kkn_fuel_module.assign_fuel_card_action_window"
         />
-
         <!-- Menu Item -->
         <menuitem id="menu_create_fuel_card" name="Fuel Cards" parent="kkn_fuel_module.menu_3"
             action="kkn_fuel_module.create_fuel_card_action_window" />

@@ -5,32 +5,32 @@
         <field name="description">Fuel Module Rights</field>
 
     </record>
-    <record id="fuel_card_assign_module_category_id" model="ir.module.category">
-        <field name="name">Fuel Card Assign Rights</field>
+    <record id="fuel_card_module_category_id" model="ir.module.category">
+        <field name="name">Fuel Card Rights</field>
         <field name="parent_id"
             ref="fuel_module_category_id" />
     </record>
 
-    <record id="fuel_assign_card_read_group_id" model="res.groups">
+    <record id="fuel_card_read_group_id" model="res.groups">
         <field name="name">Read only</field>
         <field name="category_id"
-            ref="fuel_card_assign_module_category_id"
+            ref="fuel_card_module_category_id"
         />
     </record>
-    <record id="fuel_assign_card_read_write_group_id" model="res.groups">
+    <record id="fuel_card_read_write_group_id" model="res.groups">
         <field name="name">Read and write only</field>
         <field name="category_id"
-            ref="fuel_card_assign_module_category_id"
+            ref="fuel_card_module_category_id"
         />
-        <field name="implied_ids" eval="[(6,0,[ref('fuel_assign_card_read_group_id')])]" />
+        <field name="implied_ids" eval="[(6,0,[ref('fuel_card_read_group_id')])]" />
     </record>
 
-    <record id="fuel_assign_card_admin_group_id" model="res.groups">
+    <record id="fuel_card_admin_group_id" model="res.groups">
         <field name="name">Admin Rights</field>
         <field name="category_id"
-            ref="fuel_card_assign_module_category_id"
+            ref="fuel_card_module_category_id"
         />
-        <field name="implied_ids" eval="[(6,0,[ref('fuel_assign_card_read_write_group_id')])]" />
+        <field name="implied_ids" eval="[(6,0,[ref('fuel_card_read_write_group_id')])]" />
     </record>
 
 </odoo>

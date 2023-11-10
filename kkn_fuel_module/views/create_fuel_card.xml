@@ -109,7 +109,7 @@
             <field name="model">create.fuel.card.model</field>
             <field name="arch" type="xml">
                 <form string="Fuel Cards">
-                    <header>
+                    <header >
 
                         <field name="state" widget="statusbar"
                             statusbar_visible="draft,admin_approval,approved,rejected,cancel"
