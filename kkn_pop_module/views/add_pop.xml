@@ -450,7 +450,7 @@
                                     </div>
 
                                     <div class="oe_kanban_bottom_right">
-                                        <i title="fuel card icon"
+                                        <i title="Add POP card icon"
                                            t-attf-class="fa fa-podcast #{record.kanban_state.raw_value == 'draft' ? 'text-secondary' : record.kanban_state.raw_value == 'admin_approval' ? 'text-warning' : record.kanban_state.raw_value == 'approved' ? 'text-success' : record.kanban_state.raw_value == 'coo_approval' ? 'text-primary' : record.kanban_state.raw_value == 'ceo_approval' || record.kanban_state.raw_value == 'rejected' || record.kanban_state.raw_value == 'cancel' ? 'text-danger' : 'default_color'}"></i>
                                     </div>
                                 </div>

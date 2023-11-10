@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-         <record id="paperformat_with_landscape_pop" model="report.paperformat">
+        <record id="paperformat_with_landscape_pop" model="report.paperformat">
             <field name="name">US Check Letter</field>
-            <field name="default" eval="True" />
+            <field name="default" eval="True"/>
             <field name="format">A4</field>
             <field name="page_height">0</field>
             <field name="page_width">0</field>
@@ -12,7 +12,7 @@
             <field name="margin_bottom">15</field>
             <field name="margin_left">5</field>
             <field name="margin_right">5</field>
-            <field name="header_line" eval="False" />
+            <field name="header_line" eval="False"/>
             <field name="header_spacing">0</field>
             <field name="dpi">90</field>
         </record>
@@ -32,23 +32,27 @@
             <field name="dpi">90</field>
         </record>
 
-        <report id="all_pop_location_report_id"
-                model="all.pop.location.report"
-                string="Location Details"
-                paperformat="paperformat_with_landscape_pop"
-                report_type="qweb-pdf"
-                name="kkn_pop_module.all_pop_location_report"
-                file="kkn_pop_module.all_pop_location_report" />
 
+        <record id="all_pop_location_report_id" model="ir.actions.report">
+            <field name="name">Location Details</field>
+            <field name="model">all.pop.location.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">kkn_pop_module.all_pop_location_report</field>
+            <field name="report_file">kkn_pop_module.all_pop_location_report</field>
+            <field name="paperformat_id" ref="paperformat_with_landscape_pop"/>
+            <field name="binding_type">report</field>
+        </record>
 
-        <report id="action_monthly_pop_rent_bill_report"
-                string="Monthly Pop Rent Bill Report"
-                model="pop.rent.bill.report"
-                print_report_name="(({'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June', '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December' }[object.month]+'_Pop_Rent_Report_'+ time.strftime('%d-%m-%Y')))"
-                report_type="qweb-pdf"
-                paperformat="paperformat_monthly_pop_rent_bill_report"
-                file="kkn_pop_module.monthly_pop_bill_report_temp"
-                name="kkn_pop_module.monthly_pop_bill_report_temp"/>
+        <record id="action_monthly_pop_rent_bill_report" model="ir.actions.report">
+            <field name="name">Monthly Pop Rent Bill Report</field>
+            <field name="model">pop.rent.bill.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="print_report_name">"(({'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June', '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December' }[object.month]+'_Pop_Rent_Report_'+ time.strftime('%d-%m-%Y')))"</field>
+            <field name="report_name">kkn_pop_module.monthly_pop_bill_report_temp</field>
+            <field name="report_file">kkn_pop_module.monthly_pop_bill_report_temp</field>
+            <field name="paperformat_id" ref="paperformat_monthly_pop_rent_bill_report"/>
+            <field name="binding_type">report</field>
+        </record>
 
     </data>
 </odoo>

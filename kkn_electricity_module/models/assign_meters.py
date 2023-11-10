@@ -22,7 +22,7 @@ STATES = [
 ]
 
 
-class kkn_electricity_module(models.Model):
+class kknElectricityModel(models.Model):
     _name = 'assign.electricity.model'
     _description = 'assign.electricity.model'
     _inherit = ['mail.thread', 'mail.activity.mixin']
