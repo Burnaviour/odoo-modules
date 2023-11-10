@@ -6,6 +6,7 @@ from odoo import models, fields, api
 class ResStation(models.Model):
     _name = 'res.station'
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    _description = 'Stations'
 
     name = fields.Char('Name', required=True, tracking=True)
     district_id = fields.Many2one('res.district', 'District', required=True, tracking=True)

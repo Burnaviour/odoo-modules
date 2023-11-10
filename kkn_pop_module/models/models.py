@@ -216,7 +216,6 @@ class kkn_pop_module(models.Model):
         string="Currency",
         related="company_id.currency_id",
         readonly=True,
-        relation="res.currency",
     )
 
     time_period = fields.Char(string="Lease Term Year(s)", tracking=True)

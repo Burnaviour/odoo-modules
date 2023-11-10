@@ -7,3 +7,4 @@ access_add_pop_rent_bill,access.add.pop.rent.bill,model_add_pop_rent_bill,base.g
 access_add_pop_service_bill,access.add.pop.service.bill,model_add_pop_service_bill,base.group_user,1,1,1,1
 access_add_pop_generator_bill,access.add.pop.generator.bill,model_add_pop_generator_bill,base.group_user,1,1,1,1
 access_pop_rent_bill_report,access.pop.rent.bill.report,model_pop_rent_bill_report,base.group_user,1,1,1,1
+access_report_kkn_pop_module_all_pop_location_report,access_report_kkn_pop_module_all_pop_location_report,model_report_kkn_pop_module_all_pop_location_report,base.group_user,1,1,1,1
