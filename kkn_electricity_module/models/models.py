@@ -21,7 +21,7 @@ STATES = [
 ]
 
 
-class kkn_electricity_meters_module(models.Model):
+class kknElectricityMeterModel(models.Model):
     _name = 'electricity.meters.model'
     _description = 'electricity_meters_model'
     _inherit = 'mail.thread', 'mail.activity.mixin'

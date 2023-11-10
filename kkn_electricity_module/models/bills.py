@@ -22,7 +22,7 @@ STATES = [
 ]
 
 
-class kkn_bills_electricity_module(models.Model):
+class kknBillsElectricityModel(models.Model):
     _name = 'bills.electricity.model'
     _description = 'bills_electricity_model'
     _inherit = ['mail.thread', 'mail.activity.mixin']
