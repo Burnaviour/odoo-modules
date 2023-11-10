@@ -8,30 +8,26 @@
         <form string="Assign Fuel Card">
           <header>
             <!-- states -->
-          
-
-              <field name="state" widget="statusbar"
-                statusbar_visible="draft,admin_approval,assigned,unassign_request,unassigned,rejected,cancel" />
-              
-              <button string="Reset to Draft" name="draft_state_method" type="object"
-                states="rejected"
-                class="oe_highlight" />
-              <button string="Admin Approval" name="admin_approval_state_method" type="object"
-                class="oe_highlight" states="draft" />
-              <button string="Assign" name="assigned_state_method" type="object"
-                class="oe_highlight" states="admin_approval"
-                confirm="Are you sure you want to assign the fuel card to this employee? This action cannot be undone." />
-              <button string="Unassign Request" name="unassign_request_state_method" type="object"
-                class="oe_highlight" states="assigned"
-                confirm="Are you sure you want to send fuel card unassign request for this employee" />
-              <button string="Unassign" name="unassigned_state_method" type="object"
-                class="oe_highlight" states="unassign_request"
-                confirm="Are you sure you want to unassign the fuel card from this employee? This action cannot be undone." />
-              <button string="Reject" name="rejected_state_method" type="object"
-                states="admin_approval" class="oe_highlight" />
-              <button string="Cancel" name="cancel_state_method" type="object" class="oe_highlight"
-                attrs="{'invisible':[('state','in',('assigned','unassigned','cancel'))]}" />
-           
+            <field name="state" widget="statusbar"
+              statusbar_visible="draft,admin_approval,assigned,unassign_request,unassigned,rejected,cancel" />
+            <button string="Reset to Draft" name="draft_state_method" type="object"
+              states="rejected"
+              class="oe_highlight" />
+            <button string="Admin Approval" name="admin_approval_state_method" type="object"
+              class="oe_highlight" states="draft" />
+            <button string="Assign" name="assigned_state_method" type="object"
+              class="oe_highlight" states="admin_approval"
+              confirm="Are you sure you want to assign the fuel card to this employee? This action cannot be undone." />
+            <button string="Unassign Request" name="unassign_request_state_method" type="object"
+              class="oe_highlight" states="assigned"
+              confirm="Are you sure you want to send fuel card unassign request for this employee" />
+            <button string="Unassign" name="unassigned_state_method" type="object"
+              class="oe_highlight" states="unassign_request"
+              confirm="Are you sure you want to unassign the fuel card from this employee? This action cannot be undone." />
+            <button string="Reject" name="rejected_state_method" type="object"
+              states="admin_approval" class="oe_highlight" />
+            <button string="Cancel" name="cancel_state_method" type="object" class="oe_highlight"
+              attrs="{'invisible':[('state','in',('assigned','unassigned','cancel'))]}" />
           </header>
           <sheet>
             <!-- employee -->
@@ -74,7 +70,7 @@
                   <span>/</span>
                   <field name="valid_from_year" class="oe_inline" />
                 </div>
-                <label for='valid_till_month' string="Valid till" />
+                <label for='valid_till_month' string="Valid till"/>
                 <div>
                   <field name="valid_till_month" class="oe_inline" />
                   <span>/</span>

@@ -109,7 +109,7 @@
             <field name="model">create.fuel.card.model</field>
             <field name="arch" type="xml">
                 <form string="Fuel Cards">
-                    <header >
+                    <header>
 
                         <field name="state" widget="statusbar"
                             statusbar_visible="draft,admin_approval,approved,rejected,cancel"
@@ -118,17 +118,25 @@
                         <!-- buttons on header -->
                         <button string="Reset to Draft" name="draft_state_method" type="object"
                             states="rejected"
-                            class="oe_highlight" />
+                            class="oe_highlight"
+                            groups="kkn_fuel_module.fuel_card_read_write_group_id,kkn_fuel_module.fuel_card_admin_group_id"
+                        />
                         <button string="Admin Approval" name="admin_approval_state_method"
                             type="object"
-                            class="oe_highlight" states="draft" />
+                            class="oe_highlight" states="draft"
+                            groups="kkn_fuel_module.fuel_card_read_write_group_id,kkn_fuel_module.fuel_card_admin_group_id"
+                        />
                         <button string="Approve" name="approved_state_method" type="object"
                             confirm="Are you sure you want to approve this fuel card ? "
-                            class="oe_highlight" states="admin_approval" />
+                            class="oe_highlight" states="admin_approval"
+                            groups="kkn_fuel_module.fuel_card_read_write_group_id,kkn_fuel_module.fuel_card_admin_group_id" />
                         <button string="Reject" name="rejected_state_method" type="object"
-                            states="admin_approval" class="oe_highlight" />
+                            states="admin_approval" class="oe_highlight"
+                            groups="kkn_fuel_module.fuel_card_read_write_group_id,kkn_fuel_module.fuel_card_admin_group_id"
+                        />
                         <button string="Cancel" name="cancel_state_method" type="object"
                             class="oe_highlight"
+                            groups="kkn_fuel_module.fuel_card_read_write_group_id,kkn_fuel_module.fuel_card_admin_group_id"
                             attrs="{'invisible':[('state','in',('approved','cancel'))]}" />
                     </header>
                     <sheet>
@@ -176,7 +184,6 @@
                                 </div>
 
                             </group>
-
                             <group>
                                 <field name="product_name"
                                     attrs="{ 
