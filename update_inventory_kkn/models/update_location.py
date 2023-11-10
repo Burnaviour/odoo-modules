@@ -47,7 +47,7 @@ class UpdateLocationForm(models.Model):
 
     # New Type in usage Pop
     usage = fields.Selection(
-        [
+        selection_add=[
             ("supplier", "Vendor Location"),
             ("view", "View"),
             ("internal", "Internal Location"),
@@ -72,6 +72,19 @@ class UpdateLocationForm(models.Model):
         "\n* Production: Virtual counterpart location for production operations: this location consumes the components and produces finished products"
         "\n* Transit Location: Counterpart location that should be used in inter-company or inter-warehouses operations",
         tracking=True,
+        ondelete={
+            'supplier': 'set default',
+            'view': 'set default',
+            'internal': 'set default',
+            'customer': 'set default',
+            'pop': 'set default',
+            'exchange': 'set default',
+            'storeconsumed': 'set default',
+            'inventory': 'set default',
+            'production': 'set default',
+            'costcenter': 'set default',
+            'transit': 'set default',
+        }
     )
     partner_latitude = fields.Float("Geo Latitude", digits=(16, 6), tracking=True)
     partner_longitude = fields.Float("Geo Longitude", digits=(16, 6), tracking=True)

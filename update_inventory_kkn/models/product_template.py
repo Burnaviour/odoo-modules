@@ -33,7 +33,7 @@ class ProductTemplate(models.Model):
     )
     type_manageable = fields.Selection(
         [("manageable", "Manageable"), ("non_manageable", "Non-Manageable")],
-        string="Type",
+        string="Type Manageable",
     )
     rack_mountable = fields.Selection(
         [("yes", "Yes"), ("no", "No")], string="Rack Mountable"
@@ -42,7 +42,7 @@ class ProductTemplate(models.Model):
     rack_space = fields.Integer(string="Rack Space", default=0)
     rack_space_uom = fields.Many2one(
         "uom.uom",
-        string="UoM",
+        string="Rack UoM",
         default=lambda self: self.env["uom.uom"].search([("name", "=", "U")]).id,
     )
 
@@ -51,19 +51,19 @@ class ProductTemplate(models.Model):
     total_ampere = fields.Integer(string="Total Power Output", default=0)
     ampere_uom1 = fields.Many2one(
         "uom.uom",
-        string="UoM",
+        string="UoM1",
         default=lambda self: self.env["uom.uom"].search([("name", "=", "Ampere")]).id,
     )
     running_load = fields.Integer(string="Running Load", default=0)
     ampere_uom2 = fields.Many2one(
         "uom.uom",
-        string="UoM",
+        string="UoM2",
         default=lambda self: self.env["uom.uom"].search([("name", "=", "Ampere")]).id,
     )
     rated_load = fields.Integer(string="Rated Load", default=0)
     ampere_uom3 = fields.Many2one(
         "uom.uom",
-        string="UoM",
+        string="UoM3",
         default=lambda self: self.env["uom.uom"].search([("name", "=", "Ampere")]).id,
     )
     uplink_type = fields.Selection(
@@ -92,10 +92,10 @@ class ProductTemplate(models.Model):
     downlink_quantity = fields.Integer()
 
     uplink_electric_optic = fields.Selection(
-        [("Electrical", "Electrical"), ("Optical", "Optical")], string="Uplink Type"
+        [("Electrical", "Electrical"), ("Optical", "Optical")], string="Uplink Optic Type"
     )
     downlink_electric_optic = fields.Selection(
-        [("Electrical", "Electrical"), ("Optical", "Optical")], string="Downlink Type"
+        [("Electrical", "Electrical"), ("Optical", "Optical")], string="Downlink Optic Type"
     )
 
     uplink_port_name = fields.Char(string="Uplink Port Name")
